@@ -13,6 +13,7 @@ public class Test {
         polyline1.appendPoint(-4, 9);
 
         System.out.println(polyline1);
+        System.out.println();
 
         List<Point> pointList = new ArrayList<>();
 
@@ -24,6 +25,8 @@ public class Test {
 
         Polyline polyline2 = new Polyline(pointList);
         System.out.println(polyline2);
+
+        System.out.println();
 
         System.out.println(new Polyline());
     }

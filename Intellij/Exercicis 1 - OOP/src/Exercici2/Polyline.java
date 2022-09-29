@@ -27,17 +27,30 @@ public class Polyline {
 
         String result = "{";
 
-        for (Point point:this.points) {
+        for (Point point : this.points) {
             result += "(x" + point.getX();
             result += ",y" + point.getY() + ")";
         }
 
-        result+= "}\n";
+        result+= "}\nTotal length = " + this.getLength();
 
         return result;
     }
 
     public double getLength() {
-        return this.points.size();
+        double totalLength = 0;
+
+        for (int i = 0; i < this.points.size() - 1; i++) {
+                Point point1 = this.points.get(i);
+                Point point2 = this.points.get(i + 1);
+
+                double cat1 = Math.abs(point2.getX() - point1.getX());
+                double cat2 = Math.abs(point2.getY() - point1.getY());
+                double hipo = Math.sqrt((cat1 * cat1) + (cat2 * cat2));
+
+                totalLength += hipo;
+        }
+
+        return totalLength;
     }
 }
