@@ -111,7 +111,6 @@ public class ExercicisTest {
     public void testLongSumOperation() {
         LongBinaryOperator sumOperation = Exercicis.longSumOperation();
 
-
         long sumOfSevenAndEight = sumOperation.applyAsLong(7, 8);
         long sumOfTenAndZero = sumOperation.applyAsLong(10, 0);
         long sumOfFiveAndMinusTen = sumOperation.applyAsLong(5, -10);

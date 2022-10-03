@@ -27,17 +27,7 @@ public class Exercicis {
      * n vegades, on n es passa com a argument de la funció.
      */
     public static BiFunction<String, Integer, String> stringMultiplier() {
-//        BiFunction<String, Integer, String> biFunction = (s, n, r) ->
-        BiFunction<String, Integer, String> biFunction = new BiFunction<String, Integer, String>() {
-            @Override
-            public String apply(String s, Integer integer) {
-                String result = "";
-                for (int i = 0; i < integer; i++) {
-                    result += s;
-                }
-                return result;
-            }
-        };
+        BiFunction<String, Integer, String> biFunction = (s, n) -> s.repeat(n);
 
         return biFunction;
     }
@@ -46,8 +36,9 @@ public class Exercicis {
      * Torna un Function que converteix un BigDecimal a String que comença pel símbol "$"
      */
     public static Function<BigDecimal, String> toDollarStringFunction() {
+        Function<BigDecimal, String> function = (n) -> "$" + n.toString();
 
-        return null;
+        return function;
     }
 
     /**
@@ -56,50 +47,55 @@ public class Exercicis {
      * dins aquest rang.
      */
     public static Predicate<String> lengthInRangePredicate(int min, int max) {
+        Predicate<String> predicate = (s) -> min <= s.length() && s.length() <= max;
 
-        return null;
+        return predicate;
     }
 
     /**
      * Retorna un Supplier de números enters aleatoris
      */
     public static IntSupplier randomIntSupplier() {
+        IntSupplier supplier = () -> (int) (Math.random() * 100);
 
-        return null;
+        return supplier;
     }
-
 
     /**
      * Retorna un IntUnaryOperator que reb un int com un límit que a la vegada
      * retorna un número aleatori dins aquest límit
      */
     public static IntUnaryOperator boundedRandomIntSupplier() {
+        IntUnaryOperator intUnaryOperator = (n) -> (int) (Math.random() * n);
 
-        return null;
+        return intUnaryOperator;
     }
 
     /**
      * Retorna un IntUnaryOperator que calcula un quadrat d'un número
      */
     public static IntUnaryOperator intSquareOperation() {
+        IntUnaryOperator intUnaryOperator = (n) -> n * n;
 
-        return null;
+        return intUnaryOperator;
     }
 
     /**
      * Retorna un LongBinaryOperator que realitza l'operació de suma
      */
     public static LongBinaryOperator longSumOperation() {
+        LongBinaryOperator longBinaryOperator = (n, i) -> n + i;
 
-        return null;
+        return longBinaryOperator;
     }
 
     /**
      * Retorna un ToIntFunction<String> que converteix un String a un Integer
      */
     public static ToIntFunction<String> stringToIntConverter() {
+        ToIntFunction<String> toIntFunction = (s) -> Integer.parseInt(s);
 
-        return null;
+        return toIntFunction;
     }
 
     /**
@@ -107,16 +103,20 @@ public class Exercicis {
      * que realitza la funció f(x) = n * x
      */
     public static Supplier<IntUnaryOperator> nMultiplyFunctionSupplier(int n) {
+        Supplier<IntUnaryOperator> supplier = () -> (x) -> n * x;
 
-        return null;
+        return supplier;
     }
 
     /**
      * Retorna una funció que composa funcions amb la funció trim() de String
      */
     public static UnaryOperator<Function<String, String>> composeWithTrimFunction() {
+        Function<String, String> function = s -> s.trim();
 
-        return null;
+        UnaryOperator<Function<String, String>> unaryOperator = (f) -> f.apply().trim();
+
+        return unaryOperator;
     }
 
     /**
