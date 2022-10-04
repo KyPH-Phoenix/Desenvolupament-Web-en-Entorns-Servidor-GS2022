@@ -112,9 +112,9 @@ public class Exercicis {
      * Retorna una funció que composa funcions amb la funció trim() de String
      */
     public static UnaryOperator<Function<String, String>> composeWithTrimFunction() {
-        Function<String, String> function = s -> s.trim();
-
-        UnaryOperator<Function<String, String>> unaryOperator = (f) -> f.apply().trim();
+        UnaryOperator<Function<String, String>> unaryOperator = (f) -> f.compose(
+                (s) -> s.trim()
+        );
 
         return unaryOperator;
     }
@@ -124,8 +124,13 @@ public class Exercicis {
      * Aquest thread s'iniciarà quan es cridi al mètode "get()" del supplier.
      */
     public static Supplier<Thread> runningThreadSupplier(Runnable runnable) {
+        Supplier<Thread> supplier = () -> {
+            Thread t = new Thread(runnable);
+            t.start();
+            return t;
+        };
 
-        return null;
+        return supplier;
     }
 
     /**
@@ -133,8 +138,7 @@ public class Exercicis {
      * dins un nou fil (thread)
      */
     public static Consumer<Runnable> newThreadRunnableConsumer() {
-
-        return null;
+        return (r) -> r.run();
     }
 
     /**
@@ -142,8 +146,13 @@ public class Exercicis {
      * un Supplier d'un Thread que s'ha creat per aquest Runnable.
      */
     public static Function<Runnable, Supplier<Thread>> runnableToThreadSupplierFunction() {
+        Function<Runnable, Supplier<Thread>> function = (r) -> () -> {
+            Thread t = new Thread(r);
+            t.start();
+            return t;
+        };
 
-        return null;
+        return function;
     }
 
     /**
@@ -159,8 +168,10 @@ public class Exercicis {
      * - Si el IntPredicate no es compleix, retorna el mateix element que s'ha rebut
      */
     public static BiFunction<IntUnaryOperator, IntPredicate, IntUnaryOperator> functionToConditionalFunction() {
+        BiFunction<IntUnaryOperator, IntPredicate, IntUnaryOperator> biFunction = (io, ip) ->
+                (n) -> (ip.test(n)) ? io.applyAsInt(n) : n;
 
-        return null;
+        return biFunction;
     }
 
     /**
@@ -173,14 +184,17 @@ public class Exercicis {
      * funció que retorna el mateix paràmetre que li passem.
      */
     public static BiFunction<Map<String, IntUnaryOperator>, String, IntUnaryOperator> functionLoader() {
+        BiFunction<Map<String, IntUnaryOperator>, String, IntUnaryOperator> biFunction = (map, s) ->
+                (map.containsKey(s)) ? map.get(s) : (i) -> i;
 
-        return null;
+        return biFunction;
     }
 
     /**
      * Retorna un Supplier d'un Supplier d'un Supplier de l'string "BEN FET!"
      */
     public static Supplier<Supplier<Supplier<String>>> trickyWellDoneSupplier() {
-        return null;
+        Supplier<Supplier<Supplier<String>>> supplier = () -> () -> () -> "BEN FET!";
+        return supplier;
     }
 }
