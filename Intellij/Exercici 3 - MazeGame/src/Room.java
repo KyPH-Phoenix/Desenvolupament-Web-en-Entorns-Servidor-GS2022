@@ -7,6 +7,12 @@ public class Room {
         this.roomNumber = roomNumber;
     }
 
+    public void setDoor(Door door, int side) {
+        // side
+        // 0 = North, 1 = South, 2 = East, 3 = West //
+        this.sites[side] = door;
+    }
+
     public int getRoomNumber() {
         return roomNumber;
     }
@@ -23,3 +29,29 @@ public class Room {
         this.key = key;
     }
 }
+
+
+/*
+
+┌ ┐ └ ┘ | -
+
+┌---------┐
+|         |
+|         |
+|         |
+└---------┘
+
+┌---------┐ l1
+|      k1 └---
+|           /
+|         ┌---
+└---------┘
+
+   | / | l1
+┌--┘   └--┐
+|         |
+|         |
+|         |
+└---------┘
+
+ */
