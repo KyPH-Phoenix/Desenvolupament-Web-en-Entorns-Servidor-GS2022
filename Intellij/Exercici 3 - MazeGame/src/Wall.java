@@ -1,7 +1,7 @@
 public class Wall implements MapSite {
 
     @Override
-    public String getType() {
+    public String getType(int nRoom) {
         return "Wall";
     }
 }

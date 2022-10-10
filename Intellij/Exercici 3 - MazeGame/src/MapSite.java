@@ -1,3 +1,3 @@
 public interface MapSite {
-    String getType();
+    String getType(int nRoom);
 }

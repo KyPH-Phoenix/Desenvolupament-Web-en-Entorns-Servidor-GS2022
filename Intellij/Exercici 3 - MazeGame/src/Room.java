@@ -28,6 +28,15 @@ public class Room {
     public void setKey(Key key) {
         this.key = key;
     }
+
+    @Override
+    public String toString() {
+        String s = String.format("\nRoom nº%d", this.roomNumber);
+        s += String.format("\nNorth: %s\nSouth: %s\nEast: %s\nWest: %s", this.sites[0].getType(this.roomNumber),
+                this.sites[1].getType(this.roomNumber), this.sites[2].getType(this.roomNumber),
+                this.sites[3].getType(this.roomNumber));
+        return s;
+    }
 }
 
 
