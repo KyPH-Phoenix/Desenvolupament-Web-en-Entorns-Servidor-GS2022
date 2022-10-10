@@ -1,5 +1,8 @@
 public class Room {
+    // Hacer con un mapa mejor
     private MapSite[] sites = {new Wall(), new Wall(), new Wall(), new Wall()};
+
+    // Hacer con item
     private Key key = null;
     private int roomNumber;
 

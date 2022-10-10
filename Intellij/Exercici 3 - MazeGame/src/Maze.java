@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Maze {
+    public enum Directions {
+        NORTH, SOUTH, EAST, WEST
+    }
+
+    // Hacer con un mapa mejor
     private List<Room> rooms = new ArrayList<>();
 
     public void addRoom(Room room) {
