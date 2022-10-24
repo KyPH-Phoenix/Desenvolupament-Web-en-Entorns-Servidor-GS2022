@@ -1,5 +1,6 @@
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/DemoServlets/src/main/java/com/liceu/DemoServlets/model/Person.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/DemoServlets/src/main/java/com/liceu/DemoServlets/controllers/Servlet1.java
+/home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/DemoServlets/src/main/java/com/liceu/DemoServlets/filters/LoginFilter.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/DemoServlets/src/main/java/com/liceu/DemoServlets/controllers/Private.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/DemoServlets/src/main/java/com/liceu/DemoServlets/controllers/MVC.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/DemoServlets/src/main/java/com/liceu/DemoServlets/controllers/Login.java

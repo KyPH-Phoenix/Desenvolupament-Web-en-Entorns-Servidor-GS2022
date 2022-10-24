@@ -1,4 +1,5 @@
 com/liceu/DemoServlets/controllers/GuessNumber2.class
+com/liceu/DemoServlets/filters/LoginFilter.class
 com/liceu/DemoServlets/controllers/Private.class
 com/liceu/DemoServlets/model/Person.class
 com/liceu/DemoServlets/controllers/MVC.class
