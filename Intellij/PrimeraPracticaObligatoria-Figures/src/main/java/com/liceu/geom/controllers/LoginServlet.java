@@ -14,7 +14,12 @@ import java.io.PrintWriter;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
 
+        if (session.getAttribute("user") != null) {
+            resp.sendRedirect("/figures");
+            return;
+        }
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/login.jsp");
         dispatcher.forward(req, resp);
@@ -27,11 +32,9 @@ public class LoginServlet extends HttpServlet {
         if (user != null) {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            resp.sendRedirect("/private");
+            resp.sendRedirect("/figures");
             return;
         }
-
-        req.setAttribute("message", "El nom d'usuari no pot ser buid");
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/login.jsp");
         dispatcher.forward(req, resp);

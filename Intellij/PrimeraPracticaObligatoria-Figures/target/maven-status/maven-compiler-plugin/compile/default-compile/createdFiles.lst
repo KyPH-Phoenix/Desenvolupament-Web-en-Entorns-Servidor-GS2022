@@ -1,1 +1,6 @@
+com/liceu/geom/model/Figure$color.class
+com/liceu/geom/model/User.class
+com/liceu/geom/controllers/FiguresServlet.class
+com/liceu/geom/model/Figure.class
+com/liceu/geom/model/Figure$type.class
 com/liceu/geom/controllers/LoginServlet.class
