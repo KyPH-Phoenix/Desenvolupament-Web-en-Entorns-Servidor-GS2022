@@ -1,3 +1,6 @@
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,7 +74,7 @@
                 ctx.stroke();
             } else if (shape === "square") {
                 ctx.beginPath();
-                ctx.fillRect(xCord - (size / 2), yCord - (size / 2), size * 2, size * 2);
+                ctx.fillRect(xCord - (size / 2.), yCord - (size / 2), size * 2, size * 2);
                 ctx.rect(xCord - (size / 2), yCord - (size / 2), size * 2, size * 2);
                 ctx.stroke();
             } else if (shape === "triangle") {

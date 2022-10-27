@@ -1,6 +1,11 @@
 com/liceu/geom/model/Figure$color.class
 com/liceu/geom/model/User.class
-com/liceu/geom/controllers/FiguresServlet.class
+com/liceu/geom/controllers/LoginController.class
+example/DAO/MessageDaoImpl.class
+example/model/Message.class
+com/liceu/geom/controllers/FiguresController.class
+example/controllers/IndexController.class
 com/liceu/geom/model/Figure.class
 com/liceu/geom/model/Figure$type.class
-com/liceu/geom/controllers/LoginServlet.class
+example/DAO/MessageDao.class
+example/service/TextService.class
