@@ -1,5 +1,8 @@
 package com.liceu.geom.controllers;
 
+import com.liceu.geom.model.User;
+import com.liceu.geom.services.UserService;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,11 +14,15 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
+    UserService userService = new UserService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        if (session.getAttribute("user") != null) {
+        System.out.println(session.getAttribute("id"));
+
+        if (session.getAttribute("id") != null) {
             resp.sendRedirect("/figures");
             return;
         }
@@ -26,11 +33,18 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String user = req.getParameter("user");
+        String userName = req.getParameter("user");
+        HttpSession session = req.getSession();
 
-        if (user != null) {
-            HttpSession session = req.getSession();
-            session.setAttribute("user", user);
+        if (session.getAttribute("id") != null) {
+            resp.sendRedirect("/figures");
+            return;
+        }
+
+        if (!userName.isEmpty()) {
+            User user = userService.createUser(userName);
+
+            session.setAttribute("id", user.getId());
             resp.sendRedirect("/figures");
             return;
         }

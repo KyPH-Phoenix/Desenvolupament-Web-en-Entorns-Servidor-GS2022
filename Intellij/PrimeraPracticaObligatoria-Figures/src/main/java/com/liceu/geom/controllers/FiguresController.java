@@ -13,8 +13,6 @@ import java.io.IOException;
 public class FiguresController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/figures.jsp");
         dispatcher.forward(req, resp);
     }
@@ -22,7 +20,8 @@ public class FiguresController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        String user;
+
+        System.out.println(session.getAttribute("user"));
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/figures.jsp");
         dispatcher.forward(req, resp);
