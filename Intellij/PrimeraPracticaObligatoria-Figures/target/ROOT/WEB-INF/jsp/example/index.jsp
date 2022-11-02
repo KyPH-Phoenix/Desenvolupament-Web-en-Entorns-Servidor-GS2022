@@ -20,9 +20,7 @@
 
     <form action="/index" method="post">
         text:<br>
-        <textarea name="text">
-    
-        </textarea>
+        <textarea name="text"></textarea>
     
         <br>
     

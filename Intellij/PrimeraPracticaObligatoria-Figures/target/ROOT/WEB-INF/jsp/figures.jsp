@@ -74,8 +74,8 @@
                 ctx.stroke();
             } else if (shape === "square") {
                 ctx.beginPath();
-                ctx.fillRect(xCord - (size / 2.), yCord - (size / 2), size * 2, size * 2);
-                ctx.rect(xCord - (size / 2), yCord - (size / 2), size * 2, size * 2);
+                ctx.fillRect(xCord - (size), yCord - (size), size * 2, size * 2);
+                ctx.rect(xCord - (size), yCord - (size), size * 2, size * 2);
                 ctx.stroke();
             } else if (shape === "triangle") {
                 let height = Math.sqrt((size * size) - ((size / 2) * (size / 2)));
@@ -89,10 +89,10 @@
                 console.log(xCord, yCord);
 
                 ctx.beginPath();
-                ctx.moveTo(xCord, yCord - (height / 2));
-                ctx.lineTo(xCord + (size / 2), yCord + (height / 2));
-                ctx.lineTo(xCord - (size / 2), yCord + (height / 2));
-                ctx.lineTo(xCord, yCord - (height / 2));
+                ctx.moveTo(xCord, yCord - (height));
+                ctx.lineTo(xCord + (size), yCord + (height));
+                ctx.lineTo(xCord - (size), yCord + (height));
+                ctx.lineTo(xCord, yCord - (height));
 
                 ctx.fill();
 

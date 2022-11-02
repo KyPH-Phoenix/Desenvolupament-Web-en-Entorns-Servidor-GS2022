@@ -76,11 +76,11 @@
             <container>
               <containerId>tomcat7x</containerId>
               <type>installed</type>
-              <home>/home/superior/Documentos/Docker/tomcat/</home>
+              <home>D:/Docker/tomcat</home>
             </container>
             <configuration>
               <type>existing</type>
-              <home>/home/superior/Documentos/Docker/tomcat/</home>
+              <home>D:/Docker/tomcat</home>
             </configuration>
           </configuration>
         </plugin>
