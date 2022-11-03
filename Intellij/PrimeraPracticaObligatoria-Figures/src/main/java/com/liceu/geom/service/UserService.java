@@ -2,6 +2,7 @@ package com.liceu.geom.service;
 
 import com.liceu.geom.DAO.UserDao;
 import com.liceu.geom.DAO.UserDaoListImpl;
+import com.liceu.geom.model.Figure;
 import com.liceu.geom.model.User;
 
 public class UserService {

@@ -16,7 +16,7 @@
 
     <form action="/login" method="post">
         <p>Introdueix el teu nom d'usuari</p>
-        User: <input type="text" placeholder="Fulanito" name="user"><br>
+        User: <input type="text" placeholder="Fulanito" name="userName"><br>
         <input type="submit" value="Envia">
     </form>
 

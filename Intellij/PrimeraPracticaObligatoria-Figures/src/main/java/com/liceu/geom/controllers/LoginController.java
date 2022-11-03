@@ -20,8 +20,6 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        System.out.println(session.getAttribute("id"));
-
         if (session.getAttribute("id") != null) {
             resp.sendRedirect("/figures");
             return;
@@ -33,7 +31,7 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userName = req.getParameter("user");
+        String userName = req.getParameter("userName");
         HttpSession session = req.getSession();
 
         if (session.getAttribute("id") != null) {
@@ -43,10 +41,6 @@ public class LoginController extends HttpServlet {
 
         if (!userName.isEmpty()) {
             User user = userService.createUser(userName);
-
-            User testUser = userService.getUserById(user.getId());
-
-            System.out.println(testUser.getId() + ".- " + testUser.getUserName());
 
             session.setAttribute("id", user.getId());
             resp.sendRedirect("/figures");

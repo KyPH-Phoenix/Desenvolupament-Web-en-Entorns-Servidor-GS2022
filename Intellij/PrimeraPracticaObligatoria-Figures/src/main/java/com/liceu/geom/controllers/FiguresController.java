@@ -1,5 +1,8 @@
 package com.liceu.geom.controllers;
 
+import com.liceu.geom.model.Figure;
+import com.liceu.geom.service.FigureService;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +14,8 @@ import java.io.IOException;
 
 @WebServlet("/figures")
 public class FiguresController extends HttpServlet {
+    FigureService figureService = new FigureService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/figures.jsp");
@@ -21,7 +26,18 @@ public class FiguresController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        System.out.println(session.getAttribute("user"));
+        int userId = (int) session.getAttribute("id");
+        String figureName = req.getParameter("figureName");
+        int xCord = Integer.parseInt(req.getParameter("xCord"));
+        int yCord = Integer.parseInt(req.getParameter("yCord"));
+        int size = Integer.parseInt(req.getParameter("size"));
+        String shape = req.getParameter("shape");
+        String color = req.getParameter("color");
+
+        figureService.createFigure(userId, figureName, xCord, yCord, size, shape, color);
+
+        Figure figure = figureService.getAllFigures().get(0);
+        System.out.println(figure);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/figures.jsp");
         dispatcher.forward(req, resp);
