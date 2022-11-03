@@ -36,9 +36,6 @@ public class FiguresController extends HttpServlet {
 
         figureService.createFigure(userId, figureName, xCord, yCord, size, shape, color);
 
-        Figure figure = figureService.getAllFigures().get(0);
-        System.out.println(figure);
-
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/figures.jsp");
         dispatcher.forward(req, resp);
     }

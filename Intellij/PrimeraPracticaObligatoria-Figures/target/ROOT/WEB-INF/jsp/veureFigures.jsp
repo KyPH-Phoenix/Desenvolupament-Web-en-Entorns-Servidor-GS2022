@@ -19,11 +19,28 @@
     <h1>Llista de figures</h1>
     <table>
         <tr>
-            <th>idFigura</th>
-            <th>nomFigura</th>
-            <th></th>
+            <th>ID Figura</th>
+            <th>Nom Figura</th>
+            <th>Forma</th>
+            <th>Color</th>
+            <th>Tamany</th>
+            <th>Coordenada X</th>
+            <th>Coordenada Y</th>
+            <th>ID Usuari</th>
         </tr>
-    </table>
 
+        <c:forEach var="figure" items="${figures}">
+            <tr>
+                <td>${figure.figureId}</td>
+                <td>${figure.name}</td>
+                <td>${figure.shape}</td>
+                <td>${figure.color}</td>
+                <td>${figure.size}</td>
+                <td>${figure.xCord}</td>
+                <td>${figure.yCord}</td>
+                <td>${figure.userId}</td>
+            </tr>
+        </c:forEach>
+    </table>
 </body>
 </html>
