@@ -1,7 +1,7 @@
 package com.liceu.geom.controllers;
 
 import com.liceu.geom.model.User;
-import com.liceu.geom.services.UserService;
+import com.liceu.geom.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,6 +43,10 @@ public class LoginController extends HttpServlet {
 
         if (!userName.isEmpty()) {
             User user = userService.createUser(userName);
+
+            User testUser = userService.getUserById(1);
+
+            System.out.println(testUser.getId() + ".- " + t);
 
             session.setAttribute("id", user.getId());
             resp.sendRedirect("/figures");

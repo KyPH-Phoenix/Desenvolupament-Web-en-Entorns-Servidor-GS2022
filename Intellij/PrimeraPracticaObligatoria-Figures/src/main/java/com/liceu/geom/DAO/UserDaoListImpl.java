@@ -4,6 +4,10 @@ import com.liceu.geom.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
+import java.util.logging.Filter;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class UserDaoListImpl implements UserDao {
     static List<User> userList = new ArrayList<>();
@@ -23,7 +27,13 @@ public class UserDaoListImpl implements UserDao {
     }
 
     @Override
-    public User getUser() {
-        return null;
+    public User getUserById(int id) {
+
+        return userList
+                .stream()
+                .filter(user -> user.getId() == id)
+                .findFirst()
+                .orElse(null)
+        ;
     }
 }

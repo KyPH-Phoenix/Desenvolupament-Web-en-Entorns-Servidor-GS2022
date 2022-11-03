@@ -1,4 +1,4 @@
-package com.liceu.geom.services;
+package com.liceu.geom.service;
 
 import com.liceu.geom.DAO.UserDao;
 import com.liceu.geom.DAO.UserDaoListImpl;
@@ -11,8 +11,7 @@ public class UserService {
         return userDao.addUser(userName);
     }
 
-    public User getUser() {
-
-        return null;
+    public User getUserById(int id) {
+        return userDao.getUserById(id);
     }
 }

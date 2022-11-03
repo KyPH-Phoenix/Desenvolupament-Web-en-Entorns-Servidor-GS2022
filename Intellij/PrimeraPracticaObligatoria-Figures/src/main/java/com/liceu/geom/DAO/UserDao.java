@@ -4,5 +4,5 @@ import com.liceu.geom.model.User;
 
 public interface UserDao {
     User addUser(String userName);
-    User getUser();
+    User getUserById(int id);
 }
