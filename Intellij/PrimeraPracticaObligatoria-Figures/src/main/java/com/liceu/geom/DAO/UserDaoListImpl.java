@@ -28,7 +28,6 @@ public class UserDaoListImpl implements UserDao {
 
     @Override
     public User getUserById(int id) {
-
         return userList
                 .stream()
                 .filter(user -> user.getId() == id)

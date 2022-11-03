@@ -44,9 +44,9 @@ public class LoginController extends HttpServlet {
         if (!userName.isEmpty()) {
             User user = userService.createUser(userName);
 
-            User testUser = userService.getUserById(1);
+            User testUser = userService.getUserById(user.getId());
 
-            System.out.println(testUser.getId() + ".- " + t);
+            System.out.println(testUser.getId() + ".- " + testUser.getUserName());
 
             session.setAttribute("id", user.getId());
             resp.sendRedirect("/figures");
