@@ -2,7 +2,9 @@ package com.liceu.geom.DAO;
 
 import com.liceu.geom.model.User;
 
+import java.util.List;
+
 public interface UserDao {
-    User addUser(String userName);
-    User getUserById(int id);
+    void addUser(User user);
+    List<User> getUserList();
 }

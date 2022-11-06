@@ -7,28 +7,14 @@ import java.util.List;
 
 public class UserDaoListImpl implements UserDao {
     static List<User> userList = new ArrayList<>();
-    static int lastId = 1;
 
     @Override
-    public User addUser(String userName) {
-        User user = new User();
-        user.setId(lastId);
-        user.setUserName(userName);
-
-        lastId++;
-
+    public void addUser(User user) {
         userList.add(user);
-
-        return user;
     }
 
     @Override
-    public User getUserById(int id) {
-        return userList
-                .stream()
-                .filter(user -> user.getId() == id)
-                .findFirst()
-                .orElse(null)
-        ;
+    public List<User> getUserList(){
+        return userList;
     }
 }

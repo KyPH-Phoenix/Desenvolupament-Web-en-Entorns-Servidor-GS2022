@@ -1,11 +1,13 @@
 D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\PrimeraPracticaObligatoria-Figures\src\main\java\com\liceu\geom\model\Figure.java
 D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\PrimeraPracticaObligatoria-Figures\src\main\java\com\liceu\geom\DAO\UserDao.java
+D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\PrimeraPracticaObligatoria-Figures\src\main\java\com\liceu\geom\controllers\BorrarFiguraController.java
 D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\PrimeraPracticaObligatoria-Figures\src\main\java\com\liceu\geom\controllers\LoginController.java
 D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\PrimeraPracticaObligatoria-Figures\src\main\java\example\controllers\IndexController.java
 D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\PrimeraPracticaObligatoria-Figures\src\main\java\com\liceu\geom\service\FigureService.java
 D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\PrimeraPracticaObligatoria-Figures\src\main\java\com\liceu\geom\service\UserService.java
 D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\PrimeraPracticaObligatoria-Figures\src\main\java\example\DAO\MessageDao.java
 D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\PrimeraPracticaObligatoria-Figures\src\main\java\com\liceu\geom\controllers\FiguresController.java
+D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\PrimeraPracticaObligatoria-Figures\src\main\java\com\liceu\geom\controllers\MevesFiguresController.java
 D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\PrimeraPracticaObligatoria-Figures\src\main\java\example\DAO\MessageDaoImpl.java
 D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\PrimeraPracticaObligatoria-Figures\src\main\java\example\model\Message.java
 D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\PrimeraPracticaObligatoria-Figures\src\main\java\com\liceu\geom\filters\LoginFilter.java

@@ -47,6 +47,7 @@ public class LoginController extends HttpServlet {
             return;
         }
 
+        req.setAttribute("message", "El nom d'usuari introduit no es valid.");
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/login.jsp");
         dispatcher.forward(req, resp);
     }

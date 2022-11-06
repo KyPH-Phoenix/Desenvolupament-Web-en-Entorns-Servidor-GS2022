@@ -1,7 +1,7 @@
 package com.liceu.geom.model;
 
 public class Figure {
-    private int userId;
+    private User user;
     private int figureId;
     private int xCord;
     private int yCord;
@@ -9,6 +9,14 @@ public class Figure {
     private String name;
     private String shape;
     private String color;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getShape() {
         return shape;
@@ -24,14 +32,6 @@ public class Figure {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public int getFigureId() {
@@ -77,7 +77,8 @@ public class Figure {
     @Override
     public String toString() {
         return "Figure{" +
-                "userId=" + userId +
+                "userId=" + user.getId() +
+                "userName=" + user.getUserName() +
                 ", figureId=" + figureId +
                 ", xCord=" + xCord +
                 ", yCord=" + yCord +

@@ -1,6 +1,7 @@
 com\liceu\geom\filters\LoginFilter.class
 com\liceu\geom\model\User.class
 com\liceu\geom\service\UserService.class
+com\liceu\geom\controllers\MevesFiguresController.class
 com\liceu\geom\model\Figure.class
 example\model\Message.class
 com\liceu\geom\DAO\FigureDao.class
@@ -9,6 +10,7 @@ example\DAO\MessageDao.class
 com\liceu\geom\controllers\VeureFiguresController.class
 example\service\TextService.class
 com\liceu\geom\DAO\UserDao.class
+com\liceu\geom\controllers\BorrarFiguraController.class
 com\liceu\geom\controllers\LoginController.class
 com\liceu\geom\DAO\UserDaoListImpl.class
 example\DAO\MessageDaoImpl.class

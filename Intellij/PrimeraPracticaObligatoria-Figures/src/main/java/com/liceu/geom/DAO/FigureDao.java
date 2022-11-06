@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface FigureDao {
-
-    void addFigure(int userId, String figureName, int xCord, int yCord, int size, String shape, String color);
+    void addFigure(Figure figure);
     List<Figure> getAllFigures();
-    List<Figure> getAllFiguresFromUser(int userId);
+    void deleteFigure(Figure figure);
 }
