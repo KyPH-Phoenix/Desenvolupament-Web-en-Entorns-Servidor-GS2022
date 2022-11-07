@@ -15,7 +15,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<body>
+<!-- Trigger drawShape() -->
+<c:choose>
+    <c:when test="${not empty figure}">
+        <body onload="drawShape('${figure.size}', '${figure.xCord}', '${figure.yCord}', '${figure.shape}', '${figure.color}')">
+    </c:when>
+    <c:otherwise>
+        <body>
+    </c:otherwise>
+</c:choose>
+    
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <!-- Boton cuando se colapsa -->
@@ -44,6 +53,7 @@
         <h1>Figures</h1>
 
         <canvas id="canvas" width="640" height="480" style="border: solid black 2px;"></canvas>
+
         <form action="/figures" method="post">
             <label for="shape">Figura:</label>
             <select name="shape" id="shape" width="100" onchange="drawPreview()">
@@ -85,7 +95,6 @@
     
             <input type="submit" value="Crear firgura">
         </form>
-    
     </main>
     
     <script>
@@ -97,9 +106,15 @@
             let xCord = document.getElementById("xCord").value;
             let yCord = document.getElementById("yCord").value;
             let shape = document.getElementById("shape").value;
-            ctx.fillStyle = document.getElementById("color").value;
+            let color = document.getElementById("color").value;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            drawShape(size, xCord, yCord, shape, color);
+        }
+
+        function drawShape(size, xCord, yCord, shape, color) {
+            ctx.fillStyle = color;
 
             if (shape === "circle") {
                 ctx.beginPath();
@@ -149,9 +164,32 @@
                 ctx.fill();
                 ctx.stroke();
             } else if (shape === "star") {
+                let rotation = Number(Math.PI / 2 * 3);
+                xCord = Number(xCord);
+                yCord = Number(yCord);
+                let step = Number(Math.PI / 7);
+                let outerRadius = Number(size);
+                let innerRadius = Number(size / 2);
+                let x = xCord;
+                let y = yCord;
 
-            } else {
+                ctx.beginPath();
+                ctx.moveTo(xCord, yCord - outerRadius);
 
+                for (i = 0; i < 7; i++) {
+                    x = xCord + Math.cos(rotation) * outerRadius;
+                    y = yCord + Math.sin(rotation) * outerRadius;
+                    ctx.lineTo(x, y)
+                    rotation += step
+
+                    x = xCord + Math.cos(rotation) * innerRadius;
+                    y = yCord + Math.sin(rotation) * innerRadius;
+                    ctx.lineTo(x, y)
+                    rotation += step
+                }
+                ctx.lineTo (xCord, yCord - outerRadius)
+                ctx.fill();
+                ctx.stroke();
             }
         }
     </script>

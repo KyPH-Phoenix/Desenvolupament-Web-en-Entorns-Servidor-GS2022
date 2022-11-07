@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/figures")
 public class FiguresController extends HttpServlet {
@@ -18,6 +19,13 @@ public class FiguresController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String figureId = req.getParameter("figureId");
+
+        if (figureId != null) {
+            Figure figure = figureService.getFigure(Integer.parseInt(figureId));
+            req.setAttribute("figure", figure);
+        }
+
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/figures.jsp");
         dispatcher.forward(req, resp);
     }
@@ -34,9 +42,27 @@ public class FiguresController extends HttpServlet {
         String shape = req.getParameter("shape");
         String color = req.getParameter("color");
 
+        if (figureName.isEmpty()) {
+            System.out.println(figureName);
+            do {
+                int random = (int) (Math.random() * 10000);
+                figureName = shape + "_" + random;
+            } while (nameAlreadyExists(figureName, (int) session.getAttribute("id")));
+        }
+
         figureService.createFigure(userId, figureName, xCord, yCord, size, shape, color);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/figures.jsp");
         dispatcher.forward(req, resp);
+    }
+
+    private boolean nameAlreadyExists(String figureName, int id) {
+        List<Figure> figureList = figureService.getAllFiguresFromUser(id);
+
+        return figureList
+                .stream()
+                .anyMatch(
+                        figure -> figure.getName().equals(figureName))
+                ;
     }
 }

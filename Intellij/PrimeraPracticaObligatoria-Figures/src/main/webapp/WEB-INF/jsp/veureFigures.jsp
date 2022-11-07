@@ -69,7 +69,7 @@
                         <td>${figure.user.id}</td>
                         <td>${figure.user.userName}</td>
                         <td>
-                            <form action="/mevesFigures" method="post">
+                            <form action="/figures" method="get">
                                 <input type="hidden" name="figureId" id="figureId" value="${figure.figureId}">
                                 <input type="submit" value="Mostrar">
                             </form>

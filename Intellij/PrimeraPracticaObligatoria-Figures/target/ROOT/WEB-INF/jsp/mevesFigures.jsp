@@ -52,7 +52,7 @@
                     <th scope="col">Coordenada Y</th>
                     <th scope="col">ID Usuari</th>
                     <th scope="col">Nom Usuari</th>
-                    <th scope="col" colspan="2" class="text-center">Accions</th>
+                    <th scope="col" colspan="2" class="text-center pr-5">Accions</th>
                 </tr>
             </thead>
 
@@ -69,7 +69,7 @@
                         <td>${figure.user.id}</td>
                         <td>${figure.user.userName}</td>
                         <td>
-                            <form action="/mevesFigures" method="post">
+                            <form action="/figures" method="get">
                                 <input type="hidden" name="figureId" id="figureId" value="${figure.figureId}">
                                 <input type="submit" value="Mostrar">
                             </form>
