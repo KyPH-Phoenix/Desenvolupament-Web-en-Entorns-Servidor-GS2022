@@ -1,5 +1,9 @@
 package com.liceu.geom.model;
 
+import javax.xml.crypto.Data;
+import java.time.LocalDate;
+import java.util.Date;
+
 public class Figure {
     private User user;
     private int figureId;
@@ -9,6 +13,15 @@ public class Figure {
     private String name;
     private String shape;
     private String color;
+    private LocalDate creationDate;
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
 
     public User getUser() {
         return user;

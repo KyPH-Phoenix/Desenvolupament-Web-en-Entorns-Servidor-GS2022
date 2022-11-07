@@ -4,6 +4,7 @@ import com.liceu.geom.DAO.FigureDao;
 import com.liceu.geom.DAO.FigureDaoListImpl;
 import com.liceu.geom.model.Figure;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +12,7 @@ public class FigureService {
     FigureDao figureDao = new FigureDaoListImpl();
     static int lastId = 1;
 
-    public void createFigure(int userId, String figureName, int xCord, int yCord, int size, String shape, String color) {
+    public void createFigure(int userId, String figureName, int xCord, int yCord, int size, String shape, String color, LocalDate date) {
         Figure figure = new Figure();
 
         figure.setUser(new UserService().getUserById(userId));
@@ -21,6 +22,7 @@ public class FigureService {
         figure.setSize(size);
         figure.setxCord(xCord);
         figure.setyCord(yCord);
+        figure.setCreationDate(date);
 
         figure.setFigureId(lastId);
         lastId++;

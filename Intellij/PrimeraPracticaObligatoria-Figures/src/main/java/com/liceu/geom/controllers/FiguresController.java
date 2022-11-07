@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet("/figures")
@@ -41,6 +46,11 @@ public class FiguresController extends HttpServlet {
         int size = Integer.parseInt(req.getParameter("size"));
         String shape = req.getParameter("shape");
         String color = req.getParameter("color");
+        LocalDate date = LocalDate.now();
+
+        date.getYear();
+        date.getMonth();
+        date.getDayOfMonth();
 
         if (figureName.isEmpty()) {
             System.out.println(figureName);
@@ -48,9 +58,16 @@ public class FiguresController extends HttpServlet {
                 int random = (int) (Math.random() * 10000);
                 figureName = shape + "_" + random;
             } while (nameAlreadyExists(figureName, (int) session.getAttribute("id")));
+        } else if (nameAlreadyExists(figureName, (int) session.getAttribute("id"))) {
+            req.setAttribute("message", "El nom de la figura ja existeix.");
+            resp.setHeader("Refresh", "3; URL=/figures");
+
+            RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/error.jsp");
+            dispatcher.forward(req, resp);
         }
 
-        figureService.createFigure(userId, figureName, xCord, yCord, size, shape, color);
+
+        figureService.createFigure(userId, figureName, xCord, yCord, size, shape, color, date);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/figures.jsp");
         dispatcher.forward(req, resp);

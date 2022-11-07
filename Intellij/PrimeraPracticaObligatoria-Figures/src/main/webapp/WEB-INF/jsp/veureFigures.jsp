@@ -45,11 +45,7 @@
                 <tr>
                     <th scope="col">ID Figura</th>
                     <th scope="col">Nom Figura</th>
-                    <th scope="col">Forma</th>
-                    <th scope="col">Color</th>
-                    <th scope="col">Tamany</th>
-                    <th scope="col">Coordenada X</th>
-                    <th scope="col">Coordenada Y</th>
+                    <th scope="col">Data de Creacio</th>
                     <th scope="col">ID Usuari</th>
                     <th scope="col">Nom Usuari</th>
                     <th scope="col" colspan="2" class="text-center pr-5">Accions</th>
@@ -59,25 +55,21 @@
             <tbody>
                 <c:forEach var="figure" items="${figures}">
                     <tr>
-                        <td scope="row">${figure.figureId}</td>
-                        <td>${figure.name}</td>
-                        <td>${figure.shape}</td>
-                        <td>${figure.color}</td>
-                        <td>${figure.size}</td>
-                        <td>${figure.xCord}</td>
-                        <td>${figure.yCord}</td>
-                        <td>${figure.user.id}</td>
-                        <td>${figure.user.userName}</td>
+                        <td scope="row" class="pt-3">${figure.figureId}</td>
+                        <td class="pt-3">${figure.name}</td>
+                        <td class="pt-3">${figure.creationDate.year} ${figure.creationDate.month} ${figure.creationDate.dayOfMonth}</td>
+                        <td class="pt-3">${figure.user.id}</td>
+                        <td class="pt-3">${figure.user.userName}</td>
                         <td>
                             <form action="/figures" method="get">
                                 <input type="hidden" name="figureId" id="figureId" value="${figure.figureId}">
-                                <input type="submit" value="Mostrar">
+                                <input type="submit" value="Mostrar" class="btn btn-dark">
                             </form>
                         </td>
                         <td>
-                            <form action="/borrarFigura" method="post">
+                            <form action="/borrarFigura" method="post" onsubmit="return confirmDelete()">
                                 <input type="hidden" name="figureId" id="figureId" value="${figure.figureId}">
-                                <input type="submit" value="Borrar">
+                                <input type="submit" value="Borrar" class="btn btn-dark">
                             </form>
                         </td>
                     </tr>
@@ -87,7 +79,13 @@
     </main>
 
     <script>
-        document.getElement
+        function confirmDelete() {
+            if (confirm("Segur que vols esborrar la figura?")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     </script>
 
      <!-- Bootstrap JS Scripts -->

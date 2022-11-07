@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liceu</groupId>
-  <artifactId>DemoServlets</artifactId>
+  <artifactId>PrimeraPracticaObligatoria</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>PrimeraPracticaObligatoria</name>
@@ -76,11 +76,11 @@
             <container>
               <containerId>tomcat7x</containerId>
               <type>installed</type>
-              <home>D:/Docker/tomcat</home>
+              <home>/home/superior/Documentos/Docker/tomcat/</home>
             </container>
             <configuration>
               <type>existing</type>
-              <home>D:/Docker/tomcat</home>
+              <home>/home/superior/Documentos/Docker/tomcat/</home>
             </configuration>
           </configuration>
         </plugin>

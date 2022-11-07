@@ -18,10 +18,10 @@
 <!-- Trigger drawShape() -->
 <c:choose>
     <c:when test="${not empty figure}">
-        <body onload="drawShape('${figure.size}', '${figure.xCord}', '${figure.yCord}', '${figure.shape}', '${figure.color}')">
+        <body class="pb-5" onload="drawShape('${figure.size}', '${figure.xCord}', '${figure.yCord}', '${figure.shape}', '${figure.color}')">
     </c:when>
     <c:otherwise>
-        <body>
+        <body class="pb-5">
     </c:otherwise>
 </c:choose>
     
@@ -49,14 +49,14 @@
         </nav>
     </header>
 
-    <main class="ml-5">
+    <main class="m-5">
         <h1>Figures</h1>
 
         <canvas id="canvas" width="640" height="480" style="border: solid black 2px;"></canvas>
 
         <form action="/figures" method="post">
             <label for="shape">Figura:</label>
-            <select name="shape" id="shape" width="100" onchange="drawPreview()">
+            <select name="shape" id="shape" class="form-select bg-dark text-white" onchange="drawPreview()">
                 <option value="circle">Cercle</option>
                 <option value="square">Quadrat</option>
                 <option value="triangle">Triangle</option>
@@ -65,7 +65,7 @@
             </select>
     
             <label for="color">Color:</label>
-            <select name="color" id="color" onchange="drawPreview()">
+            <select name="color" id="color" class="form-select bg-dark text-white" onchange="drawPreview()">
                 <option value="black">Negre</option>
                 <option value="green">Verd</option>
                 <option value="red">Vermell</option>
@@ -93,13 +93,26 @@
     
             <br>
     
-            <input type="submit" value="Crear firgura">
+            <input type="submit" class="btn btn-dark" value="Crear firgura">
+            <button onclick="drawPreview()" type="button" class="btn btn-dark">Previsualitza</button>
         </form>
     </main>
     
     <script>
         let canvas = document.getElementById("canvas");
         let ctx = canvas.getContext("2d");
+
+        canvas.addEventListener("mousedown", function (event) {
+            const boundingRect = canvas.getBoundingClientRect();
+            const x = event.clientX - boundingRect.left;
+            const y = event.clientY - boundingRect.top;
+            
+            if (event.button == 0) {
+                document.getElementById("xCord").value = x;
+                document.getElementById("yCord").value = y;
+                drawPreview();
+            }
+        });
 
         function drawPreview() {
             let size = document.getElementById("size").value;

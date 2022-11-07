@@ -3,6 +3,7 @@ package com.liceu.geom.controllers;
 import com.liceu.geom.model.Figure;
 import com.liceu.geom.service.FigureService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +29,12 @@ public class BorrarFiguraController extends HttpServlet {
             return;
         }
 
-        resp.getWriter().println("No pots esborrar una figura que no es teva.");
+        String message = "No pots esborrar una figura que no es teva.";
+        req.setAttribute("message", message);
+
+        resp.setHeader("Refresh", "3; URL=/veureFigures");
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/error.jsp");
+        dispatcher.forward(req, resp);
     }
 }

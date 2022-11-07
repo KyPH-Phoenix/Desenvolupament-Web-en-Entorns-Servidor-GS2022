@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<body class="ml-5">
+<body class="m-5">
     <h1> Login </h1>
 
     <c:choose>
@@ -29,7 +29,7 @@
 
     <form action="/login" method="post">
         User: <input type="text" placeholder="Fulanito" name="userName"><br>
-        <input type="submit" value="Envia">
+        <input type="submit" value="Envia" class="btn btn-dark mt-3">
     </form>
 
     <!-- Bootstrap JS Scripts -->
