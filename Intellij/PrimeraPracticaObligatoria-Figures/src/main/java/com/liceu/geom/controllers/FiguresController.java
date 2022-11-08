@@ -29,6 +29,9 @@ public class FiguresController extends HttpServlet {
         if (figureId != null) {
             Figure figure = figureService.getFigure(Integer.parseInt(figureId));
             req.setAttribute("figure", figure);
+
+            RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/visualitzador.jsp");
+            dispatcher.forward(req, resp);
         }
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/figures.jsp");

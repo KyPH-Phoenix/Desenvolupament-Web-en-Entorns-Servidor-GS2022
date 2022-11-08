@@ -20,6 +20,7 @@ public class VeureFiguresController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Figure> figureList = figureService.getAllFigures();
         req.setAttribute("figures", figureList);
+        req.setAttribute("pageName", "Llista de Figures");
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/veureFigures.jsp");
         dispatcher.forward(req, resp);

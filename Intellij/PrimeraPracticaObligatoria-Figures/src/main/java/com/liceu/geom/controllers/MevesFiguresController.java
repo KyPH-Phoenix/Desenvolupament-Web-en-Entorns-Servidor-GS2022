@@ -24,8 +24,9 @@ public class MevesFiguresController extends HttpServlet {
 
         List<Figure> figureList = figureService.getAllFiguresFromUser(userId);
         req.setAttribute("figures", figureList);
+        req.setAttribute("pageName", "Les Meves Figures");
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/mevesFigures.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/veureFigures.jsp");
         dispatcher.forward(req, resp);
     }
 }

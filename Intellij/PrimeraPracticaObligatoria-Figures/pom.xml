@@ -76,17 +76,27 @@
             <container>
               <containerId>tomcat7x</containerId>
               <type>installed</type>
-<!--              <home>/home/superior/Documentos/Docker/tomcat/</home>-->
-              <home>D:/Docker/tomcat</home>
+              <home>/home/superior/Documentos/Docker/tomcat/</home>
+<!--              <home>D:/Docker/tomcat</home>-->
             </container>
             <configuration>
               <type>existing</type>
-<!--              <home>/home/superior/Documentos/Docker/tomcat/</home>-->
-              <home>D:/Docker/tomcat</home>
+              <home>/home/superior/Documentos/Docker/tomcat/</home>
+<!--              <home>D:/Docker/tomcat</home>-->
             </configuration>
           </configuration>
         </plugin>
       </plugins>
-    </pluginManagement><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><configuration><source>9</source><target>9</target></configuration></plugin></plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>9</source>
+          <target>9</target>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>

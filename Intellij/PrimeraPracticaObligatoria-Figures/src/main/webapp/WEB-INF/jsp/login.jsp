@@ -28,7 +28,8 @@
     </c:choose>
 
     <form action="/login" method="post">
-        User: <input type="text" placeholder="Fulanito" name="userName"><br>
+        <label for="userName">User: </label>
+        <input type="text" placeholder="Fulanito" name="userName" required><br>
         <input type="submit" value="Envia" class="btn btn-dark mt-3">
     </form>
 
