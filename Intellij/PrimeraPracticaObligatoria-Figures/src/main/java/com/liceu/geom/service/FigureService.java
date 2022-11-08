@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 public class FigureService {
     FigureDao figureDao = new FigureDaoListImpl();
-    static int lastId = 1;
 
     public void createFigure(int userId, String figureName, int xCord, int yCord, int size, String shape, String color, LocalDate date) {
         Figure figure = new Figure();
@@ -23,9 +22,6 @@ public class FigureService {
         figure.setxCord(xCord);
         figure.setyCord(yCord);
         figure.setCreationDate(date);
-
-        figure.setFigureId(lastId);
-        lastId++;
 
         figureDao.addFigure(figure);
     }

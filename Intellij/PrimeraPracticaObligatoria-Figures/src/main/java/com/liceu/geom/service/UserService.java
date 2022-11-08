@@ -9,13 +9,10 @@ import java.util.List;
 
 public class UserService {
     UserDao userDao = new UserDaoListImpl();
-    static int lastId = 1;
 
     public User createUser(String userName) {
         User user = new User();
-        user.setId(lastId);
         user.setUserName(userName);
-        lastId++;
 
         userDao.addUser(user);
 

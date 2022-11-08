@@ -7,9 +7,13 @@ import java.util.List;
 
 public class UserDaoListImpl implements UserDao {
     static List<User> userList = new ArrayList<>();
+    static int lastId = 1;
 
     @Override
-    public void addUser(User user) {
+    public synchronized void addUser(User user) {
+        user.setId(lastId);
+        lastId++;
+
         userList.add(user);
     }
 

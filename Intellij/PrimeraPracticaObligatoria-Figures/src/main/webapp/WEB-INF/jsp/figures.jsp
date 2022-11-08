@@ -90,7 +90,8 @@
         </form>
     </main>
     
-    <script src="/javascript/draw.js">
+    <script src="/javascript/draw.js"></script>
+    <script>
         canvas.addEventListener("mousedown", function (event) {
             const boundingRect = canvas.getBoundingClientRect();
             const x = event.clientX - boundingRect.left;

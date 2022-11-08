@@ -91,6 +91,19 @@
     </main>
     
     <script src="/javascript/draw.js"></script>
+    <script>
+        canvas.addEventListener("mousedown", function (event) {
+            const boundingRect = canvas.getBoundingClientRect();
+            const x = event.clientX - boundingRect.left;
+            const y = event.clientY - boundingRect.top;
+
+            if (event.button == 0 ) {
+                document.getElementById("xCord").value = x;
+                document.getElementById("yCord").value = y;
+                drawPreview();
+            }
+        });
+    </script>
 
     <!-- Bootstrap JS Scripts -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

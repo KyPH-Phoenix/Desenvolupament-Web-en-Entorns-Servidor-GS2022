@@ -10,7 +10,10 @@ public class FigureDaoListImpl implements FigureDao {
     static int lastId = 1;
 
     @Override
-    public void addFigure(Figure figure) {
+    public synchronized void addFigure(Figure figure) {
+        figure.setFigureId(lastId);
+        lastId++;
+
         figureList.add(figure);
     }
 
@@ -20,7 +23,7 @@ public class FigureDaoListImpl implements FigureDao {
     }
 
     @Override
-    public void deleteFigure(Figure figure) {
+    public synchronized void deleteFigure(Figure figure) {
         figureList.removeIf(
                 originalFigure -> originalFigure.getFigureId() == figure.getFigureId()
         );

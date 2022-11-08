@@ -1,18 +1,6 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 
-canvas.addEventListener("mousedown", function (event) {
-    const boundingRect = canvas.getBoundingClientRect();
-    const x = event.clientX - boundingRect.left;
-    const y = event.clientY - boundingRect.top;
-
-    if (event.button == 0 ) {
-        document.getElementById("xCord").value = x;
-        document.getElementById("yCord").value = y;
-        drawPreview();
-    }
-});
-
 function drawPreview() {
     let size = document.getElementById("size").value;
     let xCord = document.getElementById("xCord").value;
