@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<body>
-    <h1 class="m-5">ERROR: ${message}</h1>    
-    <p>Redireccionant en 3 segons.</p>
+<body class="m-5">
+    <h1>${message}</h1>    
+    <h3>Redireccionant en 3 segons.</h3>
 </body>
 
 </html>

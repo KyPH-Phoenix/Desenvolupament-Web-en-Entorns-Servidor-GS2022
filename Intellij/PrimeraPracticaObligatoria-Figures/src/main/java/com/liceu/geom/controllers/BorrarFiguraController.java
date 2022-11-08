@@ -23,18 +23,20 @@ public class BorrarFiguraController extends HttpServlet {
 
         Figure figure = figureService.getFigure(figureId);
 
+        String message = "";
+
         if (figure.getUser().getId() == (int) session.getAttribute("id")) {
             figureService.deleteFigure(figure);
-            resp.sendRedirect("/veureFigures");
-            return;
+
+            message = "La figura " + figure.getName() + " s'ha esborrat correctament.";
+        } else {
+            message = "ERROR: No pots esborrar una figura que no es teva.";
         }
 
-        String message = "No pots esborrar una figura que no es teva.";
         req.setAttribute("message", message);
-
         resp.setHeader("Refresh", "3; URL=/veureFigures");
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/error.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/message.jsp");
         dispatcher.forward(req, resp);
     }
 }

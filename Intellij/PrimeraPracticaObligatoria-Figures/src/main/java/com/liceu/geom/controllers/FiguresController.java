@@ -48,28 +48,28 @@ public class FiguresController extends HttpServlet {
         String color = req.getParameter("color");
         LocalDate date = LocalDate.now();
 
-        date.getYear();
-        date.getMonth();
-        date.getDayOfMonth();
+        String message = "Figura creada correctament.";
 
         if (figureName.isEmpty()) {
-            System.out.println(figureName);
             do {
                 int random = (int) (Math.random() * 10000);
                 figureName = shape + "_" + random;
             } while (nameAlreadyExists(figureName, (int) session.getAttribute("id")));
-        } else if (nameAlreadyExists(figureName, (int) session.getAttribute("id"))) {
-            req.setAttribute("message", "El nom de la figura ja existeix.");
-            resp.setHeader("Refresh", "3; URL=/figures");
 
-            RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/error.jsp");
-            dispatcher.forward(req, resp);
+            message += " Se li ha autogenerat el nom " + figureName + ".";
+            figureService.createFigure(userId, figureName, xCord, yCord, size, shape, color, date);
+
+        } else if (nameAlreadyExists(figureName, (int) session.getAttribute("id"))) {
+            message = "ERROR: El nom de la figura ja existeix. La figura no s'ha creat.";
+
+        } else {
+            figureService.createFigure(userId, figureName, xCord, yCord, size, shape, color, date);
         }
 
+        req.setAttribute("message", message);
+        resp.setHeader("Refresh", "3; URL=/figures");
 
-        figureService.createFigure(userId, figureName, xCord, yCord, size, shape, color, date);
-
-        RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/figures.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/message.jsp");
         dispatcher.forward(req, resp);
     }
 
