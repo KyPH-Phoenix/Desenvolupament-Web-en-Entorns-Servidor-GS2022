@@ -1,4 +1,8 @@
-package com.liceu.maze.model.maze;
+package com.liceu.maze.service;
+
+import com.liceu.maze.model.*;
+import com.liceu.maze.util.MazeBuilder;
+import com.liceu.maze.util.StandardMazeBuilder;
 
 import java.util.Scanner;
 import java.util.stream.IntStream;
@@ -22,7 +26,7 @@ public class MazeGame {
 
     private static void go(Player player, Maze.Directions dir) {
         Room room = player.getCurrentRoom();
-        MapSite ms = room.getSide(dir);
+        MapSide ms = room.getSide(dir);
         ms.enter(player);
     }
 

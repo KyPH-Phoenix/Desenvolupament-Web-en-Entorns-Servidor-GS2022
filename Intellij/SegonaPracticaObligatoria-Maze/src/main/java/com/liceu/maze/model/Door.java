@@ -1,12 +1,12 @@
-package com.liceu.maze.model.maze;
+package com.liceu.maze.model;
 
 import java.util.List;
 
-public class Door implements MapSite {
+public class Door implements MapSide {
     private Room r1, r2;
     private boolean open = false;
 
-    Door(Room r1, Room r2) {
+    public Door(Room r1, Room r2) {
         this.r1 = r1;
         this.r2 = r2;
     }

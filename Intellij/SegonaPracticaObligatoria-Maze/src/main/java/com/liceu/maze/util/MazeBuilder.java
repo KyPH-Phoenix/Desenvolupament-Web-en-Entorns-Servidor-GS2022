@@ -1,4 +1,7 @@
-package com.liceu.maze.model.maze;
+package com.liceu.maze.util;
+
+import com.liceu.maze.model.Key;
+import com.liceu.maze.model.Maze;
 
 public interface MazeBuilder {
     void buildRoom(int nroom);

@@ -1,4 +1,4 @@
-package com.liceu.maze.model.maze;
+package com.liceu.maze.model;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ public class Room {
 
     private boolean target = false;
 
-    private Map<Maze.Directions, MapSite> sides = new HashMap<>();
+    private Map<Maze.Directions, MapSide> sides = new HashMap<>();
 
     public Room(int number) {
         this.number = number;
@@ -31,11 +31,11 @@ public class Room {
         this.item = it;
     }
 
-    public MapSite getSide(Maze.Directions dir) {
+    public MapSide getSide(Maze.Directions dir) {
         return this.sides.get(dir);
     }
 
-    public void setSide(Maze.Directions dir, MapSite ms) {
+    public void setSide(Maze.Directions dir, MapSide ms) {
         this.sides.put(dir, ms);
     }
 

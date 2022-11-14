@@ -1,4 +1,4 @@
-package com.liceu.maze.model.maze;
+package com.liceu.maze.model;
 
 import java.util.HashMap;
 import java.util.Map;

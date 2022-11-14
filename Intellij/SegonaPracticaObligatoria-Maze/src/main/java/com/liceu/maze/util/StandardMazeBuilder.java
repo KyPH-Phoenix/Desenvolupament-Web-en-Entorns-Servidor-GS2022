@@ -1,4 +1,6 @@
-package com.liceu.maze.model.maze;
+package com.liceu.maze.util;
+
+import com.liceu.maze.model.*;
 
 public class StandardMazeBuilder implements MazeBuilder {
     private Maze maze = new Maze();
