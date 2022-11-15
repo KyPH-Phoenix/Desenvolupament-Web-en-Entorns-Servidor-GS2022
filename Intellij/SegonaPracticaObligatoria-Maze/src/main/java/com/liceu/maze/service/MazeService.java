@@ -12,42 +12,24 @@ import java.util.stream.IntStream;
 public class MazeService {
     static List<MazeGame> gameList = new ArrayList<>();
 
-    private static Scanner scanner = new Scanner(System.in);
+    public List<Maze> getMaps() {
+        Maze maze1 = createMaze1();
 
-    public static void main(String[] args) {
+        return List.of(maze1);
+    }
+
+    public synchronized MazeGame newGame() {
+        MazeGame mazeGame = new MazeGame();
         Maze maze = createMaze1();
+
         Player player = new Player();
-        play(maze, player);
-    }
-
-    private static void play(Maze maze, Player player) {
         player.setCurrentRoom(maze.getRoom(1));
-        while(!player.getCurrentRoom().isTarget()) {
-            Maze.Directions dir = askUser();
-            go(player, dir);
-        }
-    }
 
-    private static void go(Player player, Maze.Directions dir) {
-        Room room = player.getCurrentRoom();
-        MapSide ms = room.getSide(dir);
-        ms.enter(player);
-    }
+        mazeGame.setMaze(createMaze1());
+        mazeGame.setPlayer(new Player());
+        gameList.add(mazeGame);
 
-    private static Maze.Directions askUser() {
-        System.out.println("Cap a on vols anar? (N,S,E,W)");
-        while(true) {
-            String line = scanner.nextLine();
-            if (line.length() > 0) {
-                char c = line.toUpperCase().charAt(0);
-                switch(c) {
-                    case 'N': return Maze.Directions.NORTH;
-                    case 'S': return Maze.Directions.SOUTH;
-                    case 'E': return Maze.Directions.EAST;
-                    case 'W': return Maze.Directions.WEST;
-                }
-            }
-        }
+        return mazeGame;
     }
 
     private static Maze createMaze1() {
@@ -80,11 +62,5 @@ public class MazeService {
         mazeBuilder.setTarget(3);
 
         return mazeBuilder.getMaze();
-    }
-
-    public List<Maze> getMaps() {
-        Maze maze1 = createMaze1();
-
-        return List.of(maze1);
     }
 }

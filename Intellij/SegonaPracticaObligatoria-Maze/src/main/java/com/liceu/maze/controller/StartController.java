@@ -30,7 +30,6 @@ public class StartController extends HttpServlet {
         int mapId = Integer.parseInt(req.getParameter("mapid"));
 
 
-
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/start.jsp");
         dispatcher.forward(req, resp);
     }
