@@ -8,12 +8,18 @@ public class Key implements Item {
     private String name;
     private int price;
 
-    public Key(String name) {
+    public Key(String name, int price) {
         this.name = name;
+        this.price = price;
     }
 
-    public void addDoor(Door d) {
-        this.doors.add(d);
+    public int getPrice() {
+        return price;
+    }
+
+    public void addDoor(Door door) {
+
+        this.doors.add(door);
     }
 
     public void open(Door door) {

@@ -12,7 +12,7 @@ public class StandardMazeBuilder implements MazeBuilder {
         room.setSide(Maze.Directions.SOUTH, new Wall());
         room.setSide(Maze.Directions.WEST, new Wall());
         room.setSide(Maze.Directions.EAST, new Wall());
-        maze.addRoom(nroom, room);
+        this.maze.addRoom(nroom, room);
     }
 
     @Override
@@ -27,8 +27,8 @@ public class StandardMazeBuilder implements MazeBuilder {
     }
 
     private Door buildDoorInternal(int roomFrom, int roomTo, Maze.Directions dir) {
-        Room r1 = maze.getRoom(roomFrom);
-        Room r2 = maze.getRoom(roomTo);
+        Room r1 = this.maze.getRoom(roomFrom);
+        Room r2 = this.maze.getRoom(roomTo);
         Door door = new Door(r1, r2);
         r1.setSide(dir, door);
         r2.setSide(getOppositeSide(dir), door);
@@ -52,8 +52,18 @@ public class StandardMazeBuilder implements MazeBuilder {
     }
 
     @Override
-    public void putKeyInRoom(int nroom, Key key) {
-        maze.getRoom(nroom).setItem(key);
+    public void putItemInRoom(int nRoom, Item item) {
+        this.maze.getRoom(nRoom).addItem(item);
+    }
+
+    @Override
+    public void setMazeName(String name) {
+        this.maze.setName(name);
+    }
+
+    @Override
+    public void setMazeId(int id) {
+        this.maze.setId(id);
     }
 
     @Override

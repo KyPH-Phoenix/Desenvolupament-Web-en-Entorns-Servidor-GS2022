@@ -7,7 +7,25 @@ public class Maze {
     public enum Directions {
         NORTH, SOUTH, EAST, WEST
     }
-    Map<Integer, Room> rooms = new HashMap<>();
+    private String name;
+    private int id;
+    private Map<Integer, Room> rooms = new HashMap<>();
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public void addRoom(int nroom, Room room) {
         this.rooms.put(nroom, room);

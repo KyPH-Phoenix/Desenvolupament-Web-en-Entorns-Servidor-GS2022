@@ -12,6 +12,13 @@ public class Player {
         currentRoom.enter(this);
     }
 
+    public int getCoins() {
+        return (int) this.itemList
+                .stream()
+                .filter(item -> item.getClass() == Coin.class)
+                .count();
+    }
+
     public void addItem(Item it) {
         this.itemList.add(it);
     }

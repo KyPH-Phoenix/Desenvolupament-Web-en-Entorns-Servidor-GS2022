@@ -1,11 +1,14 @@
 package com.liceu.maze.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Room {
     private int number;
-    private Item item;
+    private List<Item> items = new ArrayList<>();
 
     private boolean target = false;
 
@@ -27,8 +30,8 @@ public class Room {
         this.target = target;
     }
 
-    public void setItem(Item it) {
-        this.item = it;
+    public void addItem(Item item) {
+        this.items.add(item);
     }
 
     public MapSide getSide(Maze.Directions dir) {
@@ -40,10 +43,32 @@ public class Room {
     }
 
     public void enter(Player player) {
-        if (this.item != null) {
-            System.out.println("Has obtingut un ítem: " + this.item.toString());
-            player.addItem(this.item);
-            this.item = null;
-        }
+        // Primer agafa les monedes
+        this.items
+                .stream()
+                .filter(item -> item.getClass() == Coin.class)
+                .collect(Collectors.toList())
+                .forEach(item -> {
+                    player.addItem(item);
+                    System.out.println("Has obtingut un ítem: " + item);
+                    this.items.remove(item);
+                });
+
+        // Despres agafa les claus, si li basten les monedes
+        this.items
+                .stream()
+                .filter(item -> item.getClass() == Key.class)
+                .collect(Collectors.toList())
+                .forEach(item -> {
+                    Key key = (Key) item;
+                    if (player.getCoins() < key.getPrice()) {
+                        System.out.printf("No s'ha obtingut la clau %s.\n Monedes necesàries: %d " +
+                                "\n Monedes actuals: %d\n", key, key.getPrice(), player.getCoins());
+                    } else {
+                        System.out.println("Has obtingut un ítem: " + item);
+                        player.addItem(item);
+                        this.items.remove(item);
+                    }
+                });
     }
 }
