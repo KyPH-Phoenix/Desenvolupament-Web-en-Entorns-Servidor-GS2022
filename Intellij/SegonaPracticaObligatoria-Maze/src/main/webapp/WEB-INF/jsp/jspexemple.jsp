@@ -35,4 +35,6 @@
         } 
     }
 
+    data.jugador;
+
  -->

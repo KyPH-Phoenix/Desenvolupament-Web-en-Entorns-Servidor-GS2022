@@ -3,6 +3,7 @@ package com.liceu.maze.service;
 import com.liceu.maze.model.*;
 import com.liceu.maze.util.MazeBuilder;
 import com.liceu.maze.util.StandardMazeBuilder;
+import org.json.simple.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,5 +84,16 @@ public class MazeService {
 
     private static Maze createMaze2() {
         return new Maze();
+    }
+
+    public String getJsonInfo(MazeGame game) {
+        JSONObject root = new JSONObject();
+
+        JSONObject player = new JSONObject();
+        player.put("currentRoom", game.getPlayer().getCurrentRoom());
+
+        root.put("player", player);
+
+        return root.toJSONString();
     }
 }

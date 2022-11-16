@@ -12,16 +12,19 @@
 <body>
     <canvas id="canvas" width="800" height="600"></canvas>
 
-    <img src="../../img/coin.png" id="coin">
-    <img src="../../img/key.png" id="key">
-    <img src="../../img/cross.png" id="cross">
-    
     <script>
         let canvas = document.getElementById("canvas");
         let ctx = canvas.getContext("2d");
-        let coin = document.getElementById("coin");
-        let key = document.getElementById("key");
-        let cross = document.getElementById("cross");
+
+        let coin = new Image();
+        let key = new Image();
+        let cross = new Image();
+        let character = new Image();
+
+        coin.src = '../../img/coin.png';
+        key.src = '../../img/key.png';
+        cross.src = '../../img/cross.png';
+        character.src = '../../img/character.png';
 
         ctx.font = "30px Arial";
         ctx.fillText("Room: 1", 10, 30);
@@ -42,10 +45,11 @@
         ctx.fillRect(170, 505, 180, 25);
         ctx.fillRect(450, 505, 180, 25);
 
-        ctx.drawImage(cross, 670, 470, 100, 100)
+        cross.onload = () => ctx.drawImage(cross, 670, 470, 100, 100);
+        character.onload = () => ctx.drawImage(character, 370, 220, 80, 130)
 
-        drawCoin();
-        drawKey();
+        coin.onload = () => drawCoin();
+        key.onload = () => drawKey();
 
         function lockedDoor(direction) {
             ctx.fillStyle = "red";
