@@ -4,6 +4,7 @@ import com.liceu.maze.model.*;
 import com.liceu.maze.util.MazeBuilder;
 import com.liceu.maze.util.StandardMazeBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,18 +19,34 @@ public class MazeService {
         return List.of(maze1);
     }
 
-    public synchronized MazeGame newGame() {
+    public synchronized MazeGame newGame(int id) throws IOException {
         MazeGame mazeGame = new MazeGame();
-        Maze maze = createMaze1();
+        Maze maze = getMaze(id);
 
         Player player = new Player();
-        player.setCurrentRoom(maze.getRoom(1));
 
-        mazeGame.setMaze(createMaze1());
-        mazeGame.setPlayer(new Player());
+        try {
+            player.setCurrentRoom(maze.getRoom(1));
+        } catch (NullPointerException e) {
+            throw new IOException(e);
+        }
+
+        mazeGame.setMaze(maze);
+        mazeGame.setPlayer(player);
         gameList.add(mazeGame);
 
         return mazeGame;
+    }
+
+    private Maze getMaze(int id) {
+        switch (id) {
+            case 1:
+                return createMaze1();
+            case 2:
+                return createMaze2();
+            default:
+                return null;
+        }
     }
 
     private static Maze createMaze1() {
@@ -62,5 +79,9 @@ public class MazeService {
         mazeBuilder.setTarget(3);
 
         return mazeBuilder.getMaze();
+    }
+
+    private static Maze createMaze2() {
+        return new Maze();
     }
 }

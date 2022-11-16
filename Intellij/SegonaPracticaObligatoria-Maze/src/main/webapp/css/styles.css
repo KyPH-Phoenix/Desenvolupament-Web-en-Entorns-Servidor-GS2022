@@ -1,0 +1,9 @@
+canvas {
+    margin-top: 100px;
+    margin-left: 100px;
+    border: black solid 2px;
+}
+
+img {
+    display: none;
+}

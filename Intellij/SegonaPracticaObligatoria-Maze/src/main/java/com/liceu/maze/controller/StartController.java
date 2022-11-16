@@ -1,6 +1,7 @@
 package com.liceu.maze.controller;
 
 import com.liceu.maze.model.Maze;
+import com.liceu.maze.service.MazeGame;
 import com.liceu.maze.service.MazeService;
 
 import javax.servlet.RequestDispatcher;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,10 +29,13 @@ public class StartController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+
         int mapId = Integer.parseInt(req.getParameter("mapid"));
+        MazeGame mazeGame = mazeService.newGame(mapId);
 
+        session.setAttribute("game", mazeGame);
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/start.jsp");
-        dispatcher.forward(req, resp);
+        resp.sendRedirect("/nav");
     }
 }
