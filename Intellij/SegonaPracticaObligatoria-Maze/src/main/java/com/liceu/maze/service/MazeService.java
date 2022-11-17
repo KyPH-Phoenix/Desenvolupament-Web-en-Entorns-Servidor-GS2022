@@ -90,10 +90,44 @@ public class MazeService {
         JSONObject root = new JSONObject();
 
         JSONObject player = new JSONObject();
-        player.put("currentRoom", game.getPlayer().getCurrentRoom());
+        Room currentRoom = game.getPlayer().getCurrentRoom();
+        player.put("currentRoom", currentRoom.getNumber());
+        player.put("coins", game.getPlayer().getCoins());
+        player.put("keys", game.getPlayer().getKeys());
+
+        JSONObject room = new JSONObject();
+
+        JSONObject walls = new JSONObject();
+        MapSide n = currentRoom.getSide(Maze.Directions.NORTH);
+        MapSide s = currentRoom.getSide(Maze.Directions.SOUTH);
+        MapSide e = currentRoom.getSide(Maze.Directions.EAST);
+        MapSide w = currentRoom.getSide(Maze.Directions.WEST);
+
+        walls.put("n", checkSide(n));
+        walls.put("s", checkSide(s));
+        walls.put("e", checkSide(e));
+        walls.put("w", checkSide(w));
+
+        room.put("walls", walls);
+        room.put("coin", currentRoom.haveCoin());
+        room.put("key", currentRoom.haveKey());
 
         root.put("player", player);
+        root.put("room", room);
 
         return root.toJSONString();
+    }
+
+    private Object checkSide(MapSide side) {
+        if (side.getClass() == Wall.class) {
+            JSONObject wall = new JSONObject();
+            wall.put("type", "wall");
+        }
+
+        JSONObject door = new JSONObject();
+        door.put("type", "door");
+        door.put("open", ((Door) side).isOpen());
+
+        return door;
     }
 }

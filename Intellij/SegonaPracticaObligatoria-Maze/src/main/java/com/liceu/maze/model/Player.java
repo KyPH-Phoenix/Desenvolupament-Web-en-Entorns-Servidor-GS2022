@@ -19,6 +19,13 @@ public class Player {
                 .count();
     }
 
+    public int getKeys() {
+        return (int) this.itemList
+                .stream()
+                .filter(item -> item.getClass() == Key.class)
+                .count();
+    }
+
     public void addItem(Item it) {
         this.itemList.add(it);
     }

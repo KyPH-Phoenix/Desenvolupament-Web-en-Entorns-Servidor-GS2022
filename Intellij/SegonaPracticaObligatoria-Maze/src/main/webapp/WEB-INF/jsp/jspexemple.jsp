@@ -15,7 +15,7 @@
 
     <script>
         let dataScript = document.getElementById("mydata").textContent;
-        let data = JSON.parse(dataScript);
+        let data = JSON.parse(document.getElementById("mydata").textContent);
         console.log(data.walls.N);
     </script>
 </body>
@@ -36,5 +36,35 @@
     }
 
     data.jugador;
-
+    
+        {
+            "room":{
+                "walls":{
+                    "S":{
+                        "type":"door",
+                        "open":true
+                    },
+                    "E":{
+                        "type":"door",
+                        "open":true
+                    },
+                    "W":{
+                        "type":"door",
+                        "open":false
+                    },
+                    "N":{
+                        "type":"door",
+                        "open":true
+                    }
+                },
+                "key":false,
+                "coin":false
+            },
+            "player":{
+                "currentRoom":1,
+                "coins":0,
+                "keys":0
+            }
+        }
+    
  -->

@@ -22,7 +22,11 @@ public class NavigationController extends HttpServlet {
 
         MazeGame game = (MazeGame) session.getAttribute("game");
 
+
+
         String myJson = mazeService.getJsonInfo(game);
+
+        req.setAttribute("myjson", myJson);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/navigation.jsp");
         dispatcher.forward(req, resp);

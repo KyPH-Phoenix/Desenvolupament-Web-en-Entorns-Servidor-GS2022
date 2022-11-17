@@ -71,4 +71,16 @@ public class Room {
                     }
                 });
     }
+
+    public boolean haveKey() {
+        return this.items
+                .stream()
+                .anyMatch(item -> item.getClass() == Key.class);
+    }
+
+    public boolean haveCoin() {
+        return this.items
+                .stream()
+                .anyMatch(item -> item.getClass() == Coin.class);
+    }
 }

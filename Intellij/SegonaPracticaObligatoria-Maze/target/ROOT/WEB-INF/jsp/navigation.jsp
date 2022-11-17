@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prova</title>
+    <title>Navigation</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 
@@ -33,11 +33,6 @@
         cross.src = '/img/cross.png';
         character.src = '/img/character.png';
 
-        ctx.font = "30px Arial";
-        ctx.fillText("Room: 1", 10, 30);
-        ctx.fillText("Keys: 0", 10, 65);
-        ctx.fillText("Coins: 0", 10, 100);
-
         ctx.fillStyle = "black";
 
         ctx.fillRect(170, 70, 180, 25);
@@ -55,15 +50,60 @@
         cross.onload = () => ctx.drawImage(cross, 670, 470, 100, 100);
         character.onload = () => ctx.drawImage(character, 370, 220, 80, 130)
 
-        coin.onload = () => drawCoin();
-        key.onload = () => drawKey();
+        let data = JSON.parse(document.getElementById("mydata").textContent);
+        console.log(data);
+        
+        ctx.font = "30px Arial";
+        ctx.fillText("Room: 1", 10, 30);
+        ctx.fillText("Keys: 0", 10, 65);
+        ctx.fillText("Coins: 0", 10, 100);
 
-        function lockedDoor(direction) {
+        if (data.room.coin) {
+            coin.onload = () => drawCoin();
+        }
+
+        if (data.room.key) {
+            key.onload = () => drawKey();
+        }
+
+        if (data.room.walls.n.type == "wall") {
+            drawWall("N");
+        } else {
+            if (!data.room.walls.n.open) {
+                drawLockedDoor("N");
+            }
+        }
+
+        if (data.room.walls.s.type == "wall") {
+            drawWall("S");
+        } else {
+            if (!data.room.walls.s.open) {
+                drawLockedDoor("S");
+            }
+        }
+
+        if (data.room.walls.e.type == "wall") {
+            drawWall("E");
+        } else {
+            if (!data.room.walls.e.open) {
+                drawLockedDoor("E");
+            }
+        }
+
+        if (data.room.walls.w.type == "wall") {
+            drawWall("W");
+        } else {
+            if (!data.room.walls.w.open) {
+                drawLockedDoor("W");
+            }
+        }
+
+        function drawLockedDoor(direction) {
             ctx.fillStyle = "red";
             fillSpace(direction);
         }
 
-        function wall(direction) {
+        function drawWall(direction) {
             ctx.fillStyle = "black";
             fillSpace(direction);
         }
@@ -100,27 +140,31 @@
                 console.log(x, y)
 
                 if (x >= 707 && x <= 735 && y >= 472 && y <= 506) {
+                    window.location.assign("/nav?dir=N")
                     console.log("up")
                 }
 
                 if (x >= 672 && x <= 705 && y >= 508 && y <= 535) {
+                    window.location.assign("/nav?dir=S")
                     console.log("left")
                 }
 
                 if (x >= 735 && x <= 769 && y >= 508 && y <= 535) {
+                    window.location.assign("/nav?dir=E")
                     console.log("right")
                 }
 
                 if (x >= 707 && x <= 735 && y >= 535 && y <= 570) {
+                    window.location.assign("/nav?dir=W")
                     console.log("down")
                 }
 
                 if (y >= 400 && y <= 480) {
-                    if (x >= 220 && x <= 300) {
+                    if (x >= 220 && x <= 300 && data.room.coin) {
                         console.log("Coge moneda");
                     }
 
-                    if (x >= 490 && x <= 570) {
+                    if (x >= 490 && x <= 570 && data.room.key) {
                         console.log("Coge llave");
                     }
                 }

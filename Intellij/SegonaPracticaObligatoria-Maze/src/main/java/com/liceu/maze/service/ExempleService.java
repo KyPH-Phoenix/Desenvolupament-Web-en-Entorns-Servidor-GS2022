@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 public class ExempleService {
     public String getJsonInfo() {
         JSONObject root = new JSONObject();
+
         JSONObject walls = new JSONObject();
 
         walls.put("N", "wall");
