@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 public class Room {
@@ -82,5 +83,40 @@ public class Room {
         return this.items
                 .stream()
                 .anyMatch(item -> item.getClass() == Coin.class);
+    }
+
+    public String getCoin(Player player) {
+        Coin coin = (Coin) this.items
+                .stream()
+                .filter(item -> item.getClass() == Coin.class)
+                .findFirst()
+                .orElse(null);
+
+        if (coin == null) {
+            return  "No hi ha monedes per agafar. Deixa de fer trampes";
+        }
+
+        player.addItem(coin);
+        this.items.remove(coin);
+
+        return "Has otingut una moneda";
+    }
+
+    public String getKey(Player player) {
+        Key key = (Key) this.items
+                .stream()
+                .filter(item -> item.getClass() == Key.class)
+                .findFirst()
+                .orElse(null);
+
+        if (key == null) return  "No hi ha claus per agafar. Deixa de fer trampes";
+
+        if (player.getCoins() < key.getPrice()) return String.format("Necesites %d monedes per agafar la clau",
+                key.getPrice());
+
+        player.addItem(key);
+        this.items.remove(key);
+
+        return "Has otingut una clau";
     }
 }

@@ -54,9 +54,13 @@
         console.log(data);
         
         ctx.font = "30px Arial";
-        ctx.fillText("Room: 1", 10, 30);
-        ctx.fillText("Keys: 0", 10, 65);
-        ctx.fillText("Coins: 0", 10, 100);
+
+        ctx.fillText("Room: " + data.player.currentRoom, 10, 30);
+        ctx.fillText("Keys: " + data.player.keys, 10, 65);
+        ctx.fillText("Coins: " + data.player.coins, 10, 100);
+
+        ctx.font = "18px Arial"
+        ctx.fillText(data.message, 200, 40);
 
         if (data.room.coin) {
             coin.onload = () => drawCoin();
@@ -140,32 +144,28 @@
                 console.log(x, y)
 
                 if (x >= 707 && x <= 735 && y >= 472 && y <= 506) {
-                    window.location.assign("/nav?dir=N")
-                    console.log("up")
+                    window.location.assign("/nav?dir=N");
                 }
 
                 if (x >= 672 && x <= 705 && y >= 508 && y <= 535) {
-                    window.location.assign("/nav?dir=S")
-                    console.log("left")
+                    window.location.assign("/nav?dir=W");
                 }
 
                 if (x >= 735 && x <= 769 && y >= 508 && y <= 535) {
-                    window.location.assign("/nav?dir=E")
-                    console.log("right")
+                    window.location.assign("/nav?dir=E");
                 }
 
                 if (x >= 707 && x <= 735 && y >= 535 && y <= 570) {
-                    window.location.assign("/nav?dir=W")
-                    console.log("down")
+                    window.location.assign("/nav?dir=S");
                 }
 
                 if (y >= 400 && y <= 480) {
                     if (x >= 220 && x <= 300 && data.room.coin) {
-                        console.log("Coge moneda");
+                        window.location.assign("/getcoin");
                     }
 
                     if (x >= 490 && x <= 570 && data.room.key) {
-                        console.log("Coge llave");
+                        window.location.assign("/getkey");
                     }
                 }
             }

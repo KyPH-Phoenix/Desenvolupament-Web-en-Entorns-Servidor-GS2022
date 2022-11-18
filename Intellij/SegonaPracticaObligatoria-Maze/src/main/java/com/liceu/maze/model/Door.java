@@ -20,20 +20,22 @@ public class Door implements MapSide {
     }
 
     @Override
-    public void enter(Player player) {
-        if (!this.open) {
+    public String enter(Player player) {
+         //COdigo original
+        /*if (!this.open) {
             List<Item> items = player.getItemList();
             items.stream()
                     .filter(i -> i instanceof Key)
                     .map(i -> (Key) i)
                     .forEach(k -> k.open(this));
-        }
+        }*/
 
         if (this.open) {
             Room r = getOtherRoom(player.getCurrentRoom());
             player.setCurrentRoom(r);
+            return "";
         } else {
-            System.out.println("No pots obrir la porta, encara");
+            return "La porta està tancada";
         }
     }
 

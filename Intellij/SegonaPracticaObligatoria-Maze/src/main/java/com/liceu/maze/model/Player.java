@@ -9,7 +9,6 @@ public class Player {
     public void setCurrentRoom(Room currentRoom) {
         System.out.println("Ets a l'habitació: " + currentRoom.getNumber());
         this.currentRoom = currentRoom;
-        currentRoom.enter(this);
     }
 
     public int getCoins() {

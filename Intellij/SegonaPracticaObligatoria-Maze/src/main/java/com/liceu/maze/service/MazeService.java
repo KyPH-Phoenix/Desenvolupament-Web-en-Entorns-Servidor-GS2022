@@ -8,11 +8,11 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class MazeService {
     static List<MazeGame> gameList = new ArrayList<>();
+    static int lastGameId = 1;
 
     public List<Maze> getMaps() {
         Maze maze1 = createMaze1();
@@ -34,6 +34,9 @@ public class MazeService {
 
         mazeGame.setMaze(maze);
         mazeGame.setPlayer(player);
+        maze.setId(lastGameId);
+        lastGameId++;
+
         gameList.add(mazeGame);
 
         return mazeGame;
@@ -114,6 +117,9 @@ public class MazeService {
 
         root.put("player", player);
         root.put("room", room);
+        root.put("message", game.getMessage());
+
+        game.setMessage("");
 
         return root.toJSONString();
     }
@@ -122,6 +128,7 @@ public class MazeService {
         if (side.getClass() == Wall.class) {
             JSONObject wall = new JSONObject();
             wall.put("type", "wall");
+            return wall;
         }
 
         JSONObject door = new JSONObject();
@@ -129,5 +136,70 @@ public class MazeService {
         door.put("open", ((Door) side).isOpen());
 
         return door;
+    }
+
+    public MazeGame moveTo(String dir, int gameId) {
+        MazeGame mazeGame = gameList.stream()
+                .filter(game -> gameId == game.getId())
+                .findAny()
+                .get();
+
+        Maze.Directions direction = getDir(dir);
+
+        if (direction == null) return mazeGame;
+
+        Player player = mazeGame.getPlayer();
+        MapSide mapSide = player.getCurrentRoom().getSide(direction);
+
+        String message = mapSide.enter(player);
+        mazeGame.setMessage(message);
+
+        return mazeGame;
+    }
+
+    private Maze.Directions getDir(String dir) {
+        if (dir.equals("N")) {
+            return Maze.Directions.NORTH;
+        } else if (dir.equals("S")) {
+            return Maze.Directions.SOUTH;
+        } else if (dir.equals("E")) {
+            return Maze.Directions.EAST;
+        } else if (dir.equals("W")) {
+            return Maze.Directions.WEST;
+        } else {
+            return null;
+        }
+    }
+
+    public MazeGame getCoin(int gameId) {
+        MazeGame mazeGame = gameList
+                .stream()
+                .filter(game -> game.getId() == gameId)
+                .findAny().get();
+
+        Player player = mazeGame.getPlayer();
+        Room room = player.getCurrentRoom();
+
+        String message = room.getCoin(player);
+
+        mazeGame.setMessage(message);
+
+        return mazeGame;
+    }
+
+    public MazeGame getKey(int gameId) {
+        MazeGame mazeGame = gameList
+                .stream()
+                .filter(game -> game.getId() == gameId)
+                .findAny().get();
+
+        Player player = mazeGame.getPlayer();
+        Room room = player.getCurrentRoom();
+
+        String message = room.getKey(player);
+
+        mazeGame.setMessage(message);
+
+        return mazeGame;
     }
 }
