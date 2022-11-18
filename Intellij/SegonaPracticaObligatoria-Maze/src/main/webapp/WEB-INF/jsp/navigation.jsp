@@ -168,6 +168,12 @@
                         window.location.assign("/getkey");
                     }
                 }
+
+                if (data.room.walls.n.type == "door" && !data.room.walls.n.type.open) {
+                    if (x >= 353 && x <= 452 && y >= 72 && y <= 96) {
+                         
+                    }
+                }
             }
         });
 
