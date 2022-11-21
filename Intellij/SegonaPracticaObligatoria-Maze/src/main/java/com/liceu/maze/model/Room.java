@@ -1,5 +1,7 @@
 package com.liceu.maze.model;
 
+import com.liceu.maze.exceptions.NonexistentCoinException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,36 +45,6 @@ public class Room {
         this.sides.put(dir, ms);
     }
 
-    public void enter(Player player) {
-        // Primer agafa les monedes
-        this.items
-                .stream()
-                .filter(item -> item.getClass() == Coin.class)
-                .collect(Collectors.toList())
-                .forEach(item -> {
-                    player.addItem(item);
-                    System.out.println("Has obtingut un ítem: " + item);
-                    this.items.remove(item);
-                });
-
-        // Despres agafa les claus, si li basten les monedes
-        this.items
-                .stream()
-                .filter(item -> item.getClass() == Key.class)
-                .collect(Collectors.toList())
-                .forEach(item -> {
-                    Key key = (Key) item;
-                    if (player.getCoins() < key.getPrice()) {
-                        System.out.printf("No s'ha obtingut la clau %s.\n Monedes necesàries: %d " +
-                                "\n Monedes actuals: %d\n", key, key.getPrice(), player.getCoins());
-                    } else {
-                        System.out.println("Has obtingut un ítem: " + item);
-                        player.addItem(item);
-                        this.items.remove(item);
-                    }
-                });
-    }
-
     public boolean haveKey() {
         return this.items
                 .stream()
@@ -85,7 +57,7 @@ public class Room {
                 .anyMatch(item -> item.getClass() == Coin.class);
     }
 
-    public String getCoin(Player player) {
+    public void getCoin(Player player) {
         Coin coin = (Coin) this.items
                 .stream()
                 .filter(item -> item.getClass() == Coin.class)
@@ -93,13 +65,11 @@ public class Room {
                 .orElse(null);
 
         if (coin == null) {
-            return  "No hi ha monedes per agafar. Deixa de fer trampes";
+            throw new NonexistentCoinException();
         }
 
         player.addItem(coin);
         this.items.remove(coin);
-
-        return "Has otingut una moneda";
     }
 
     public String getKey(Player player) {

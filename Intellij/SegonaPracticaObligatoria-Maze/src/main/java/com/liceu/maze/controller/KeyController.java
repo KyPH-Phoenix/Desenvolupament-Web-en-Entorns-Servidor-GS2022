@@ -21,7 +21,7 @@ public class KeyController extends HttpServlet {
 
         MazeGame game = (MazeGame) session.getAttribute("game");
 
-        game = mazeService.getKey(game.getId());
+        game = mazeService.getKey(game);
 
         session.setAttribute("game", game);
 

@@ -8,6 +8,7 @@ com/liceu/maze/service/MazeService.class
 com/liceu/maze/service/ExempleService.class
 com/liceu/maze/model/Wall.class
 com/liceu/maze/model/Maze.class
+com/liceu/maze/controller/DoorController.class
 com/liceu/maze/controller/StartController.class
 com/liceu/maze/model/Item.class
 com/liceu/maze/model/Room.class

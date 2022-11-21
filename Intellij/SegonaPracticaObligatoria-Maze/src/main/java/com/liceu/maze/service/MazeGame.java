@@ -6,7 +6,6 @@ import com.liceu.maze.model.Player;
 public class MazeGame {
     private Maze maze;
     private Player player;
-    private int id;
     private String message = "";
 
     public String getMessage() {
@@ -15,14 +14,6 @@ public class MazeGame {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Player getPlayer() {

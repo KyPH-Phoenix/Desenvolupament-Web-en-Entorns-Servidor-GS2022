@@ -1,7 +1,5 @@
 package com.liceu.maze.model;
 
-import java.util.List;
-
 public class Door implements MapSide {
     private Room r1, r2;
     private boolean open = false;
@@ -11,8 +9,13 @@ public class Door implements MapSide {
         this.r2 = r2;
     }
 
-    public void open() {
+    public String open() {
+        if (this.isOpen()) {
+            return "La porta ja està oberta";
+        }
+
         this.open = true;
+        return "Has obert la porta";
     }
 
     public boolean isOpen() {
@@ -22,13 +25,6 @@ public class Door implements MapSide {
     @Override
     public String enter(Player player) {
          //COdigo original
-        /*if (!this.open) {
-            List<Item> items = player.getItemList();
-            items.stream()
-                    .filter(i -> i instanceof Key)
-                    .map(i -> (Key) i)
-                    .forEach(k -> k.open(this));
-        }*/
 
         if (this.open) {
             Room r = getOtherRoom(player.getCurrentRoom());

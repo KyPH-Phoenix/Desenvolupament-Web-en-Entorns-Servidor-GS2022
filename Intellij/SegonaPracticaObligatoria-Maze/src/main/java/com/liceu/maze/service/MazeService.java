@@ -12,7 +12,6 @@ import java.util.stream.IntStream;
 
 public class MazeService {
     static List<MazeGame> gameList = new ArrayList<>();
-    static int lastGameId = 1;
 
     public List<Maze> getMaps() {
         Maze maze1 = createMaze1();
@@ -34,8 +33,6 @@ public class MazeService {
 
         mazeGame.setMaze(maze);
         mazeGame.setPlayer(player);
-        maze.setId(lastGameId);
-        lastGameId++;
 
         gameList.add(mazeGame);
 
@@ -138,12 +135,7 @@ public class MazeService {
         return door;
     }
 
-    public MazeGame moveTo(String dir, int gameId) {
-        MazeGame mazeGame = gameList.stream()
-                .filter(game -> gameId == game.getId())
-                .findAny()
-                .get();
-
+    public MazeGame moveTo(String dir, MazeGame mazeGame) {
         Maze.Directions direction = getDir(dir);
 
         if (direction == null) return mazeGame;
@@ -152,6 +144,50 @@ public class MazeService {
         MapSide mapSide = player.getCurrentRoom().getSide(direction);
 
         String message = mapSide.enter(player);
+        mazeGame.setMessage(message);
+
+        return mazeGame;
+    }
+
+    public MazeGame getCoin(MazeGame mazeGame) {
+        Player player = mazeGame.getPlayer();
+        Room room = player.getCurrentRoom();
+
+        room.getCoin(player);
+        mazeGame.setMessage("Has obtingut una moneda");
+
+        return mazeGame;
+    }
+
+    public MazeGame getKey(MazeGame mazeGame) {
+        Player player = mazeGame.getPlayer();
+        Room room = player.getCurrentRoom();
+
+        String message = room.getKey(player);
+
+        mazeGame.setMessage(message);
+
+        return mazeGame;
+    }
+
+    public MazeGame openDoor(String dir, MazeGame mazeGame) {
+        Maze.Directions direction = getDir(dir);
+
+        if (direction == null) return mazeGame;
+
+        Player player = mazeGame.getPlayer();
+        MapSide mapSide = player.getCurrentRoom().getSide(direction);
+
+        String message;
+
+        if (mapSide.getClass() == Door.class) {
+            Door door = (Door) mapSide;
+            message = door.open();
+            mazeGame.setMessage(message);
+        } else {
+            message = "No pots obrir una paret. Deixa d'intentar rompre el programa";
+        }
+
         mazeGame.setMessage(message);
 
         return mazeGame;
@@ -169,37 +205,5 @@ public class MazeService {
         } else {
             return null;
         }
-    }
-
-    public MazeGame getCoin(int gameId) {
-        MazeGame mazeGame = gameList
-                .stream()
-                .filter(game -> game.getId() == gameId)
-                .findAny().get();
-
-        Player player = mazeGame.getPlayer();
-        Room room = player.getCurrentRoom();
-
-        String message = room.getCoin(player);
-
-        mazeGame.setMessage(message);
-
-        return mazeGame;
-    }
-
-    public MazeGame getKey(int gameId) {
-        MazeGame mazeGame = gameList
-                .stream()
-                .filter(game -> game.getId() == gameId)
-                .findAny().get();
-
-        Player player = mazeGame.getPlayer();
-        Room room = player.getCurrentRoom();
-
-        String message = room.getKey(player);
-
-        mazeGame.setMessage(message);
-
-        return mazeGame;
     }
 }

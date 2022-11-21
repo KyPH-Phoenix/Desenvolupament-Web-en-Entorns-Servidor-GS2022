@@ -24,7 +24,7 @@ public class NavigationController extends HttpServlet {
         String dir = req.getParameter("dir");
 
         if (dir != null) {
-            game = mazeService.moveTo(dir, game.getId());
+            game = mazeService.moveTo(dir, game);
         }
 
         String myJson = mazeService.getJsonInfo(game);

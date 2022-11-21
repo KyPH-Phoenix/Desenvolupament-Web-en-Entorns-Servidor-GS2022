@@ -1,5 +1,6 @@
 package com.liceu.maze.controller;
 
+import com.liceu.maze.exceptions.NonexistentCoinException;
 import com.liceu.maze.service.MazeGame;
 import com.liceu.maze.service.MazeService;
 
@@ -21,9 +22,17 @@ public class CoinController extends HttpServlet {
 
         MazeGame game = (MazeGame) session.getAttribute("game");
 
-        game = mazeService.getCoin(game.getId());
+        try {
+            game = mazeService.getCoin(game);
+        } catch (NonexistentCoinException e) {
+            resp.setStatus(406);
+            /* renderitza vista d'error*/
+
+            return;
+        }
 
         session.setAttribute("game", game);
+
 
         resp.sendRedirect("/nav");
     }
