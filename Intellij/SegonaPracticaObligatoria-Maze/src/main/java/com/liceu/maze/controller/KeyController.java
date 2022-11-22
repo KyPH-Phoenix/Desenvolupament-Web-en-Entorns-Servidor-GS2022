@@ -1,8 +1,10 @@
 package com.liceu.maze.controller;
 
+import com.liceu.maze.exceptions.NonexistentKeyException;
 import com.liceu.maze.service.MazeGame;
 import com.liceu.maze.service.MazeService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +23,17 @@ public class KeyController extends HttpServlet {
 
         MazeGame game = (MazeGame) session.getAttribute("game");
 
-        game = mazeService.getKey(game);
+        try {
+            game = mazeService.getKey(game);
+        } catch (NonexistentKeyException e) {
+            resp.setStatus(403);
+            req.setAttribute("message", "La clau no existeix. Deixa de fer trampes.");
+            resp.setHeader("Refresh", "3; URL=/nav");
+
+            RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/error.jsp");
+            dispatcher.forward(req, resp);
+            return;
+        }
 
         session.setAttribute("game", game);
 

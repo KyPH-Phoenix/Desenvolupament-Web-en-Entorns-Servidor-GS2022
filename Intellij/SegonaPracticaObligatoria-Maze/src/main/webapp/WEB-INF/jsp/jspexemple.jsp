@@ -28,12 +28,11 @@
 
     --
     *Displays*
-    {
+    
         "walls": {
             "N": wall,
             "S": door,
         } 
-    }
 
     data.jugador;
     

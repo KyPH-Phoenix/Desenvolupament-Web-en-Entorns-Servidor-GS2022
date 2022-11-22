@@ -25,15 +25,17 @@ public class CoinController extends HttpServlet {
         try {
             game = mazeService.getCoin(game);
         } catch (NonexistentCoinException e) {
-            resp.setStatus(406);
+            resp.setStatus(403);
             /* renderitza vista d'error*/
+            req.setAttribute("message", "La moneda no existeix. Deixa de fer trampes.");
+            resp.setHeader("Refresh", "3; URL=/nav");
 
+            RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/error.jsp");
+            dispatcher.forward(req, resp);
             return;
         }
 
         session.setAttribute("game", game);
-
-
         resp.sendRedirect("/nav");
     }
 }

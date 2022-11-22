@@ -1,5 +1,7 @@
 package com.liceu.maze.model;
 
+import com.liceu.maze.exceptions.AlreadyOpenDoorException;
+
 public class Door implements MapSide {
     private Room r1, r2;
     private boolean open = false;
@@ -9,13 +11,12 @@ public class Door implements MapSide {
         this.r2 = r2;
     }
 
-    public String open() {
+    public void open() {
         if (this.isOpen()) {
-            return "La porta ja està oberta";
+            throw new AlreadyOpenDoorException();
         }
 
         this.open = true;
-        return "Has obert la porta";
     }
 
     public boolean isOpen() {

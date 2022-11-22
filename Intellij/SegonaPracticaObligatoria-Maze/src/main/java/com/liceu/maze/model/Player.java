@@ -1,7 +1,9 @@
 package com.liceu.maze.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Player {
     private Room currentRoom;
@@ -10,18 +12,29 @@ public class Player {
         this.currentRoom = currentRoom;
     }
 
-    public int getCoins() {
+    public int getCoinsCount() {
         return (int) this.itemList
                 .stream()
                 .filter(item -> item.getClass() == Coin.class)
                 .count();
     }
 
-    public int getKeys() {
+    public int getKeysCount() {
         return (int) this.itemList
                 .stream()
                 .filter(item -> item.getClass() == Key.class)
                 .count();
+    }
+
+    public List<Key> getKeyList() {
+        List<Key> result = new ArrayList<>();
+
+        this.itemList
+                .stream()
+                .filter(item -> item.getClass() == Key.class)
+                .forEach(item -> result.add((Key) item));
+
+        return result;
     }
 
     public void addItem(Item it) {
@@ -34,5 +47,19 @@ public class Player {
 
     public Room getCurrentRoom() {
         return this.currentRoom;
+    }
+
+    public void removeCoins(int price) {
+        int count = 0;
+
+        Iterator<Item> iterator = this.itemList.iterator();
+
+        while (iterator.hasNext()) {
+            Item item = iterator.next();
+            if (item.getClass() == Coin.class && count < price) {
+                count++;
+                iterator.remove();
+            }
+        }
     }
 }

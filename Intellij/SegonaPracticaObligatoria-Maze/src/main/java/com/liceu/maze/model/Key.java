@@ -18,15 +18,13 @@ public class Key implements Item {
     }
 
     public void addDoor(Door door) {
-
         this.doors.add(door);
     }
 
-    public void open(Door door) {
-        this.doors
+    public boolean opensDoor(Door door) {
+        return doors
                 .stream()
-                .filter(d -> d.equals(door))
-                .forEach(Door::open);
+                .anyMatch(door1 -> door1 == door);
     }
 
     @Override

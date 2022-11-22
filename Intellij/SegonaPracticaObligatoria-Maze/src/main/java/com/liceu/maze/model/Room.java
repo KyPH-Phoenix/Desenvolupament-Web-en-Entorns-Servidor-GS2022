@@ -1,13 +1,12 @@
 package com.liceu.maze.model;
 
 import com.liceu.maze.exceptions.NonexistentCoinException;
+import com.liceu.maze.exceptions.NonexistentKeyException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 public class Room {
     private int number;
@@ -79,11 +78,14 @@ public class Room {
                 .findFirst()
                 .orElse(null);
 
-        if (key == null) return  "No hi ha claus per agafar. Deixa de fer trampes";
+        if (key == null) {
+            throw new NonexistentKeyException();
+        };
 
-        if (player.getCoins() < key.getPrice()) return String.format("Necesites %d monedes per agafar la clau",
+        if (player.getCoinsCount() < key.getPrice()) return String.format("Necesites %d monedes per agafar la clau",
                 key.getPrice());
 
+        player.removeCoins(key.getPrice());
         player.addItem(key);
         this.items.remove(key);
 

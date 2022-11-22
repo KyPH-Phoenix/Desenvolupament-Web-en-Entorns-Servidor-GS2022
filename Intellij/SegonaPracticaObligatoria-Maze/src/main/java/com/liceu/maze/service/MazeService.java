@@ -1,5 +1,7 @@
 package com.liceu.maze.service;
 
+import com.liceu.maze.exceptions.NotDoorException;
+import com.liceu.maze.exceptions.NotValidDirectionException;
 import com.liceu.maze.model.*;
 import com.liceu.maze.util.MazeBuilder;
 import com.liceu.maze.util.StandardMazeBuilder;
@@ -92,8 +94,8 @@ public class MazeService {
         JSONObject player = new JSONObject();
         Room currentRoom = game.getPlayer().getCurrentRoom();
         player.put("currentRoom", currentRoom.getNumber());
-        player.put("coins", game.getPlayer().getCoins());
-        player.put("keys", game.getPlayer().getKeys());
+        player.put("coins", game.getPlayer().getCoinsCount());
+        player.put("keys", game.getPlayer().getKeysCount());
 
         JSONObject room = new JSONObject();
 
@@ -173,24 +175,32 @@ public class MazeService {
     public MazeGame openDoor(String dir, MazeGame mazeGame) {
         Maze.Directions direction = getDir(dir);
 
-        if (direction == null) return mazeGame;
+        if (direction == null) throw new NotValidDirectionException();
 
         Player player = mazeGame.getPlayer();
         MapSide mapSide = player.getCurrentRoom().getSide(direction);
 
-        String message;
-
         if (mapSide.getClass() == Door.class) {
             Door door = (Door) mapSide;
-            message = door.open();
-            mazeGame.setMessage(message);
+            if (playerHasKey(player, door)) {
+                door.open();
+                mazeGame.setMessage("Has obert la porta.");
+            } else {
+                mazeGame.setMessage("No tens la clau per obrir aquesta porta");
+            }
         } else {
-            message = "No pots obrir una paret. Deixa d'intentar rompre el programa";
+            throw new NotDoorException();
         }
 
-        mazeGame.setMessage(message);
-
         return mazeGame;
+    }
+
+    private boolean playerHasKey(Player player, Door door) {
+        List<Key> keyList = player.getKeyList();
+
+        return keyList
+                .stream()
+                .anyMatch(key -> key.opensDoor(door));
     }
 
     private Maze.Directions getDir(String dir) {
