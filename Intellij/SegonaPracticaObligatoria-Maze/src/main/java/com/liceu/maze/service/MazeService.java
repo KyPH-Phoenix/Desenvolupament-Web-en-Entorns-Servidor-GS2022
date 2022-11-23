@@ -1,5 +1,6 @@
 package com.liceu.maze.service;
 
+import com.liceu.maze.exceptions.AlreadyOpenDoorException;
 import com.liceu.maze.exceptions.NotDoorException;
 import com.liceu.maze.exceptions.NotValidDirectionException;
 import com.liceu.maze.model.*;
@@ -182,6 +183,9 @@ public class MazeService {
 
         if (mapSide.getClass() == Door.class) {
             Door door = (Door) mapSide;
+
+            if (door.isOpen()) throw new AlreadyOpenDoorException();
+
             if (playerHasKey(player, door)) {
                 door.open();
                 mazeGame.setMessage("Has obert la porta.");

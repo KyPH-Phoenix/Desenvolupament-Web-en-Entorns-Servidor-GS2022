@@ -12,10 +12,6 @@ public class Door implements MapSide {
     }
 
     public void open() {
-        if (this.isOpen()) {
-            throw new AlreadyOpenDoorException();
-        }
-
         this.open = true;
     }
 

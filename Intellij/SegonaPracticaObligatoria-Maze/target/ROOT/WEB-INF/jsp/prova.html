@@ -5,58 +5,119 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prova</title>
-    <link rel="stylesheet" href="../../css/styles.css">
+    <title>Navigation</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body>
+<body onload="drawRoom()">
     <canvas id="canvas" width="800" height="600"></canvas>
+
+    <script id="mydata" type="application/json">
+        {
+            "room":{
+                "walls":{
+                    "s":{
+                        "type":"door",
+                        "open":true
+                    },
+                    "e":{
+                        "type":"door",
+                        "open":true
+                    },
+                    "w":{
+                        "type":"door",
+                        "open":false
+                    },
+                    "n":{
+                        "type":"door",
+                        "open":true
+                    }
+                },
+                "key":true,
+                "coin":true
+            },
+            "player":{
+                "currentRoom":1,
+                "coins":0,
+                "keys":0
+            },
+            "message":""
+        }
+    </script>
 
     <script>
         let canvas = document.getElementById("canvas");
         let ctx = canvas.getContext("2d");
+        let data = JSON.parse(document.getElementById("mydata").textContent);
+        console.log(data);
 
-        let coin = new Image();
-        let key = new Image();
-        let cross = new Image();
-        let character = new Image();
+        function drawRoom() {
+            let cross = new Image();
+            let character = new Image();
+            let coin = new Image();
+            let key = new Image();
+    
+            cross.src = '/img/cross.png';
+            character.src = '/img/character.png';
+            coin.src = '/img/coin.png';
+            key.src = '/img/key.png';
 
-        coin.src = '../../img/coin.png';
-        key.src = '../../img/key.png';
-        cross.src = '../../img/cross.png';
-        character.src = '../../img/character.png';
+            ctx.fillStyle = "black";
 
-        ctx.font = "30px Arial";
-        ctx.fillText("Room: 1", 10, 30);
-        ctx.fillText("Keys: 0", 10, 65);
-        ctx.fillText("Coins: 0", 10, 100);
+            ctx.fillRect(170, 70, 180, 25);
+            ctx.fillRect(450, 70, 180, 25);
 
-        ctx.fillStyle = "black";
+            ctx.fillRect(170, 70, 25, 180);
+            ctx.fillRect(605, 70, 25, 180);
 
-        ctx.fillRect(170, 70, 180, 25);
-        ctx.fillRect(450, 70, 180, 25);
+            ctx.fillRect(170, 350, 25, 180);
+            ctx.fillRect(605, 350, 25, 180);
 
-        ctx.fillRect(170, 70, 25, 180);
-        ctx.fillRect(605, 70, 25, 180);
+            ctx.fillRect(170, 505, 180, 25);
+            ctx.fillRect(450, 505, 180, 25);
 
-        ctx.fillRect(170, 350, 25, 180);
-        ctx.fillRect(605, 350, 25, 180);
+            cross.onload = () => ctx.drawImage(cross, 670, 470, 100, 100);
+            character.onload = () => ctx.drawImage(character, 370, 220, 80, 130)
 
-        ctx.fillRect(170, 505, 180, 25);
-        ctx.fillRect(450, 505, 180, 25);
+            ctx.font = "30px Arial";
 
-        cross.onload = () => ctx.drawImage(cross, 670, 470, 100, 100);
-        character.onload = () => ctx.drawImage(character, 370, 220, 80, 130)
+            ctx.fillText("Room: " + data.player.currentRoom, 10, 30);
+            ctx.fillText("Keys: " + data.player.keys, 10, 65);
+            ctx.fillText("Coins: " + data.player.coins, 10, 100);
 
-        coin.onload = () => drawCoin();
-        key.onload = () => drawKey();
+            ctx.font = "18px Arial"
+            ctx.fillText(data.message, 200, 40);
 
-        function lockedDoor(direction) {
+            drawSide("N", data.room.walls.n.type, data.room.walls.n.open);
+            drawSide("S", data.room.walls.s.type, data.room.walls.s.open);
+            drawSide("E", data.room.walls.e.type, data.room.walls.e.open);
+            drawSide("W", data.room.walls.w.type, data.room.walls.w.open);
+
+            if (data.room.coin) {
+                coin.onload = () => drawCoin(coin);
+            }
+
+            if (data.room.key) {
+                key.onload = () => drawKey(key);
+            }
+        }        
+
+        function drawSide(side, type, doorOpen) {
+            if (type == "wall") {
+                drawWall(side);
+            } else {
+                if (!doorOpen) {
+                    drawLockedDoor(side);
+                }
+            }
+        }
+
+        function drawLockedDoor(direction) {
             ctx.fillStyle = "red";
             fillSpace(direction);
         }
 
-        function wall(direction) {
+        function drawWall(direction) {
             ctx.fillStyle = "black";
             fillSpace(direction);
         }
@@ -76,11 +137,11 @@
             }
         }
 
-        function drawCoin() {
+        function drawCoin(coin) {
             ctx.drawImage(coin, 220, 400, 80, 80);
         }
 
-        function drawKey() {
+        function drawKey(key) {
             ctx.drawImage(key, 490, 400, 80, 80);
         }
 
@@ -93,33 +154,88 @@
                 console.log(x, y)
 
                 if (x >= 707 && x <= 735 && y >= 472 && y <= 506) {
-                    console.log("up")
+                    window.location.assign("/nav?dir=N");
                 }
 
                 if (x >= 672 && x <= 705 && y >= 508 && y <= 535) {
-                    console.log("left")
+                    window.location.assign("/nav?dir=W");
                 }
 
                 if (x >= 735 && x <= 769 && y >= 508 && y <= 535) {
-                    console.log("right")
+                    window.location.assign("/nav?dir=E");
                 }
 
                 if (x >= 707 && x <= 735 && y >= 535 && y <= 570) {
-                    console.log("down")
+                    window.location.assign("/nav?dir=S");
                 }
 
                 if (y >= 400 && y <= 480) {
-                    if (x >= 220 && x <= 300) {
-                        console.log("Coge moneda");
+                    if (x >= 220 && x <= 300 && data.room.coin) {
+                        window.location.assign("/getcoin");
                     }
 
-                    if (x >= 490 && x <= 570) {
-                        console.log("Coge llave");
+                    if (x >= 490 && x <= 570 && data.room.key) {
+                        window.location.assign("/getkey");
                     }
                 }
-            }
+
+                if (data.room.walls.n.type == "door" && !data.room.walls.n.open) {
+                    if (x >= 353 && x <= 452 && y >= 72 && y <= 96) {
+                        console.log("open north");
+                        window.location.assign("/open?dir=N");
+
+                    }
+                }
+
+                if (y >= 253 && y <= 352) {
+                    if (data.room.walls.w.type == "door" && !data.room.walls.w.open) {
+                        if (x >= 172 && x <= 196) {
+                            console.log("open west");
+                            window.location.assign("/open?dir=W");
+
+                        }
+                    }
+
+                    if (data.room.walls.e.type == "door" && !data.room.walls.e.open) {
+                        if (x >= 607 && x <= 631) {
+                            console.log("open east");
+                            window.location.assign("/open?dir=E");
+
+                        }
+                    }
+                }
+
+                if (data.room.walls.s.type == "door" && !data.room.walls.s.open) {
+                    if (x >= 353 && x <= 452 && y >= 508 && y <= 531) {
+                        console.log("open south");
+                        window.location.assign("/open?dir=S");
+
+                    }
+                }
+            }  
         });
 
+    </script>
+
+
+    <script>
+        let previousTimestamp;
+        let start;
+
+        const step = (timestamp) => {
+            if (start == undefined) {
+                start = timestamp;
+            }
+
+            let elapsed = timestamp - start;
+
+            if (timestamp - start <= 500) {
+                // if( ;
+                requestAnimationFrame(step);
+            }
+        }
+
+        requestAnimationFrame(step);
     </script>
 </body>
 

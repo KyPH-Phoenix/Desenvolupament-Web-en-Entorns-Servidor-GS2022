@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body>
+<body onload="drawRoom()">
     <canvas id="canvas" width="800" height="600"></canvas>
 
     <script id="mydata" type="application/json">
@@ -22,83 +22,67 @@
     <script>
         let canvas = document.getElementById("canvas");
         let ctx = canvas.getContext("2d");
-
-        let coin = new Image();
-        let key = new Image();
-        let cross = new Image();
-        let character = new Image();
-
-        coin.src = '/img/coin.png';
-        key.src = '/img/key.png';
-        cross.src = '/img/cross.png';
-        character.src = '/img/character.png';
-
-        ctx.fillStyle = "black";
-
-        ctx.fillRect(170, 70, 180, 25);
-        ctx.fillRect(450, 70, 180, 25);
-
-        ctx.fillRect(170, 70, 25, 180);
-        ctx.fillRect(605, 70, 25, 180);
-
-        ctx.fillRect(170, 350, 25, 180);
-        ctx.fillRect(605, 350, 25, 180);
-
-        ctx.fillRect(170, 505, 180, 25);
-        ctx.fillRect(450, 505, 180, 25);
-
-        cross.onload = () => ctx.drawImage(cross, 670, 470, 100, 100);
-        character.onload = () => ctx.drawImage(character, 370, 220, 80, 130)
-
         let data = JSON.parse(document.getElementById("mydata").textContent);
         console.log(data);
-        
-        ctx.font = "30px Arial";
 
-        ctx.fillText("Room: " + data.player.currentRoom, 10, 30);
-        ctx.fillText("Keys: " + data.player.keys, 10, 65);
-        ctx.fillText("Coins: " + data.player.coins, 10, 100);
+        function drawRoom() {
+            let cross = new Image();
+            let character = new Image();
+            let coin = new Image();
+            let key = new Image();
+    
+            cross.src = '/img/cross.png';
+            character.src = '/img/character.png';
+            coin.src = '/img/coin.png';
+            key.src = '/img/key.png';
 
-        ctx.font = "18px Arial"
-        ctx.fillText(data.message, 200, 40);
+            ctx.fillStyle = "black";
 
-        if (data.room.coin) {
-            coin.onload = () => drawCoin();
-        }
+            ctx.fillRect(170, 70, 180, 25);
+            ctx.fillRect(450, 70, 180, 25);
 
-        if (data.room.key) {
-            key.onload = () => drawKey();
-        }
+            ctx.fillRect(170, 70, 25, 180);
+            ctx.fillRect(605, 70, 25, 180);
 
-        if (data.room.walls.n.type == "wall") {
-            drawWall("N");
-        } else {
-            if (!data.room.walls.n.open) {
-                drawLockedDoor("N");
+            ctx.fillRect(170, 350, 25, 180);
+            ctx.fillRect(605, 350, 25, 180);
+
+            ctx.fillRect(170, 505, 180, 25);
+            ctx.fillRect(450, 505, 180, 25);
+
+            cross.onload = () => ctx.drawImage(cross, 670, 470, 100, 100);
+            character.onload = () => ctx.drawImage(character, 370, 220, 80, 130)
+
+            ctx.font = "30px Arial";
+
+            ctx.fillText("Room: " + data.player.currentRoom, 10, 30);
+            ctx.fillText("Keys: " + data.player.keys, 10, 65);
+            ctx.fillText("Coins: " + data.player.coins, 10, 100);
+
+            ctx.font = "18px Arial"
+            ctx.fillText(data.message, 200, 40);
+
+            drawSide("N", data.room.walls.n.type, data.room.walls.n.open);
+            drawSide("S", data.room.walls.s.type, data.room.walls.s.open);
+            drawSide("E", data.room.walls.e.type, data.room.walls.e.open);
+            drawSide("W", data.room.walls.w.type, data.room.walls.w.open);
+
+            if (data.room.coin) {
+                coin.onload = () => drawCoin(coin);
             }
-        }
 
-        if (data.room.walls.s.type == "wall") {
-            drawWall("S");
-        } else {
-            if (!data.room.walls.s.open) {
-                drawLockedDoor("S");
+            if (data.room.key) {
+                key.onload = () => drawKey(key);
             }
-        }
+        }        
 
-        if (data.room.walls.e.type == "wall") {
-            drawWall("E");
-        } else {
-            if (!data.room.walls.e.open) {
-                drawLockedDoor("E");
-            }
-        }
-
-        if (data.room.walls.w.type == "wall") {
-            drawWall("W");
-        } else {
-            if (!data.room.walls.w.open) {
-                drawLockedDoor("W");
+        function drawSide(side, type, doorOpen) {
+            if (type == "wall") {
+                drawWall(side);
+            } else {
+                if (!doorOpen) {
+                    drawLockedDoor(side);
+                }
             }
         }
 
@@ -127,11 +111,11 @@
             }
         }
 
-        function drawCoin() {
+        function drawCoin(coin) {
             ctx.drawImage(coin, 220, 400, 80, 80);
         }
 
-        function drawKey() {
+        function drawKey(key) {
             ctx.drawImage(key, 490, 400, 80, 80);
         }
 
@@ -169,12 +153,40 @@
                     }
                 }
 
-                if (data.room.walls.n.type == "door" && !data.room.walls.n.type.open) {
+                if (data.room.walls.n.type == "door" && !data.room.walls.n.open) {
                     if (x >= 353 && x <= 452 && y >= 72 && y <= 96) {
-                         
+                        console.log("open north");
+                        window.location.assign("/open?dir=N");
+
                     }
                 }
-            }
+
+                if (y >= 253 && y <= 352) {
+                    if (data.room.walls.w.type == "door" && !data.room.walls.w.open) {
+                        if (x >= 172 && x <= 196) {
+                            console.log("open west");
+                            window.location.assign("/open?dir=W");
+
+                        }
+                    }
+
+                    if (data.room.walls.e.type == "door" && !data.room.walls.e.open) {
+                        if (x >= 607 && x <= 631) {
+                            console.log("open east");
+                            window.location.assign("/open?dir=E");
+
+                        }
+                    }
+                }
+
+                if (data.room.walls.s.type == "door" && !data.room.walls.s.open) {
+                    if (x >= 353 && x <= 452 && y >= 508 && y <= 531) {
+                        console.log("open south");
+                        window.location.assign("/open?dir=S");
+
+                    }
+                }
+            }  
         });
 
     </script>
