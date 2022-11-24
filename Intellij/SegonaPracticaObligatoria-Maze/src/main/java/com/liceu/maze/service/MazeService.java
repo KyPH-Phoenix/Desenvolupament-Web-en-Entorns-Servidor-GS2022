@@ -114,6 +114,7 @@ public class MazeService {
         room.put("walls", walls);
         room.put("coin", currentRoom.haveCoin());
         room.put("key", currentRoom.haveKey());
+        room.put("target", currentRoom.isTarget());
 
         root.put("player", player);
         root.put("room", room);
