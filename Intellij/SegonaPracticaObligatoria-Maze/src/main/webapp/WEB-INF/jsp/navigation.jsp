@@ -19,20 +19,116 @@
         ${myjson}
     </script>
 
+    <script id="mydata" type="application/json">
+        {
+            "room":{
+                "walls":{
+                    "s":{
+                        "type":"door",
+                        "open":true
+                    },
+                    "e":{
+                        "type":"door",
+                        "open":true
+                    },
+                    "w":{
+                        "type":"door",
+                        "open":false
+                    },
+                    "n":{
+                        "type":"door",
+                        "open":true
+                    }
+                },
+                "key":true,
+                "coin":true
+            },
+            "player":{
+                "currentRoom":1,
+                "coins":0,
+                "keys":0
+            },
+            "message":""
+        }
+    </script>
+
     <script>
         let canvas = document.getElementById("canvas");
         let ctx = canvas.getContext("2d");
         let data = JSON.parse(document.getElementById("mydata").textContent);
         console.log(data);
 
+        let directions = {
+            "down": {
+                "frames": {
+                    "f1": { "x": 0, "y": 0 },
+                    "f2": { "x": 64, "y": 0 },
+                    "f3": { "x": 128, "y": 0 },
+                    "f4": { "x": 192, "y": 0 }
+                },
+                "clear": [350, 230, 100, 300],
+                "positions": {
+                    "p1": { "x": 355, "y": 235 },
+                    "p2": { "x": 355, "y": 295 },
+                    "p3": { "x": 355, "y": 355 },
+                    "p4": { "x": 355, "y": 415 }
+                }
+            },
+            "up": {
+                "frames": {
+                    "f1": { "x": 0, "y": 192 },
+                    "f2": { "x": 64, "y": 192 },
+                    "f3": { "x": 128, "y": 192 },
+                    "f4": { "x": 192, "y": 192 }
+                },
+                "clear": [350, 50, 100, 300],
+                "positions": {
+                    "p1": { "x": 355, "y": 235 },
+                    "p2": { "x": 355, "y": 175 },
+                    "p3": { "x": 355, "y": 115 },
+                    "p4": { "x": 355, "y": 55 }
+                }
+            },
+            "left": {
+                "frames": {
+                    "f1": { "x": 0, "y": 64 },
+                    "f2": { "x": 64, "y": 64 },
+                    "f3": { "x": 128, "y": 64 },
+                    "f4": { "x": 192, "y": 64 }
+                },
+                "clear": [150, 250, 300, 100],
+                "positions": {
+                    "p1": { "x": 355, "y": 235 },
+                    "p2": { "x": 295, "y": 235 },
+                    "p3": { "x": 235, "y": 235 },
+                    "p4": { "x": 175, "y": 235 }
+                }
+            },
+            "right": {
+                "frames": {
+                    "f1": { "x": 0, "y": 128 },
+                    "f2": { "x": 64, "y": 128 },
+                    "f3": { "x": 128, "y": 128 },
+                    "f4": { "x": 192, "y": 128 }
+                },
+                "clear": [350, 250, 300, 100],
+                "positions": {
+                    "p1": { "x": 355, "y": 235 },
+                    "p2": { "x": 415, "y": 235 },
+                    "p3": { "x": 475, "y": 235 },
+                    "p4": { "x": 535, "y": 235 }
+                }
+            }
+        }
+
         function drawRoom() {
             let cross = new Image();
             let character = new Image();
             let coin = new Image();
             let key = new Image();
-    
+
             cross.src = '/img/cross.png';
-            character.src = '/img/character.png';
+            character.src = '/img/leon.png';
             coin.src = '/img/coin.png';
             key.src = '/img/key.png';
 
@@ -51,7 +147,8 @@
             ctx.fillRect(450, 505, 180, 25);
 
             cross.onload = () => ctx.drawImage(cross, 670, 470, 100, 100);
-            character.onload = () => ctx.drawImage(character, 370, 220, 80, 130)
+            character.onload = () => ctx.drawImage(character, 0, 0, 64, 64, 355, 235, 96, 96);
+
 
             ctx.font = "30px Arial";
 
@@ -61,6 +158,8 @@
 
             ctx.font = "18px Arial"
             ctx.fillText(data.message, 200, 40);
+
+            if (data.room.target) ctx.fillText("Has GANAO", 200, 40);
 
             drawSide("N", data.room.walls.n.type, data.room.walls.n.open);
             drawSide("S", data.room.walls.s.type, data.room.walls.s.open);
@@ -74,7 +173,7 @@
             if (data.room.key) {
                 key.onload = () => drawKey(key);
             }
-        }        
+        }
 
         function drawSide(side, type, doorOpen) {
             if (type == "wall") {
@@ -124,23 +223,77 @@
             const x = event.clientX - boundingRect.left;
             const y = event.clientY - boundingRect.top;
 
+            let character = new Image();
+            character.src = '/img/leon.png';
+
+
+
+            let start;
+            const step = (dir) => (timestamp) => {
+                console.log(dir);
+                if (start == undefined) {
+                    start = timestamp;
+                }
+
+                let elapsed = timestamp - start;
+                lastTimestamp = timestamp;
+
+                if (elapsed <= 600) {
+                    if (elapsed <= 150) {
+                        ctx.clearRect(dir.clear[0], dir.clear[1], dir.clear[2], dir.clear[3]);
+                        ctx.drawImage(character, dir.frames.f1.x, dir.frames.f1.y, 64, 64, dir.positions.p1.x, dir.positions.p1.y, 96, 96);
+                    } else if (elapsed <= 300) {
+                        ctx.clearRect(dir.clear[0], dir.clear[1], dir.clear[2], dir.clear[3]);
+                        ctx.drawImage(character, dir.frames.f2.x, dir.frames.f2.y, 64, 64, dir.positions.p2.x, dir.positions.p2.y, 96, 96);
+                    } else if (elapsed <= 450) {
+                        ctx.clearRect(dir.clear[0], dir.clear[1], dir.clear[2], dir.clear[3]);
+                        ctx.drawImage(character, dir.frames.f3.x, dir.frames.f3.y, 64, 64, dir.positions.p3.x, dir.positions.p3.y, 96, 96);
+                    } else {
+                        ctx.clearRect(dir.clear[0], dir.clear[1], dir.clear[2], dir.clear[3]);
+                        ctx.drawImage(character, dir.frames.f4.x, dir.frames.f4.y, 64, 64, dir.positions.p4.x, dir.positions.p4.y, 96, 96);
+                    }
+
+                    requestAnimationFrame(step(dir));
+                }
+            }
+
             if (event.button == 0) {
                 console.log(x, y)
 
                 if (x >= 707 && x <= 735 && y >= 472 && y <= 506) {
-                    window.location.assign("/nav?dir=N");
+                    if (data.room.walls.n.type == "door") {
+                        if (data.room.walls.n.open) {
+                            requestAnimationFrame(step(directions.up));
+                        }
+                    }
+                    setTimeout(() => window.location.assign("/nav?dir=N"), 600);
                 }
 
                 if (x >= 672 && x <= 705 && y >= 508 && y <= 535) {
-                    window.location.assign("/nav?dir=W");
+                    if (data.room.walls.w.type == "door") {
+                        if (data.room.walls.w.open) {
+                            requestAnimationFrame(step(directions.left));
+                        }
+                    }                    
+                    setTimeout(() => window.location.assign("/nav?dir=W"), 600);
                 }
 
                 if (x >= 735 && x <= 769 && y >= 508 && y <= 535) {
-                    window.location.assign("/nav?dir=E");
+                    if (data.room.walls.e.type == "door") {
+                        if (data.room.walls.e.open) {
+                            requestAnimationFrame(step(directions.right));
+                        }
+                    }
+                    setTimeout(() => window.location.assign("/nav?dir=E"), 600);
                 }
 
                 if (x >= 707 && x <= 735 && y >= 535 && y <= 570) {
-                    window.location.assign("/nav?dir=S");
+                    if (data.room.walls.s.type == "door") {
+                        if (data.room.walls.s.open) {
+                            requestAnimationFrame(step(directions.down));
+                        }
+                    }
+                    setTimeout(() => window.location.assign("/nav?dir=S"), 600);
                 }
 
                 if (y >= 400 && y <= 480) {
@@ -186,9 +339,8 @@
 
                     }
                 }
-            }  
+            }
         });
-
     </script>
 </body>
 
