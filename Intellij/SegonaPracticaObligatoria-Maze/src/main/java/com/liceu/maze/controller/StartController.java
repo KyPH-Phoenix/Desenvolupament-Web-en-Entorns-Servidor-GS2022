@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet("/start")
@@ -34,7 +38,12 @@ public class StartController extends HttpServlet {
         int mapId = Integer.parseInt(req.getParameter("mapid"));
         MazeGame mazeGame = mazeService.newGame(mapId);
 
+        Date start = new Date();
+
         session.setAttribute("game", mazeGame);
+        session.setAttribute("gameWon", false);
+        session.setAttribute("mapId", mapId);
+        session.setAttribute("startTime", start.getTime());
 
         resp.sendRedirect("/nav");
     }

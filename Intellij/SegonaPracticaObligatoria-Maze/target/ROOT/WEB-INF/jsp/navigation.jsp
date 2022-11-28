@@ -15,41 +15,12 @@
 <body onload="drawRoom()">
     <canvas id="canvas" width="800" height="600"></canvas>
 
-    <script id="mydata" type="application/json">
-        ${myjson}
-    </script>
+    <form action="/reset" method="get">
+        <input type="submit" value="reset">
+    </form>
 
     <script id="mydata" type="application/json">
-        {
-            "room":{
-                "walls":{
-                    "s":{
-                        "type":"door",
-                        "open":true
-                    },
-                    "e":{
-                        "type":"door",
-                        "open":true
-                    },
-                    "w":{
-                        "type":"door",
-                        "open":false
-                    },
-                    "n":{
-                        "type":"door",
-                        "open":true
-                    }
-                },
-                "key":true,
-                "coin":true
-            },
-            "player":{
-                "currentRoom":1,
-                "coins":0,
-                "keys":0
-            },
-            "message":""
-        }
+        ${myjson}
     </script>
 
     <script>
@@ -159,12 +130,15 @@
             ctx.font = "18px Arial"
             ctx.fillText(data.message, 200, 40);
 
-            if (data.room.target) ctx.fillText("Has GANAO", 200, 40);
+            if (data.room.target) {
+                ctx.fillText("VICTORIA! Es redirigirà a la pàgina de registre en 3 segons...", 200, 40);
+                setTimeout(() => window.location.assign("/endform"), 3000);
+            }
 
             drawSide("N", data.room.walls.n.type, data.room.walls.n.open);
             drawSide("S", data.room.walls.s.type, data.room.walls.s.open);
             drawSide("E", data.room.walls.e.type, data.room.walls.e.open);
-            drawSide("W", data.room.walls.w.type, data.room.walls.w.open);
+            drawSide("W", data.room.walls.w.type, data.room.walls.w.open);  
 
             if (data.room.coin) {
                 coin.onload = () => drawCoin(coin);
@@ -226,8 +200,6 @@
             let character = new Image();
             character.src = '/img/leon.png';
 
-
-
             let start;
             const step = (dir) => (timestamp) => {
                 console.log(dir);
@@ -257,7 +229,7 @@
                 }
             }
 
-            if (event.button == 0) {
+            if (event.button == 0 && !data.room.target) {
                 console.log(x, y)
 
                 if (x >= 707 && x <= 735 && y >= 472 && y <= 506) {

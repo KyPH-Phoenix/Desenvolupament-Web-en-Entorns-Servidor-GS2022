@@ -8,9 +8,11 @@
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/exceptions/NotDoorException.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/controller/CoinController.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/model/Maze.java
+/home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/controller/ResetController.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/service/MazeService.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/model/Item.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/service/PereGame.java
+/home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/filters/EndFilter.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/controller/DoorController.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/model/Door.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/service/ExempleService.java

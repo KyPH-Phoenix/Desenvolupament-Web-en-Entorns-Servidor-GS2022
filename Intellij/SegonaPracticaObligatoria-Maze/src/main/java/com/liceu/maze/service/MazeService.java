@@ -22,7 +22,7 @@ public class MazeService {
         return List.of(maze1);
     }
 
-    public synchronized MazeGame newGame(int id) throws IOException {
+    public synchronized MazeGame newGame(int id) {
         MazeGame mazeGame = new MazeGame();
         Maze maze = getMaze(id);
 
@@ -31,13 +31,21 @@ public class MazeService {
         try {
             player.setCurrentRoom(maze.getRoom(1));
         } catch (NullPointerException e) {
-            throw new IOException(e);
+            throw new RuntimeException(e);
         }
 
         mazeGame.setMaze(maze);
         mazeGame.setPlayer(player);
 
         gameList.add(mazeGame);
+
+        return mazeGame;
+    }
+
+    public synchronized MazeGame resetGame(int mapId, MazeGame mazeGame) {
+        gameList.remove(mazeGame);
+
+        mazeGame = newGame(mapId);
 
         return mazeGame;
     }
@@ -221,4 +229,6 @@ public class MazeService {
             return null;
         }
     }
+
+
 }

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/nav", "/open", "/getcoin", "/getkey"})
+@WebFilter(urlPatterns = {"/nav", "/open", "/getcoin", "/getkey", "/endform"})
 public class MapFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
