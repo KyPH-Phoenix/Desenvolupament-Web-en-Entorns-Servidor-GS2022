@@ -15,6 +15,7 @@ com/liceu/maze/controller/CoinController.class
 com/liceu/maze/service/MazeGame.class
 com/liceu/maze/model/Player.class
 com/liceu/maze/util/MazeBuilder.class
+com/liceu/maze/controller/EndController.class
 com/liceu/maze/model/Door.class
 com/liceu/maze/util/StandardMazeBuilder$1.class
 com/liceu/maze/controller/ResetController.class

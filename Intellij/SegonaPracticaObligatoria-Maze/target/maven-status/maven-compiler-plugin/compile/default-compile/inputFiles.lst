@@ -1,5 +1,6 @@
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/controller/NavigationController.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/model/Player.java
+/home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/controller/EndController.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/controller/KeyController.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/exceptions/NonexistentCoinException.java
 /home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/SegonaPracticaObligatoria-Maze/src/main/java/com/liceu/maze/exceptions/NotValidDirectionException.java

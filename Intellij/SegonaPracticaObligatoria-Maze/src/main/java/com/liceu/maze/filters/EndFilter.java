@@ -15,12 +15,12 @@ public class EndFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpSession session = req.getSession();
 
-        boolean gameWon = (boolean) session.getAttribute("gameWon");
+        if (session.getAttribute("gameWon") == null) {
+            res.sendRedirect("/start");
+            return;
+        }
 
-//        if (session.getAttribute("game") == null) {
-//            res.sendRedirect("/start");
-//            return;
-//        }
+        boolean gameWon = (boolean) session.getAttribute("gameWon");
 
         if (!gameWon) {
             res.sendRedirect("/nav");
