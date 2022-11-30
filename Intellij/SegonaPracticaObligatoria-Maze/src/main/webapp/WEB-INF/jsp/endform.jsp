@@ -12,6 +12,10 @@
 </head>
 <body>
     <h1>Has Guanyat</h1>
+    <h3>Temps: ${time}</h3>
     <h3>Registra la teva victòria</h3>
+    <form action="/endform" method="post">
+        
+    </form>
 </body>
 </html>
