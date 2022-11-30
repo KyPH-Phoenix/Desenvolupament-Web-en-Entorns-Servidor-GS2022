@@ -12,10 +12,12 @@
 </head>
 <body>
     <h1>Has Guanyat</h1>
-    <h3>Temps: ${time}</h3>
+    <h3>${mapName} - Temps: ${time}</h3>
     <h3>Registra la teva victòria</h3>
     <form action="/endform" method="post">
-        
+        <label for="userName"></label>
+        <input type="text" name="userName" id="userName" maxlength="20">
+        <input type="submit" value="Registra">  
     </form>
 </body>
 </html>

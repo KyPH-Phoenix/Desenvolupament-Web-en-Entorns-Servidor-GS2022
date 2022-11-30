@@ -20,6 +20,10 @@
         <input type="submit" value="reset">
     </form>
 
+    <form action="/exit" method="get">
+        <input type="submit" value="menu principal">
+    </form>
+
     <script id="mydata" type="application/json">
         ${myjson}
     </script>

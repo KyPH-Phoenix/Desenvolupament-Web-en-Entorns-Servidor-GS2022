@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 
 @WebServlet("/reset")
 public class ResetController extends HttpServlet {
@@ -26,8 +27,11 @@ public class ResetController extends HttpServlet {
         MazeGame game = (MazeGame) session.getAttribute("game");
         game = mazeService.resetGame(mapId, game);
 
+        long startTime = new Date().getTime();
+
         session.setAttribute("game", game);
         session.setAttribute("gameWon", false);
+        session.setAttribute("startTime", startTime);
 
         resp.sendRedirect("/nav");
     }

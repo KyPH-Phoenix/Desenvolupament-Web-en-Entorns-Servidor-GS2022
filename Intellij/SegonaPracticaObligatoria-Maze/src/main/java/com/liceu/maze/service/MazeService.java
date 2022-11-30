@@ -18,8 +18,9 @@ public class MazeService {
 
     public List<Maze> getMaps() {
         Maze maze1 = createMaze1();
+        Maze maze2 = createMaze2();
 
-        return List.of(maze1);
+        return List.of(maze1, maze2);
     }
 
     public synchronized MazeGame newGame(int id) {
@@ -42,8 +43,12 @@ public class MazeService {
         return mazeGame;
     }
 
-    public synchronized MazeGame resetGame(int mapId, MazeGame mazeGame) {
+    public synchronized void removeGame(MazeGame mazeGame) {
         gameList.remove(mazeGame);
+    }
+
+    public synchronized MazeGame resetGame(int mapId, MazeGame mazeGame) {
+        removeGame(mazeGame);
 
         mazeGame = newGame(mapId);
 
@@ -94,7 +99,20 @@ public class MazeService {
     }
 
     private static Maze createMaze2() {
-        return new Maze();
+        MazeBuilder mazeBuilder = new StandardMazeBuilder();
+
+        mazeBuilder.setMazeName("Maze 2");
+        mazeBuilder.setMazeId(2);
+
+        IntStream
+                .range(1,3)
+                .forEach(mazeBuilder::buildRoom);
+
+        mazeBuilder.buildDoor(1,2, Maze.Directions.NORTH);
+
+        mazeBuilder.setTarget(2);
+
+        return mazeBuilder.getMaze();
     }
 
     public String getJsonInfo(MazeGame game) {
