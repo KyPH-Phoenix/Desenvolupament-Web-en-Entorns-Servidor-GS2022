@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 
 @WebServlet("/nav")
 public class NavigationController extends HttpServlet {
@@ -30,6 +31,11 @@ public class NavigationController extends HttpServlet {
 
         if (game.getPlayer().getCurrentRoom().isTarget()) {
             session.setAttribute("gameWon", true);
+            long startTime = (long) session.getAttribute("startTime");
+            long timeExpent = new Date().getTime() - startTime;
+
+            session.removeAttribute("startTime");
+            session.setAttribute("timeExpent", timeExpent);
         }
 
         String myJson = mazeService.getJsonInfo(game);

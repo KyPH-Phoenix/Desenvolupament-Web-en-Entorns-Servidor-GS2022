@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liceu</groupId>
-  <artifactId>exemplePere</artifactId>
+  <artifactId>exemple</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>PrimeraPracticaObligatoria</name>
@@ -32,7 +32,14 @@
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
+
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.31</version>
+    </dependency>
   </dependencies>
+
   <build>
     <finalName>ROOT</finalName>
 
@@ -76,13 +83,13 @@
             <container>
               <containerId>tomcat7x</containerId>
               <type>installed</type>
-              <home>/home/superior/Documentos/Docker/tomcat/</home>
-<!--              <home>D:/Docker/tomcat</home>-->
+<!--              <home>/home/superior/Documentos/Docker/tomcat/</home>-->
+              <home>D:/Docker/tomcat</home>
             </container>
             <configuration>
               <type>existing</type>
-              <home>/home/superior/Documentos/Docker/tomcat/</home>
-<!--              <home>D:/Docker/tomcat</home>-->
+<!--              <home>/home/superior/Documentos/Docker/tomcat/</home>-->
+              <home>D:/Docker/tomcat</home>
             </configuration>
           </configuration>
         </plugin>

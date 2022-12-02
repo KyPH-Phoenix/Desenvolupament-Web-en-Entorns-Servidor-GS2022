@@ -1,6 +1,6 @@
-/home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/ExemplePere/src/main/java/example/DAO/MessageDaoImpl.java
-/home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/ExemplePere/src/main/java/example/model/Message.java
-/home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/ExemplePere/src/main/java/example/DAO/MessageDaoMysql.java
-/home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/ExemplePere/src/main/java/example/DAO/MessageDao.java
-/home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/ExemplePere/src/main/java/example/controllers/IndexController.java
-/home/superior/Documentos/Repos/Desenvolupament-Web-en-Entorns-Servidor-GS2022/Intellij/ExemplePere/src/main/java/example/service/TextService.java
+D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\ExemplePere\src\main\java\com\liceu\exemple\DAO\MessageDao.java
+D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\ExemplePere\src\main\java\com\liceu\exemple\DAO\MessageDaoImpl.java
+D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\ExemplePere\src\main\java\com\liceu\exemple\service\TextService.java
+D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\ExemplePere\src\main\java\com\liceu\exemple\model\Message.java
+D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\ExemplePere\src\main\java\com\liceu\exemple\controllers\IndexController.java
+D:\Repos\Desenvolupament-Web-en-Entorns-Servidor-GS2022\Intellij\ExemplePere\src\main\java\com\liceu\exemple\DAO\MessageDaoMysql.java

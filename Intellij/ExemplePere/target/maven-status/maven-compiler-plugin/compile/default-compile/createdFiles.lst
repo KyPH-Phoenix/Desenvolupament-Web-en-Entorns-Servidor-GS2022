@@ -1,5 +1,6 @@
-example/controllers/IndexController.class
-example/model/Message.class
-example/DAO/MessageDao.class
-example/service/TextService.class
-example/DAO/MessageDaoMysql.class
+com\liceu\exemple\model\Message.class
+com\liceu\exemple\DAO\MessageDaoMysql.class
+com\liceu\exemple\DAO\MessageDao.class
+com\liceu\exemple\controllers\IndexController.class
+com\liceu\exemple\service\TextService.class
+com\liceu\exemple\DAO\MessageDaoImpl.class

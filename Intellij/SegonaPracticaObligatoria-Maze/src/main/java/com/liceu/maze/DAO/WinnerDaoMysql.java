@@ -1,7 +1,6 @@
 package com.liceu.maze.DAO;
 
 import com.liceu.maze.model.Winner;
-import com.liceu.maze.util.Util;
 
 import java.sql.*;
 import java.util.List;
@@ -14,7 +13,7 @@ public class WinnerDaoMysql implements WinnerDao {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://mysql:3307/mazeWinners",
+                    "jdbc:mysql://mysql:3306/mazeWinners",
                     "root",
                     "root"
             );

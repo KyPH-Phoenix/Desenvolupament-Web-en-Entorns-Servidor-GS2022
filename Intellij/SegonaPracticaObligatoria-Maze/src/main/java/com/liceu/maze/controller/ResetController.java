@@ -1,10 +1,8 @@
 package com.liceu.maze.controller;
 
-import com.liceu.maze.exceptions.NonexistentKeyException;
 import com.liceu.maze.service.MazeGame;
 import com.liceu.maze.service.MazeService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
