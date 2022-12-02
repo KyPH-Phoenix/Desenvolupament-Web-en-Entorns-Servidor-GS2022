@@ -3,6 +3,7 @@ package com.liceu.maze.DAO;
 import com.liceu.maze.model.Winner;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class WinnerDaoMysql implements WinnerDao {
@@ -25,8 +26,9 @@ public class WinnerDaoMysql implements WinnerDao {
 
     @Override
     public void addWinner(Winner winner) {
+        Connection con = getConnection();
+
         try {
-            Connection con = getConnection();
             String insert = "INSERT INTO `winner` (`userName`, `mapName`, `elapsedTime`) VALUES (?, ?, ?)";
 
             PreparedStatement ps = con.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
@@ -50,6 +52,30 @@ public class WinnerDaoMysql implements WinnerDao {
 
     @Override
     public List<Winner> getWinners() {
-        return null;
+        Connection con = getConnection();
+        List<Winner> winnerList = new ArrayList<>();
+
+        try {
+            Statement st = con.createStatement();
+            String select = "SELECT * FROM winner ORDER BY elapsedTime ASC";
+            ResultSet rs = st.executeQuery(select);
+
+            while (rs.next()) {
+                String userName = rs.getString("userName");
+                String mapName = rs.getString("mapName");
+                long elapsedTime = rs.getLong("elapsedTime");
+
+                Winner winner = new Winner();
+                winner.setUserName(userName);
+                winner.setMapName(mapName);
+                winner.setElapsedTime(elapsedTime);
+
+                winnerList.add(winner);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return winnerList;
     }
 }
