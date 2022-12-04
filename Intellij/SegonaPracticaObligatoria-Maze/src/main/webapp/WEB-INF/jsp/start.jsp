@@ -37,19 +37,21 @@
         </nav>
     </header>
 
-    <main class="pl-5 mt-3">
+    <main class="d-flex flex-column justify-content-center align-items-center w-100 h-75">
         <h1>Seleccio de mapa</h1>
-        
-        <form action="/start" method="post">
-            <label for="mapid">Tria mapa</label>
-            <select name="mapid" id="mapid">
-                <c:forEach var="map" items="${maps}">
-                    <option value="${map.id}">${map.name}</option>
-                </c:forEach>
-            </select>
-        
-            <input type="submit" value="Jugar">
-    </form>
+
+        <form action="/start" method="post" class="d-flex flex-column w-25">
+            <section class="d-flex flex-row pb-1">
+                <label for="mapid" class="w-25">Tria mapa</label>
+                <select name="mapid" id="mapid" class="w-75 button button-dark">
+                    <c:forEach var="map" items="${maps}">
+                        <option value="${map.id}">${map.name}</option>
+                    </c:forEach>
+                </select>
+            </section>
+
+            <input type="submit" value="Jugar" class="py-2 btn btn-primary">
+        </form>
     </main>
 
     <!-- Bootstrap JS Scripts -->

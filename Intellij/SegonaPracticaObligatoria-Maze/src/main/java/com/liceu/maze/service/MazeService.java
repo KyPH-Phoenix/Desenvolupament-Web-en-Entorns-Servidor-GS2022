@@ -69,7 +69,7 @@ public class MazeService {
     private static Maze createMaze1() {
         MazeBuilder mazeBuilder = new StandardMazeBuilder();
 
-        mazeBuilder.setMazeName("Maze 1");
+        mazeBuilder.setMazeName("Mapa1");
         mazeBuilder.setMazeId(1);
 
         IntStream
@@ -101,16 +101,51 @@ public class MazeService {
     private static Maze createMaze2() {
         MazeBuilder mazeBuilder = new StandardMazeBuilder();
 
-        mazeBuilder.setMazeName("Maze 2");
+        mazeBuilder.setMazeName("Mapa2");
         mazeBuilder.setMazeId(2);
 
         IntStream
-                .range(1,3)
+                .range(1,18)
                 .forEach(mazeBuilder::buildRoom);
 
         mazeBuilder.buildDoor(1,2, Maze.Directions.NORTH);
+        mazeBuilder.buildDoor(4,5, Maze.Directions.EAST);
+        mazeBuilder.buildDoor(2,3, Maze.Directions.NORTH);
+        mazeBuilder.buildDoor(1,6, Maze.Directions.EAST);
+        mazeBuilder.buildDoor(7,8, Maze.Directions.SOUTH);
+        mazeBuilder.buildDoor(1,10, Maze.Directions.SOUTH);
+        mazeBuilder.buildDoor(11, 12, Maze.Directions.WEST);
+        mazeBuilder.buildDoor(12,13, Maze.Directions.WEST);
+        mazeBuilder.buildDoor(1, 14, Maze.Directions.WEST);
+        mazeBuilder.buildDoor(14, 15, Maze.Directions.WEST);
+        mazeBuilder.buildDoor(15, 16, Maze.Directions.NORTH);
+        mazeBuilder.buildDoor(16, 17, Maze.Directions.NORTH);
 
-        mazeBuilder.setTarget(2);
+        Key k1 = new Key("k1", 2);
+        Key k2 = new Key("k2", 1);
+        Key k3 = new Key("k3", 2);
+        Key k4 = new Key("k4", 3);
+
+        mazeBuilder.buildDoor(6,7, Maze.Directions.EAST,k1);
+        mazeBuilder.buildDoor(10, 11, Maze.Directions.SOUTH, k2);
+        mazeBuilder.buildDoor(8, 9, Maze.Directions.SOUTH, k3);
+        mazeBuilder.buildDoor(3, 4, Maze.Directions.EAST, k4);
+
+        mazeBuilder.putItemInRoom(3, k1);
+        mazeBuilder.putItemInRoom(8, k2);
+        mazeBuilder.putItemInRoom(13, k3);
+        mazeBuilder.putItemInRoom(9, k4);
+
+        mazeBuilder.putItemInRoom(2, new Coin());
+        mazeBuilder.putItemInRoom(7, new Coin());
+        mazeBuilder.putItemInRoom(11, new Coin());
+        mazeBuilder.putItemInRoom(12, new Coin());
+        mazeBuilder.putItemInRoom(13, new Coin());
+        mazeBuilder.putItemInRoom(15, new Coin());
+        mazeBuilder.putItemInRoom(16, new Coin());
+        mazeBuilder.putItemInRoom(17, new Coin());
+
+        mazeBuilder.setTarget(5);
 
         return mazeBuilder.getMaze();
     }

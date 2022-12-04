@@ -16,13 +16,15 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body class="pl-5 pt-3 vw-100 vh-100">
-    <h1>Has Guanyat</h1>
-    <h3>${mapName} - Temps: ${time}</h3>
-    <h3>Registra la teva victòria</h3>
-    <form action="/endform" method="post">
-        <label for="userName"></label>
-        <input type="text" name="userName" id="userName" maxlength="20">
-        <input type="submit" value="Registra">  
-    </form>
+    <main class="d-flex flex-column justify-content-center align-items-center w-100 h-75">
+        <h1>Has Guanyat</h1>
+        <h3>${mapName} - Temps: ${time}</h3>
+        <h3>Registra la teva victòria</h3>
+        <form action="/endform" method="post" class="d-flex flex-column pb-1">
+            <label for="userName"></label>
+            <input type="text" name="userName" id="userName" maxlength="20" class="mb-2">
+            <input type="submit" value="Registra" class="btn btn-primary py-2">  
+        </form>
+    </main>
 </body>
 </html>

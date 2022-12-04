@@ -17,16 +17,18 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body onload="drawRoom()" class="pl-5 mt-5 vw-100 vh-100">
-    <canvas id="canvas" width="800" height="600"></canvas>
+<body onload="drawRoom()" class="vw-100 vh-100 d-flex flex-column align-items-center justify-content-center">
+    <canvas id="canvas" width="800" height="600" class="mb-2"></canvas>
 
-    <form action="/reset" method="get">
-        <input type="submit" value="reset">
-    </form>
-
-    <form action="/exit" method="get">
-        <input type="submit" value="menu principal">
-    </form>
+    <section class="d-flex flex-row w-25 justify-content-center">
+        <form action="/reset" method="get" class="w-50 mr-2">
+            <input type="submit" value="Reset" class="w-100 btn btn-primary">
+        </form>
+        
+        <form action="/exit" method="get" class="w-50">
+            <input type="submit" value="Menu Principal" class="w-100 btn btn-primary">
+        </form>
+    </section>
 
     <script id="mydata" type="application/json">
         ${myjson}
