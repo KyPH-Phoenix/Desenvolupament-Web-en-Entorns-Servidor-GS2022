@@ -282,6 +282,4 @@ public class MazeService {
             return null;
         }
     }
-
-
 }
