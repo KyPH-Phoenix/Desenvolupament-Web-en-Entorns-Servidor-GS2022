@@ -1,0 +1,10 @@
+com\liceu\countries\services\MyService.class
+com\liceu\countries\dao\CityDAOMysql.class
+com\liceu\countries\controllers\AppController.class
+com\liceu\countries\model\Country.class
+com\liceu\countries\dao\CountryDAOMysql.class
+com\liceu\countries\configuration\AppConfig.class
+com\liceu\countries\dao\CountryDAO.class
+com\liceu\countries\model\City.class
+com\liceu\countries\configuration\AnnotationWebAppInitializer.class
+com\liceu\countries\dao\CityDAO.class

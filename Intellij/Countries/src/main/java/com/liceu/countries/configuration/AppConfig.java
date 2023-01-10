@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebMvc
 @ComponentScan
-@ComponentScan("com.liceu.ExempleSpring")
+@ComponentScan("com.liceu.countries")
 @PropertySource("classpath:application.properties")
 public class AppConfig implements WebMvcConfigurer {
     @Autowired
