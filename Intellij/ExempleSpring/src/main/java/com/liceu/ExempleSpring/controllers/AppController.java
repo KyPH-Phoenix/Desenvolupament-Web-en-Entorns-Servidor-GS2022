@@ -1,15 +1,14 @@
 package com.liceu.ExempleSpring.controllers;
 
+import com.liceu.ExempleSpring.model.Person;
 import com.liceu.ExempleSpring.service.MyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class AppController {
@@ -47,5 +46,24 @@ public class AppController {
     @ResponseBody
     public String test2() {
         return "Hello from spring";
+    }
+
+    @GetMapping("/newPerson")
+    public String newPersonGet() {
+        return "personForm";
+    }
+
+    @PostMapping("/newPerson")
+    @ResponseBody
+    public String newPersonPost(String name) {
+        service.newPerson(name);
+        return "ok";
+    }
+
+    @GetMapping("/allPersons")
+    public String allPersonsPost(Model model) {
+        List<Person> people = service.getAllPersons();
+        model.addAttribute("people", people);
+        return "allPeople";
     }
 }

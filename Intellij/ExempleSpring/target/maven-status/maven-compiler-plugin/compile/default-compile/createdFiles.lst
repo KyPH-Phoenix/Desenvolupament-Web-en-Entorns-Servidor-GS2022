@@ -1,6 +1,9 @@
 com/liceu/ExempleSpring/configuration/AppConfig.class
-com/liceu/ExempleSpring/service/MyService.class
 com/liceu/ExempleSpring/controllers/AppController.class
 com/liceu/ExempleSpring/configuration/AnnotationWebAppInitializer.class
-com/liceu/ExempleSpring/DAO/UserDAOImpl.class
-com/liceu/ExempleSpring/DAO/UserDAO.class
+com/liceu/ExempleSpring/DAO/PersonDAOMysql.class
+com/liceu/ExempleSpring/DAO/PersonDAO.class
+com/liceu/ExempleSpring/model/Person.class
+com/liceu/ExempleSpring/service/MyService.class
+com/liceu/ExempleSpring/interceptors/LoginInterceptor.class
+com/liceu/ExempleSpring/interceptors/TestInterceptor.class
