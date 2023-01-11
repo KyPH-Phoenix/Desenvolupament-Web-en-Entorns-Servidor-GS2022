@@ -15,6 +15,10 @@
             border: 2px solid black;
         }
 
+        td, th {
+            padding: 4px;
+        }
+        
         body > * {
             margin: auto;
             margin-top: 20px;
@@ -63,17 +67,11 @@
                 </td>
 
                 <td>
-                    <form action="/cities/${country.code}" method="get">
-                        <input type="hidden" value="${country.code}">
-                        <input type="submit" value="Cities">
-                    </form>
+                    <a href="/cities/${country.code}">Cities</a>
                 </td>
 
                 <td>
-                    <form action="/languages/${country.code}" method="get">
-                        <input type="hidden" value="${country.code}">
-                        <input type="submit" value="Languages">
-                    </form>
+                    <a href="/languages/${country.code}">Languages</a>
                 </td>
             </tr>
         </c:forEach>

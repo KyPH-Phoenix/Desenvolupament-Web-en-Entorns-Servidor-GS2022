@@ -15,6 +15,10 @@
             border: 2px solid black;
         }
 
+        td, th {
+            padding: 4px;
+        }
+        
         body > * {
             margin: auto;
             margin-top: 20px;

@@ -19,6 +19,13 @@ public class CountryDAOMysql implements CountryDAO {
     }
 
     @Override
+    public List<Country> getAllForLanguage(String language) {
+        return jdbcTemplate.query("SELECT Code, Name, Population FROM country " +
+                "JOIN countrylanguage ON Code = CountryCode WHERE Language = (?)",
+                countryMapper, language);
+    }
+
+    @Override
     public Country get(String countryCode) {
         return jdbcTemplate.query("SELECT Code, Name, Population FROM country WHERE Code = (?)",
                 countryMapper, countryCode).get(0);

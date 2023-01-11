@@ -15,6 +15,10 @@
             border: 2px solid black;
         }
 
+        td, th {
+            padding: 4px;
+        }
+
         body > * {
             margin: auto;
             margin-top: 20px;
@@ -47,7 +51,7 @@
         <c:forEach var="language" items="${languages}">
             <tr>
                 <td>
-                    ${language.name}
+                    <a href="/countries/${language.name}">${language.name}</a>
                 </td> 
                 
                 <td>
