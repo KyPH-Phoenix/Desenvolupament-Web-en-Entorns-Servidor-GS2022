@@ -2,9 +2,11 @@ package com.liceu.countries.services;
 
 import com.liceu.countries.dao.CityDAO;
 import com.liceu.countries.dao.CountryDAO;
+import com.liceu.countries.dao.LanguageDAO;
 import com.liceu.countries.model.City;
 import com.liceu.countries.model.Country;
 
+import com.liceu.countries.model.Language;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,9 @@ public class MyService {
     @Autowired
     CityDAO cityDAO;
 
+    @Autowired
+    LanguageDAO languageDAO;
+
     public List<Country> getAllCountries() {
         return countryDAO.getAll();
     }
@@ -26,7 +31,7 @@ public class MyService {
         return cityDAO.getFromCountry(code);
     }
 
-    public Country getCountry(String code) {
-        return countryDAO.get(code);
-    }
+    public Country getCountry(String code) { return countryDAO.get(code); }
+
+    public List<Language> getLanguagesFromCountry(String code) { return languageDAO.getAllFromCountry(code); }
 }

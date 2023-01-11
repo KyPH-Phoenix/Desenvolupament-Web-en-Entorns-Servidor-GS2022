@@ -20,4 +20,8 @@
 
     -->
 
+    <welcome-file-list>
+        <welcome-file>countries</welcome-file>
+    </welcome-file-list>
+
 </web-app>

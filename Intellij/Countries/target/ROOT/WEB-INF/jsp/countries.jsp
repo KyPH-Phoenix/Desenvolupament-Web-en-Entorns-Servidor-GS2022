@@ -18,6 +18,7 @@
         body > * {
             margin: auto;
             margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         h1 {
@@ -46,7 +47,7 @@
                 Actions
             </th>
         </tr>
-        
+
         <c:forEach var="country" items="${countries}">
             <tr>
                 <td>

@@ -2,6 +2,7 @@ package com.liceu.countries.controllers;
 
 import com.liceu.countries.model.City;
 import com.liceu.countries.model.Country;
+import com.liceu.countries.model.Language;
 import com.liceu.countries.services.MyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class AppController {
     MyService myService;
 
     @GetMapping("/countries")
-    public String allCountries(Model model) {
+    public String allCountriesGet(Model model) {
         List<Country> countries = myService.getAllCountries();
 
         model.addAttribute("countries", countries);
@@ -29,7 +30,7 @@ public class AppController {
     }
 
     @GetMapping("/cities/{code}")
-    public String cities(@PathVariable String code, Model model) {
+    public String citiesGet(@PathVariable String code, Model model) {
         List<City> cities = myService.getCitiesFromCountry(code);
         String countryName = myService.getCountry(code).getName();
 
@@ -37,5 +38,16 @@ public class AppController {
         model.addAttribute("title", String.format("CITIES FROM %s - %s", countryName, code).toUpperCase());
 
         return "cities";
+    }
+
+    @GetMapping("/languages/{code}")
+    public String languagesGet(@PathVariable String code, Model model) {
+        List<Language> languages = myService.getLanguagesFromCountry(code);
+        String countryName = myService.getCountry(code).getName();
+
+        model.addAttribute("languages", languages);
+        model.addAttribute("title", String.format((countryName + " - " + code).toUpperCase()));
+
+        return "languages";
     }
 }
