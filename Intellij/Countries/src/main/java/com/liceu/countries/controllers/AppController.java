@@ -6,12 +6,14 @@ import com.liceu.countries.model.Language;
 import com.liceu.countries.services.MyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 
 @Controller
@@ -46,20 +48,31 @@ public class AppController {
         String countryName = myService.getCountry(code).getName();
 
         model.addAttribute("cities", cities);
+        model.addAttribute("countryCode", code);
         model.addAttribute("title", String.format("CITIES FROM %s - %s",
                 countryName, code).toUpperCase());
 
         return "cities";
     }
 
-    @GetMapping("/newCity")
-    public String newCityGet(){
+    @GetMapping("/newCity/{code}")
+    public String newCityGet(@PathVariable String code, Model model) {
+        String countryName = myService.getCountry(code).getName();
+        List<String> districts = myService.getDistrictsFromCountry(code);
+
+        model.addAttribute("countryCode", code);
+        model.addAttribute("country", countryName.toUpperCase());
+        model.addAttribute("districts", districts);
+
         return "newCityForm";
     }
 
-    @PostMapping("/newCity")
-    public String newCityPost(Model model) {
-        return null;
+    @PostMapping("/newCity/{code}")
+    public String newCityPost(@PathVariable String code, Model model, ) {
+        String cityName = (String) model.getAttribute("cityName");
+        String district = (String) model.getAttribute("district");
+        int population = (int) model.getAttribute("population");
+
     }
 
     @GetMapping("/languages/{code}")

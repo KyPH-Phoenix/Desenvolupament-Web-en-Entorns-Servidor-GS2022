@@ -31,6 +31,14 @@ public class CountryDAOMysql implements CountryDAO {
                 countryMapper, countryCode).get(0);
     }
 
+    @Override
+    public List<String> getDistricts(String countryCode) {
+        return jdbcTemplate.query("SELECT DISTINCT District FROM city WHERE CountryCode = (?) AND " +
+                        "District != '' AND District != '–'",
+                (rs, rn) -> rs.getString("District"),
+                countryCode);
+    }
+
     private final RowMapper<Country> countryMapper = (rs, rn) -> {
         Country country = new Country();
         country.setCode(rs.getString("Code"));
@@ -39,5 +47,4 @@ public class CountryDAOMysql implements CountryDAO {
 
         return country;
     };
-
 }

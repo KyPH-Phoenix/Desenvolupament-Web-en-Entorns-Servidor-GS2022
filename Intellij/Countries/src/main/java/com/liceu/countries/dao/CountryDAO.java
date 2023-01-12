@@ -8,4 +8,5 @@ public interface CountryDAO {
     List<Country> getAll();
     List<Country> getAllForLanguage(String language);
     Country get(String countryCode);
+    List<String> getDistricts(String countryCode);
 }

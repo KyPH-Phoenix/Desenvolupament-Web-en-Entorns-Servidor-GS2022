@@ -37,4 +37,7 @@ public class MyService {
 
     public List<Language> getLanguagesFromCountry(String code) { return languageDAO.getAllFromCountry(code); }
 
+    public List<String> getDistrictsFromCountry(String code) {
+        return countryDAO.getDistricts(code);
+    }
 }

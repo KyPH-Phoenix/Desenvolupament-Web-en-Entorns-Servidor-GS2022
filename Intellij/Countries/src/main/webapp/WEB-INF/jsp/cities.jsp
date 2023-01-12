@@ -25,7 +25,7 @@
             margin-bottom: 20px;
         }
 
-        h1 {
+        h1, a {
             text-align: center;
         }
     </style>
@@ -33,7 +33,7 @@
 <body>
     <h1>${title}</h1>
 
-    <a href="/newCity">Add city</a>
+    <a href="/newCity/${code}">Add city</a>
     <table>
         <tr>
             <th>
