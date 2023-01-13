@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.net.http.HttpResponse;
 import java.util.List;
@@ -68,11 +69,17 @@ public class AppController {
     }
 
     @PostMapping("/newCity/{code}")
-    public String newCityPost(@PathVariable String code, Model model, ) {
+    @ResponseBody
+    public String newCityPost(@PathVariable String code, Model model) {
         String cityName = (String) model.getAttribute("cityName");
         String district = (String) model.getAttribute("district");
-        int population = (int) model.getAttribute("population");
+        String population = (String) model.getAttribute("population");
 
+        System.out.println(cityName);
+        System.out.println(district);
+        System.out.println(population);
+
+        return "City added succesfully";
     }
 
     @GetMapping("/languages/{code}")

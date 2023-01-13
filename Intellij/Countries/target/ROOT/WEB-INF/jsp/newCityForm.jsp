@@ -12,7 +12,7 @@
 </head>
 <body>
     <h1>NEW CITY IN ${country}</h1>
-    <form action="/newCity" method="post">
+    <form action="/newCity/${code}" method="post">
         <label for="cityName">Name:</label>
         <input type="text" name="cityName" id="cityName">
 
