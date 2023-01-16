@@ -18,6 +18,13 @@ public class CityDAOMysql implements CityDAO {
         return jdbcTemplate.query("SELECT Name, District, Population FROM city WHERE CountryCode = (?)", cityMapper, countryCode);
     }
 
+    @Override
+    public void addToCountry(String countryCode, City city) {
+        jdbcTemplate.update("INSERT INTO city (Name, CountryCode, District, Population) " +
+                "VALUES ((?), (?), (?), (?))", city.getName(), countryCode, city.getDistrict(),
+                city.getPopulation());
+    }
+
     private final RowMapper<City> cityMapper = (rs, rn) -> {
         City city = new City();
 

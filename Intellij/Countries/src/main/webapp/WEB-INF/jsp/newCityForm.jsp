@@ -11,6 +11,10 @@
     <title>New City</title>
 </head>
 <body>
+    <header>
+        <a href="/countries">All countries</a>
+    </header>
+
     <h1>NEW CITY IN ${country}</h1>
     <form action="/newCity/${code}" method="post">
         <label for="cityName">Name:</label>

@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -19,7 +20,7 @@ public class CountryDAOMysql implements CountryDAO {
     }
 
     @Override
-    public List<Country> getAllForLanguage(String language) {
+    public List<Country> getAllByLanguage(String language) {
         return jdbcTemplate.query("SELECT Code, Name, Population FROM country " +
                 "JOIN countrylanguage ON Code = CountryCode WHERE Language = (?)",
                 countryMapper, language);
@@ -37,6 +38,19 @@ public class CountryDAOMysql implements CountryDAO {
                         "District != '' AND District != '–'",
                 (rs, rn) -> rs.getString("District"),
                 countryCode);
+    }
+
+    @Override
+    public void deleteByLanguage(String language) {
+        List<Country> countries = getAllByLanguage(language);
+        List<String> countryCodes = new ArrayList<>();
+
+        countries.forEach(country -> countryCodes.add(country.getCode()));
+        countryCodes.forEach(code -> {
+            jdbcTemplate.update("DELETE FROM countrylanguage WHERE CountryCode = (?)", code);
+            jdbcTemplate.update("DELETE FROM city WHERE CountryCode = (?)", code);
+            jdbcTemplate.update("DELETE FROM country WHERE Code = (?)", code);
+        });
     }
 
     private final RowMapper<Country> countryMapper = (rs, rn) -> {

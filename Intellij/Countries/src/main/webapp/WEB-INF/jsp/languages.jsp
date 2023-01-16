@@ -31,6 +31,10 @@
     </style>
 </head>
 <body>
+    <header>
+        <a href="/countries">All countries</a>
+    </header>
+
     <h1>${title}</h1>
 
     <table>

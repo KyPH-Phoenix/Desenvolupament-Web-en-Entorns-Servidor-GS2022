@@ -31,7 +31,15 @@
     </style>
 </head>
 <body>
+    <header>
+        <a href="/countries">All countries</a>
+    </header>
+
     <h1>${title}</h1>
+
+    <c:if test="${not empty language}">
+        <a href="/deleteCountries/${language}">Delete countries that speak ${language}</a>
+    </c:if>
 
     <table>
         <tr>

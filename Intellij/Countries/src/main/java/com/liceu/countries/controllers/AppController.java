@@ -6,15 +6,11 @@ import com.liceu.countries.model.Language;
 import com.liceu.countries.services.MyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -39,6 +35,7 @@ public class AppController {
         model.addAttribute("countries", countries);
         model.addAttribute("title", String.format("COUNTRIES WITH %s AS A LANGUAGE",
                 language).toUpperCase());
+        model.addAttribute("language", language);
 
         return "countries";
     }
@@ -70,16 +67,14 @@ public class AppController {
 
     @PostMapping("/newCity/{code}")
     @ResponseBody
-    public String newCityPost(@PathVariable String code, Model model) {
-        String cityName = (String) model.getAttribute("cityName");
-        String district = (String) model.getAttribute("district");
-        String population = (String) model.getAttribute("population");
+    public String newCityPost(@PathVariable String code, HttpServletRequest req) {
+        String cityName = req.getParameter("cityName");
+        String district = req.getParameter("district");
+        int population = Integer.parseInt(req.getParameter("population"));
 
-        System.out.println(cityName);
-        System.out.println(district);
-        System.out.println(population);
+        myService.addCityToCountry(code, cityName, district, population);
 
-        return "City added succesfully";
+        return "City added succesfully<br><a href=\"/cities/" + code + "\">Go back</a>";
     }
 
     @GetMapping("/languages/{code}")
@@ -92,5 +87,13 @@ public class AppController {
                 .toUpperCase()));
 
         return "languages";
+    }
+
+    @GetMapping("/deleteCountries/{language}")
+    @ResponseBody
+    public String deleteCountries(@PathVariable String language) {
+        myService.deleteCuntriesByLanguage(language);
+
+        return "Countries deleted succesfully<br><a href=\"/countries\">Go back</a>";
     }
 }

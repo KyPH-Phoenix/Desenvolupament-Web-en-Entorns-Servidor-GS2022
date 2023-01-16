@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CityDAO {
     List<City> getFromCountry(String countryCode);
+    void addToCountry(String countryCode, City city);
 }

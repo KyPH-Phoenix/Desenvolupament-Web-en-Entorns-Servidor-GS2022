@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <style>
+        table, th, td {
+            border: 2px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav th:replace="navbar.html :: nav">
+
+    </nav>
+
+    <h1 th:text="'Hola ' + ${name}"></h1>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+
+        <tr th:each="p : ${people}">
+            <td th:text="${p.name}"></td>
+            <td th:text="${p.age}"></td>
+        </tr>
+    </table>
+
+    <p th:if="${people.size() > 3}" th:text="'Moltes persones'"></p>
+
+    <a th:href="@{ /people/{name}/{age}/ (name=${pname}, age=${page}) }">Link</a>
+
+    <p>
+        [(${prova})]
+    </p>
+</body>
+</html>
