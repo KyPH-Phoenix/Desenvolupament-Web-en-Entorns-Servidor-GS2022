@@ -1,0 +1,19 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+form > section {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+
+form > section > label {
+    padding-right: 5px;
+}
+
+form > p {
+    text-align: center; 
+}
