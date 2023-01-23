@@ -1,0 +1,22 @@
+2021/prog/barcode.java
+
+USER
+|id| nom |
+|1 |pere |
+
+BUCKET
+|nom |prop|
+|2021|1   |
+
+OBJECT
+|id|       nom       |prop|bucket|data     |
+|1 |prog/barcode.java|1   |1     |12/1/2023|
+|1 |prog/barcode.java|1   |
+
+OBJECT-FITXER
+
+
+FITXER
+|id|blob|hash|
+|1 | ** |abc |
+

@@ -3,10 +3,22 @@ package com.liceu.demo.model;
 public class Person {
     private String name;
     private int age;
+    private int id;
 
     public Person(String name, int age) {
         this.name = name;
         this.age = age;
+        }
+
+        public Person() {
+        }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getAge() {
