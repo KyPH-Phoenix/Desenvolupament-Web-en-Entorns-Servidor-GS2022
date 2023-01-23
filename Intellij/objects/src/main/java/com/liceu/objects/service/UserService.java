@@ -2,6 +2,7 @@ package com.liceu.objects.service;
 
 import com.liceu.objects.dao.UserDAO;
 import com.liceu.objects.exception.DistinctPasswordException;
+import com.liceu.objects.exception.IncorrectPasswordOrUsernameException;
 import com.liceu.objects.exception.UsernameAlreadyExistsException;
 import com.liceu.objects.model.User;
 import com.liceu.objects.util.Utilities;
@@ -36,5 +37,13 @@ public class UserService {
 
         return users.stream()
                 .anyMatch(user -> user.getUsername().equals(username));
+    }
+
+    public User getUserByUsername(String username, String password) {
+        User user = userDAO.getByUsername(username, password);
+
+        if (user == null) throw new IncorrectPasswordOrUsernameException();
+
+        return user;
     }
 }

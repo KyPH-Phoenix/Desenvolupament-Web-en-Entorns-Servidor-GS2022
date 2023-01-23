@@ -26,4 +26,13 @@ public class UserDAOMysql implements UserDAO {
         return jdbcTemplate.query("SELECT * FROM user",
                 new BeanPropertyRowMapper<>(User.class));
     }
+
+    @Override
+    public User getByUsername(String username, String password) {
+        return jdbcTemplate.query("SELECT * FROM user WHERE username = (?) AND password = (?)",
+                new BeanPropertyRowMapper<>(User.class), username, password)
+                .stream()
+                .findAny()
+                .orElse(null);
+    }
 }
