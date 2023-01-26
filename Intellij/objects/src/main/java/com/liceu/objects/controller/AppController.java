@@ -5,6 +5,7 @@ import com.liceu.objects.exception.IncorrectPasswordOrUsernameException;
 import com.liceu.objects.exception.UsernameAlreadyExistsException;
 import com.liceu.objects.model.Bucket;
 import com.liceu.objects.model.User;
+import com.liceu.objects.service.BucketService;
 import com.liceu.objects.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +24,9 @@ import java.util.List;
 public class AppController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    BucketService bucketService;
 
     @GetMapping("/")
     public RedirectView redirectToLogin() {
@@ -52,16 +56,16 @@ public class AppController {
 
         }
 
-        return new RedirectView("/homepage/" + username);
+        return new RedirectView("/objects");
     }
 
-    @GetMapping("/register")
+    @GetMapping("/signup")
     public String registerGet() {
 
-        return "register";
+        return "signup";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public RedirectView registerPost(HttpServletRequest req) {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
@@ -81,19 +85,21 @@ public class AppController {
         return new RedirectView("/login");
     }
 
-    @GetMapping("/homepage/{username}")
-    public String okGet(@PathVariable String username, HttpServletRequest req) {
+    @GetMapping("/objects")
+    public String okGet(HttpServletRequest req) {
         HttpSession session = req.getSession();
 
         User user = (User) session.getAttribute("user");
-        List<Bucket> buckets = userService.getBucketsFromUser(username);
+
+        List<Bucket> buckets = bucketService.getBucketsFromUser(user);
 
         req.setAttribute("username", user.getUsername());
         req.setAttribute("buckets", buckets);
 
-        return "homepage";
+        return "object";
     }
 
+    /*
     @PostMapping("...")
     public ResponseEntity<byte[]> download() {
         byte[] content = file.getContent();
@@ -108,4 +114,5 @@ public class AppController {
 
         return new ResponseEntity<>(content, headers, HttpStatus.OK);
     }
+    */
 }

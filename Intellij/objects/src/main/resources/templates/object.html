@@ -8,5 +8,11 @@
 </head>
 <body>
     <h1 th:text="'Welcome, ' + ${username}"></h1>
+
+    <ul th:each="b : ${buckets}">
+        <li>
+            <a th:href="@{/objects/${b.bucketname}}" th:text="${b.bucketname}"></a>
+        </li>
+    </ul>
 </body>
 </html>
