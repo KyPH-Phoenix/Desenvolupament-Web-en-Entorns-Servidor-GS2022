@@ -7,12 +7,22 @@
     <title>Homepage</title>
 </head>
 <body>
-    <h1 th:text="'Welcome, ' + ${username}"></h1>
+    <header>
+        <h1 th:text="'Welcome, ' + ${username}"></h1>
+        
+        <section id="menu">
+            <button onclick="displayMenu()">New bucket</button>
+        </section>
+    </header>
+
+    
 
     <ul th:each="b : ${buckets}">
         <li>
-            <a th:href="@{/objects/${b.bucketname}}" th:text="${b.bucketname}"></a>
+            <a th:href="@{ /objects/{bucket}/ (bucket=${b.bucketname}) }" th:text="${b.bucketname}"></a>
         </li>
     </ul>
+
+    <script src="/js/bucketMenu.js"></script>
 </body>
 </html>

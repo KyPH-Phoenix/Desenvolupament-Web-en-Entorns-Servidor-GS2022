@@ -13,9 +13,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
@@ -86,7 +88,7 @@ public class AppController {
     }
 
     @GetMapping("/objects")
-    public String okGet(HttpServletRequest req) {
+    public String objectsGet(HttpServletRequest req) {
         HttpSession session = req.getSession();
 
         User user = (User) session.getAttribute("user");
@@ -98,6 +100,27 @@ public class AppController {
 
         return "object";
     }
+
+    @PostMapping("/objects")
+    public RedirectView objectsPost(HttpServletRequest req) {
+        HttpSession session = req.getSession();
+
+        String username = ((User) session.getAttribute("user")).getUsername();
+        String bucketname = req.getParameter("name");
+
+        bucketService.createBucket(bucketname, username);
+
+        return new RedirectView("/objects");
+    }
+
+    /*
+    @GetMapping("objects/{bucket}/**")
+    public String getObject(HttpServletRequest req) {
+        String url = (String) req.getAttribute(
+                HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE
+        );
+    }
+    */
 
     /*
     @PostMapping("...")

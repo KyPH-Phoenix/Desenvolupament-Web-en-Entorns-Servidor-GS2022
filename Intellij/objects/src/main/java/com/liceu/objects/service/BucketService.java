@@ -18,4 +18,8 @@ public class BucketService {
 
         return bucketDAO.getAllFromUser(username);
     }
+
+    public void createBucket(String bucketname, String username) {
+        bucketDAO.createBucket(bucketname, username);
+    }
 }

@@ -18,4 +18,10 @@ public class BucketDAOMysql implements BucketDAO {
         return jdbcTemplate.query("SELECT * FROM bucket WHERE username = (?)",
                 new BeanPropertyRowMapper<>(Bucket.class), username);
     }
+
+    @Override
+    public void createBucket(String bucketname, String username) {
+        jdbcTemplate.update("INSERT INTO bucket (username, bucketname) VALUES ((?), (?))",
+                username, bucketname);
+    }
 }

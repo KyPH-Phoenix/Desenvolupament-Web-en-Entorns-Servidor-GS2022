@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface BucketDAO {
     List<Bucket> getAllFromUser(String username);
+    void createBucket(String bucketname, String username);
 }
