@@ -40,7 +40,7 @@ public class UserService {
     }
 
     public User getUserByUsername(String username, String password) {
-        User user = userDAO.getByUsername(username, password);
+        User user = userDAO.getByUsername(username, Utilities.getSHA512(password));
 
         if (user == null) throw new IncorrectPasswordOrUsernameException();
 
