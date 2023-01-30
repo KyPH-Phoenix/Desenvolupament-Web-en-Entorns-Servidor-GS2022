@@ -4,20 +4,20 @@ import com.liceu.objects.exception.DistinctPasswordException;
 import com.liceu.objects.exception.IncorrectPasswordOrUsernameException;
 import com.liceu.objects.exception.UsernameAlreadyExistsException;
 import com.liceu.objects.model.Bucket;
+import com.liceu.objects.model.BucketObject;
 import com.liceu.objects.model.User;
 import com.liceu.objects.service.BucketService;
 import com.liceu.objects.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
@@ -112,6 +112,17 @@ public class AppController {
 
         return new RedirectView("/objects");
     }
+
+    @GetMapping("/objects/{bucketname}")
+    public String bucketGet(@PathVariable String bucketname, Model model) {
+        List<BucketObject> objects = bucketService.getAllObjectsFromBucket(bucketname);
+
+        model.addAttribute("objects", objects); 
+        model.addAttribute("bucketname", bucketname);
+
+        return "bucket";
+    }
+
 
     /*
     @GetMapping("objects/{bucket}/**")

@@ -1,6 +1,7 @@
 package com.liceu.objects.dao;
 
 import com.liceu.objects.model.Bucket;
+import com.liceu.objects.model.BucketObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,5 +24,11 @@ public class BucketDAOMysql implements BucketDAO {
     public void createBucket(String bucketname, String username) {
         jdbcTemplate.update("INSERT INTO bucket (username, bucketname) VALUES ((?), (?))",
                 username, bucketname);
+    }
+
+    @Override
+    public List<BucketObject> getAllObjectsFromBucket(String bucketname) {
+        return jdbcTemplate.query("SELECT * FROM object WHERE bucketname = (?)",
+                new BeanPropertyRowMapper<>(BucketObject.class), bucketname);
     }
 }

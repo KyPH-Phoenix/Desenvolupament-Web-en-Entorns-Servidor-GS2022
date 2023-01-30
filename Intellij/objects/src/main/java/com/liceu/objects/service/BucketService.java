@@ -2,6 +2,7 @@ package com.liceu.objects.service;
 
 import com.liceu.objects.dao.BucketDAO;
 import com.liceu.objects.model.Bucket;
+import com.liceu.objects.model.BucketObject;
 import com.liceu.objects.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,9 @@ public class BucketService {
 
     public void createBucket(String bucketname, String username) {
         bucketDAO.createBucket(bucketname, username);
+    }
+
+    public List<BucketObject> getAllObjectsFromBucket(String bucketname) {
+        return bucketDAO.getAllObjectsFromBucket(bucketname);
     }
 }

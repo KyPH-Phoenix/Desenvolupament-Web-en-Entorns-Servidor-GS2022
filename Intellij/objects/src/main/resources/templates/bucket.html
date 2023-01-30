@@ -8,19 +8,17 @@
 </head>
 <body>
     <header>
-        <h1 th:text="'Welcome, ' + ${username}"></h1>
-        
+        <h1 th:text="${bucketname}"></h1>
+
         <section id="menu">
-            <button onclick="displayMenu()">New bucket</button>
+            <button th:attr="onclick=|displayMenu('${bucketname}')|">New object</button>
         </section>
     </header>
 
-    <ul th:each="b : ${buckets}">
-        <li>
-            <a th:href="@{ /objects/{bucket} (bucket=${b.bucketname}) }" th:text="${b.bucketname}"></a>
-        </li>
+    <ul th:each="o : ${objects}">
+        <li th:text="${o.objectname} + ' | ' + ${o.version}"></li>
     </ul>
 
-    <script src="/js/bucketMenu.js"></script>
+    <script src="/js/objectMenu.js"></script>
 </body>
 </html>
