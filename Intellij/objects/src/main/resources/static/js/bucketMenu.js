@@ -2,8 +2,8 @@ function displayMenu() {
     let menu = document.getElementById("menu");
 
     let htmlPlaneText = `<form action="/objects" method="POST">`;
-    htmlPlaneText += `<label for="name">Name: </label>`;
-    htmlPlaneText += `<input type="text" name="name" required><br>`;
+    htmlPlaneText += `<label for="bucketname">Name: </label>`;
+    htmlPlaneText += `<input type="text" name="bucketname" required><br>`;
     htmlPlaneText += `<input type="submit" value="Create"><br>`
     htmlPlaneText += '</form><br>'
     htmlPlaneText += `<button onclick="hideMenu()">Cancel</button>`
