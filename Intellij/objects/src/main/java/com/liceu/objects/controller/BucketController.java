@@ -64,22 +64,15 @@ public class BucketController {
     public RedirectView bucketPost(@PathVariable String bucketname, MultipartFile file, String path) {
         User user = (User) session.getAttribute("user");
 
-        System.out.println(file);
-
         try {
             bucketService.createObject(file, path, bucketname, user);
         } catch (IOException E) {
             System.out.println("ERROR");
-            return new RedirectView("objects/{bucketname}");
+            return new RedirectView("/objects/{bucketname}");
         }
 
-        return new RedirectView("objects/{bucketname}");
+        return new RedirectView("/objects/{bucketname}");
     }
-
-//    @PostMaping("/url")
-//    public String url(@PathVariable mis variables, @ReqParam("file"), @MultipartFile file) {
-//        Byte[] bytes = file.getFiles(); (hay que hacer un try catch);
-//    }
 
     /*
     @GetMapping("objects/{bucket}/**")

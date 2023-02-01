@@ -1,7 +1,7 @@
 function displayMenu(bucketName) {
     let menu = document.getElementById("menu");
 
-    let htmlPlaneText = `<form action="/objects/${bucketName}" method="POST" enctype="multipar/form-data">`;
+    let htmlPlaneText = `<form action="/objects/${bucketName}" method="POST" enctype="multipart/form-data">`;
     
     htmlPlaneText += `<label for="file">File: </label>`;
     htmlPlaneText += `<input type="file" name="file" required><br>`;

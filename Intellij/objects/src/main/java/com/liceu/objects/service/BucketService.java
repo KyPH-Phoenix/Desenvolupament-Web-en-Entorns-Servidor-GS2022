@@ -1,6 +1,7 @@
 package com.liceu.objects.service;
 
 import com.liceu.objects.dao.BucketDAO;
+import com.liceu.objects.exception.ObjectAlreadyExistsException;
 import com.liceu.objects.model.Bucket;
 import com.liceu.objects.model.BucketObject;
 import com.liceu.objects.model.User;
@@ -37,12 +38,20 @@ public class BucketService {
         String hash = Utilities.getSHA512(content);
         String objectname = path + ((lastCharSlash(path)) ? "/" : "") + file;
 
-//        if (objectExists(objectname, bucketname)) {
-//
-//        } else {
+        if (objectAlreadyExists(objectname, bucketname)) {
+            throw new ObjectAlreadyExistsException();
+        } else {
 //            bucketDAO.createObject(bucketname, content, hash, objectname, user.getUsername());
-//        }
+        }
     }
+
+    private boolean objectAlreadyExists(String objectname, String bucketname) {
+        List<BucketObject> objects = bucketDAO.getAllObjectsFromBucket(bucketname);
+
+        return objects.stream()
+                .anyMatch(object -> object.getObjectname().equals(objectname));
+    }
+
 
     private boolean lastCharSlash(String path) {
         return path.charAt(path.length() - 1) == '/';
