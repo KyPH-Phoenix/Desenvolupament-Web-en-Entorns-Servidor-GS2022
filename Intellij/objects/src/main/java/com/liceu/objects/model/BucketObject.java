@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class BucketObject {
     private int id;
-    private Date version;
     private String objectname;
     private String username;
     private String bucketname;
@@ -15,14 +14,6 @@ public class BucketObject {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Date getVersion() {
-        return version;
-    }
-
-    public void setVersion(Date version) {
-        this.version = version;
     }
 
     public String getObjectname() {

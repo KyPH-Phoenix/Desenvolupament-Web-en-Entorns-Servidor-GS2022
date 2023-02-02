@@ -1,5 +1,6 @@
 package com.liceu.objects.controller;
 
+import com.liceu.objects.exception.ObjectAlreadyExistsException;
 import com.liceu.objects.model.Bucket;
 import com.liceu.objects.model.BucketObject;
 import com.liceu.objects.model.User;
@@ -38,7 +39,7 @@ public class BucketController {
         model.addAttribute("username", user.getUsername());
         model.addAttribute("buckets", buckets);
 
-        return "object";
+        return "userpage";
     }
 
     @PostMapping("/objects")
@@ -68,6 +69,9 @@ public class BucketController {
             bucketService.createObject(file, path, bucketname, user);
         } catch (IOException E) {
             System.out.println("ERROR");
+            return new RedirectView("/objects/{bucketname}");
+        } catch (ObjectAlreadyExistsException e) {
+            System.out.println("Objecte ja existeix");
             return new RedirectView("/objects/{bucketname}");
         }
 

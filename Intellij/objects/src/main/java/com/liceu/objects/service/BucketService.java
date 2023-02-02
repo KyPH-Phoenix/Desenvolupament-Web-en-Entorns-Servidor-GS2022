@@ -3,6 +3,7 @@ package com.liceu.objects.service;
 import com.liceu.objects.dao.BucketDAO;
 import com.liceu.objects.exception.ObjectAlreadyExistsException;
 import com.liceu.objects.model.Bucket;
+import com.liceu.objects.model.BucketFile;
 import com.liceu.objects.model.BucketObject;
 import com.liceu.objects.model.User;
 import com.liceu.objects.util.Utilities;
@@ -36,13 +37,26 @@ public class BucketService {
     public void createObject(MultipartFile file, String path, String bucketname, User user) throws IOException {
         byte[] content = file.getBytes();
         String hash = Utilities.getSHA512(content);
-        String objectname = path + ((lastCharSlash(path)) ? "/" : "") + file;
+        String objectname = path + ((lastCharSlash(path)) ? "" : "/") + file.getOriginalFilename();
 
-        if (objectAlreadyExists(objectname, bucketname)) {
-            throw new ObjectAlreadyExistsException();
-        } else {
+//        if (objectAlreadyExists(objectname, bucketname)) {
+//            throw new ObjectAlreadyExistsException();
+//        } else {
 //            bucketDAO.createObject(bucketname, content, hash, objectname, user.getUsername());
-        }
+//        }
+
+        BucketObject object = new BucketObject();
+        object.setObjectname(objectname);
+        object.setBucketname(bucketname);
+        object.setUsername(user.getUsername());
+        int idObject = bucketDAO.createObject(object);
+
+        BucketFile bucketFile = new BucketFile();
+        bucketFile.setContent(content);
+        bucketFile.setHash(hash);
+        int idFile = bucketDAO.createFile(bucketFile);
+
+        bucketDAO.createVersion(idObject, idFile);
     }
 
     private boolean objectAlreadyExists(String objectname, String bucketname) {
