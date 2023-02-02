@@ -16,7 +16,7 @@
     </header>
 
     <ul th:each="o : ${objects}">
-        <li th:text="${o.objectname} + ' | ' + ${o.version}"></li>
+        <li th:text="${o.objectname}"></li>
     </ul>
 
     <script src="/js/objectMenu.js"></script>
