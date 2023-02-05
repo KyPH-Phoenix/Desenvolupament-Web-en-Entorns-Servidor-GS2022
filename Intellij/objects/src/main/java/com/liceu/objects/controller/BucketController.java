@@ -97,14 +97,18 @@ public class BucketController {
     }
 
     @GetMapping("objects/{bucketname}/**")
-    public RedirectView getObject(@PathVariable String bucketname, HttpServletRequest req) {
+    public String getObject(@PathVariable String bucketname, HttpServletRequest req) {
         String url = (String) req.getAttribute(
                 HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE
         );
 
-        System.out.println(url);
+        if (url.charAt(url.length() - 1) == '/') {
+            return "bucket";
+        } else {
 
-        return new RedirectView("/objects/" + bucketname);
+        }
+
+        return "bucket";
     }
 
 

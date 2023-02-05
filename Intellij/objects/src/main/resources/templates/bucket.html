@@ -14,20 +14,24 @@
     <header>
         <h1 th:text="${bucketname}"></h1>
 
+        
+    </header>
+
+    <main>
         <section id="menu">
             <button th:attr="onclick=|displayMenu('${bucketname}')|">New object</button>
         </section>
-    </header>
-
-    <ul id="myUL">
-        <li th:each="d : ${directories}" class="directory">
-            <a th:href="@{ /objects/{bucket}/{directory}/ (bucket=${bucketname}, directory=${d}) }" th:text="${d}"></a>
-        </li>
-
-        <li th:each="f : ${files}">
-            <a th:href="@{ /objects/{bucket}/{file}/ (bucket=${bucketname}, file=${f}) }" th:text="${f}"></a>
-        </li>
-    </ul>
+        
+        <ul id="myUL">
+            <li th:each="d : ${directories}" class="directory">
+                <a th:href="@{ /objects/{bucket}/{directory}/ (bucket=${bucketname}, directory=${d}) }" th:text="${d}"></a>
+            </li>
+            
+            <li th:each="f : ${files}" class="file">
+                <a th:href="@{ /objects/{bucket}/{file} (bucket=${bucketname}, file=${f}) }" th:text="${f}"></a>
+            </li>
+        </ul>
+    </main>
 
     <script src="/js/objectMenu.js"></script>
 </body>

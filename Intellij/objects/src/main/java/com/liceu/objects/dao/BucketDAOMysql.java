@@ -36,7 +36,6 @@ public class BucketDAOMysql implements BucketDAO {
 
     @Override
     public void createObject(BucketObject object) {
-        System.out.println(object.getObjectname());
         jdbcTemplate.update("INSERT INTO object (username, bucketname, objectname) " +
                         "VALUES ((?), (?), (?))",
                 object.getUsername(), object.getBucketname(), object.getObjectname());
@@ -73,9 +72,6 @@ public class BucketDAOMysql implements BucketDAO {
 
     @Override
     public void createVersion(int idObject, int idFile) {
-        System.out.println(idObject);
-        System.out.println(idFile);
-
         jdbcTemplate.update("INSERT INTO version (idobject, idfile) VALUES ((?), (?));",
                 idObject, idFile);
     }
