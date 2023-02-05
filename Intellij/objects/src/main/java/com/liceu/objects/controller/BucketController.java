@@ -7,6 +7,7 @@ import com.liceu.objects.model.User;
 import com.liceu.objects.service.BucketService;
 import com.liceu.objects.util.Utilities;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class BucketController {
@@ -55,7 +59,24 @@ public class BucketController {
     public String bucketGet(@PathVariable String bucketname, Model model) {
         List<BucketObject> objects = bucketService.getAllObjectsFromBucket(bucketname);
 
-        model.addAttribute("objects", objects);
+        List<String> directories = new ArrayList<>();
+        List<String> files = new ArrayList<>();
+
+        objects.forEach(object -> {
+            String name = object.getObjectname();
+            String[] segments = name.split("/");
+
+            if (segments.length > 1) {
+                if (!directories.contains(segments[1])) {
+                    directories.add(segments[1]);
+                }
+            } else {
+                files.add(name);
+            }
+        });
+
+        model.addAttribute("directories", directories.stream().sorted().collect(Collectors.toList()));
+        model.addAttribute("files", files.stream().sorted().collect(Collectors.toList()));
         model.addAttribute("bucketname", bucketname);
 
         return "bucket";
@@ -70,22 +91,22 @@ public class BucketController {
         } catch (IOException E) {
             System.out.println("ERROR");
             return new RedirectView("/objects/{bucketname}");
-        } catch (ObjectAlreadyExistsException e) {
-            System.out.println("Objecte ja existeix");
-            return new RedirectView("/objects/{bucketname}");
         }
 
         return new RedirectView("/objects/{bucketname}");
     }
 
-    /*
-    @GetMapping("objects/{bucket}/**")
-    public String getObject(HttpServletRequest req) {
+    @GetMapping("objects/{bucketname}/**")
+    public RedirectView getObject(@PathVariable String bucketname, HttpServletRequest req) {
         String url = (String) req.getAttribute(
                 HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE
         );
+
+        System.out.println(url);
+
+        return new RedirectView("/objects/" + bucketname);
     }
-    */
+
 
     /*
     @PostMapping("...")

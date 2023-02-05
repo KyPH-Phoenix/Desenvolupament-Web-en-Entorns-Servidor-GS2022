@@ -3,6 +3,7 @@ package com.liceu.objects.dao;
 import com.liceu.objects.model.Bucket;
 import com.liceu.objects.model.BucketFile;
 import com.liceu.objects.model.BucketObject;
+import com.liceu.objects.model.ObjectVersion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,16 +35,19 @@ public class BucketDAOMysql implements BucketDAO {
     }
 
     @Override
-    public int createObject(BucketObject object) {
+    public void createObject(BucketObject object) {
         System.out.println(object.getObjectname());
         jdbcTemplate.update("INSERT INTO object (username, bucketname, objectname) " +
                         "VALUES ((?), (?), (?))",
                 object.getUsername(), object.getBucketname(), object.getObjectname());
+    }
 
+    @Override
+    public int getObjectId(String objectname, String bucketname) {
         List<BucketObject> generated = jdbcTemplate.query("SELECT * FROM object " +
-                "WHERE objectname = (?) AND bucketname = (?)",
-                new BeanPropertyRowMapper<>(BucketObject.class), object.getObjectname(),
-                object.getBucketname());
+                        "WHERE objectname = (?) AND bucketname = (?)",
+                new BeanPropertyRowMapper<>(BucketObject.class), objectname,
+                bucketname);
 
         BucketObject resultObject = generated.stream().findFirst().orElse(null);
 
@@ -51,13 +55,16 @@ public class BucketDAOMysql implements BucketDAO {
     }
 
     @Override
-    public int createFile(BucketFile bucketFile) {
+    public void createFile(BucketFile bucketFile) {
         jdbcTemplate.update("INSERT INTO file (content, hash) VALUES ((?), (?))",
                 bucketFile.getContent(), bucketFile.getHash());
+    }
 
+    @Override
+    public int getFileId(String hash) {
         List<BucketFile> generated = jdbcTemplate.query("SELECT * FROM file " +
-                "WHERE hash = (?)", new BeanPropertyRowMapper<>(BucketFile.class),
-                bucketFile.getHash());
+                        "WHERE hash = (?)", new BeanPropertyRowMapper<>(BucketFile.class),
+                hash);
 
         BucketFile resultBucketFile = generated.stream().findAny().orElse(null);
 
@@ -71,5 +78,21 @@ public class BucketDAOMysql implements BucketDAO {
 
         jdbcTemplate.update("INSERT INTO version (idobject, idfile) VALUES ((?), (?));",
                 idObject, idFile);
+    }
+
+    @Override
+    public List<BucketFile> getAllFiles() {
+        return jdbcTemplate.query("SELECT * FROM file",
+                new BeanPropertyRowMapper<>(BucketFile.class));
+    }
+
+    @Override
+    public ObjectVersion getLatestVersion(int idObject) {
+        return jdbcTemplate.query("SELECT * FROM version WHERE idobject = (?) " +
+                                "ORDER BY date DESC LIMIT 1",
+                new BeanPropertyRowMapper<>(ObjectVersion.class), idObject)
+                .stream()
+                .findFirst()
+                .orElse(null);
     }
 }

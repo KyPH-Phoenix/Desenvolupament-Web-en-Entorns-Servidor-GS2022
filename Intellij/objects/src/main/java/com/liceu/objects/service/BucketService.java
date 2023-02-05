@@ -1,11 +1,7 @@
 package com.liceu.objects.service;
 
 import com.liceu.objects.dao.BucketDAO;
-import com.liceu.objects.exception.ObjectAlreadyExistsException;
-import com.liceu.objects.model.Bucket;
-import com.liceu.objects.model.BucketFile;
-import com.liceu.objects.model.BucketObject;
-import com.liceu.objects.model.User;
+import com.liceu.objects.model.*;
 import com.liceu.objects.util.Utilities;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,37 +33,70 @@ public class BucketService {
     public void createObject(MultipartFile file, String path, String bucketname, User user) throws IOException {
         byte[] content = file.getBytes();
         String hash = Utilities.getSHA512(content);
-        String objectname = path + ((lastCharSlash(path)) ? "" : "/") + file.getOriginalFilename();
+        path += lastCharSlash(path) ? "" : "/";
+        path = (firstCharSlash(path) ? "" : "/") + path;
+        path = path.replaceAll("/+", "/");
 
-//        if (objectAlreadyExists(objectname, bucketname)) {
-//            throw new ObjectAlreadyExistsException();
-//        } else {
-//            bucketDAO.createObject(bucketname, content, hash, objectname, user.getUsername());
-//        }
+        String objectname = path + (file.getOriginalFilename());
 
-        BucketObject object = new BucketObject();
-        object.setObjectname(objectname);
-        object.setBucketname(bucketname);
-        object.setUsername(user.getUsername());
-        int idObject = bucketDAO.createObject(object);
+        if (fileDosntExists(hash)) {
+            BucketFile bucketFile = new BucketFile();
+            bucketFile.setContent(content);
+            bucketFile.setHash(hash);
 
-        BucketFile bucketFile = new BucketFile();
-        bucketFile.setContent(content);
-        bucketFile.setHash(hash);
-        int idFile = bucketDAO.createFile(bucketFile);
+            bucketDAO.createFile(bucketFile);
+        }
 
-        bucketDAO.createVersion(idObject, idFile);
+        int idFile = bucketDAO.getFileId(hash);
+        int idObject;
+
+        if (objectDosntExists(objectname, bucketname)) {
+            BucketObject object = new BucketObject();
+            object.setObjectname(objectname);
+            object.setBucketname(bucketname);
+            object.setUsername(user.getUsername());
+
+            bucketDAO.createObject(object);
+            idObject = bucketDAO.getObjectId(objectname, bucketname);
+
+            bucketDAO.createVersion(idObject, idFile);
+        } else {
+            idObject = bucketDAO.getObjectId(objectname, bucketname);
+
+            boolean versionRepeated = checkLastVersion(idObject, idFile);
+
+            if (!versionRepeated) {
+                bucketDAO.createVersion(idObject, idFile);
+            }
+        }
     }
 
-    private boolean objectAlreadyExists(String objectname, String bucketname) {
+    private boolean checkLastVersion(int idObject, int idFile) {
+        ObjectVersion version = bucketDAO.getLatestVersion(idObject);
+
+        return (version.getIdfile() == idFile);
+    }
+
+    private boolean fileDosntExists(String hash) {
+        List<BucketFile> files = bucketDAO.getAllFiles();
+
+        return files.stream()
+                .noneMatch(file -> file.getHash().equals(hash));
+    }
+
+    private boolean objectDosntExists(String objectname, String bucketname) {
         List<BucketObject> objects = bucketDAO.getAllObjectsFromBucket(bucketname);
 
         return objects.stream()
-                .anyMatch(object -> object.getObjectname().equals(objectname));
+                .noneMatch(object -> object.getObjectname().equals(objectname));
     }
 
 
     private boolean lastCharSlash(String path) {
         return path.charAt(path.length() - 1) == '/';
     }
+    private boolean firstCharSlash(String path) {
+        return path.charAt(0) == '/';
+    }
+
 }
