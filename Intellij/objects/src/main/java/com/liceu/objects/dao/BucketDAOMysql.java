@@ -91,4 +91,35 @@ public class BucketDAOMysql implements BucketDAO {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public List<BucketObject> getAllObjectsFromDirectory(String directoryName, String bucketname) {
+        return jdbcTemplate.query("SELECT * FROM object WHERE bucketname = (?) " +
+                        "AND objectname LIKE '" + directoryName + "%'",
+                new BeanPropertyRowMapper<>(BucketObject.class), bucketname);
+    }
+
+    @Override
+    public List<ObjectVersion> getAllVersions(int objectId) {
+        return jdbcTemplate.query("SELECT * FROM version WHERE idobject = (?) ORDER BY date DESC",
+                new BeanPropertyRowMapper<>(ObjectVersion.class), objectId);
+    }
+
+    @Override
+    public BucketFile getFile(int idfile) {
+        return jdbcTemplate.query("SELECT * FROM file WHERE id = (?)",
+                new BeanPropertyRowMapper<>(BucketFile.class), idfile)
+                .stream()
+                .findAny()
+                .orElse(null);
+    }
+
+    @Override
+    public BucketObject getObject(int objectid) {
+        return jdbcTemplate.query("SELECT * FROM object WHERE id = (?)",
+                new BeanPropertyRowMapper<>(BucketObject.class),objectid)
+                .stream()
+                .findFirst()
+                .orElse(null);
+    }
 }

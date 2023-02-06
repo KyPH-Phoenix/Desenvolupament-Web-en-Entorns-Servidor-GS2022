@@ -17,7 +17,7 @@ public class ObjectsApplication implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new LoginInterceptor()).addPathPatterns(List.of("/objects/**", "/settings"));
+		registry.addInterceptor(new LoginInterceptor()).addPathPatterns(List.of("/objects/**", "/settings", "/download/**"));
 		registry.addInterceptor(new AlreadyLoggedInterceptor()).addPathPatterns(List.of("/login", "/signup"));
 	}
 }

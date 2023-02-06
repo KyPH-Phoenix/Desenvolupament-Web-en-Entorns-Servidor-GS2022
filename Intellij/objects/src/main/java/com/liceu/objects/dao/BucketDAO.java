@@ -18,4 +18,8 @@ public interface BucketDAO {
     void createVersion(int idObject, int idFile);
     List<BucketFile> getAllFiles();
     ObjectVersion getLatestVersion(int idObject);
+    List<BucketObject> getAllObjectsFromDirectory(String directoryName, String bucketname);
+    List<ObjectVersion> getAllVersions(int objectId);
+    BucketFile getFile(int idfile);
+    BucketObject getObject(int objectid);
 }

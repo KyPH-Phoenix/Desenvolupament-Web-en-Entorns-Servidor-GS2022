@@ -1,9 +1,7 @@
 package com.liceu.objects.controller;
 
 import com.liceu.objects.exception.ObjectAlreadyExistsException;
-import com.liceu.objects.model.Bucket;
-import com.liceu.objects.model.BucketObject;
-import com.liceu.objects.model.User;
+import com.liceu.objects.model.*;
 import com.liceu.objects.service.BucketService;
 import com.liceu.objects.util.Utilities;
 
@@ -11,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,12 +62,12 @@ public class BucketController {
         List<String> files = new ArrayList<>();
 
         objects.forEach(object -> {
-            String name = object.getObjectname();
+            String name = object.getObjectname().substring(1);
             String[] segments = name.split("/");
 
             if (segments.length > 1) {
-                if (!directories.contains(segments[1])) {
-                    directories.add(segments[1]);
+                if (!directories.contains(segments[0])) {
+                    directories.add(segments[0]);
                 }
             } else {
                 files.add(name);
@@ -82,7 +81,7 @@ public class BucketController {
         return "bucket";
     }
 
-    @PostMapping("/objects/{bucketname}")
+    @PostMapping("/objects/{bucketname}/**")
     public RedirectView bucketPost(@PathVariable String bucketname, MultipartFile file, String path) {
         User user = (User) session.getAttribute("user");
 
@@ -96,27 +95,59 @@ public class BucketController {
         return new RedirectView("/objects/{bucketname}");
     }
 
-    @GetMapping("objects/{bucketname}/**")
-    public String getObject(@PathVariable String bucketname, HttpServletRequest req) {
+    @GetMapping("/objects/{bucketname}/**")
+    public String getObject(@PathVariable String bucketname, HttpServletRequest req, Model model) {
         String url = (String) req.getAttribute(
                 HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE
         );
 
+        url = url.replace("%20", " ");
+
         if (url.charAt(url.length() - 1) == '/') {
+            String directoryName = url.substring(9 + bucketname.length());
+
+            List<BucketObject> objects = bucketService.getAllObjectsFromDirectory(directoryName, bucketname);
+
+            List<String> directories = new ArrayList<>();
+            List<String> files = new ArrayList<>();
+
+            objects.forEach(object -> {
+                String name = object.getObjectname().substring(directoryName.length());
+                String[] segments = name.split("/");
+
+                if (segments.length > 1) {
+                    if (!directories.contains(segments[0])) {
+                        directories.add(segments[0]);
+                    }
+                } else {
+                    files.add(name);
+                }
+            });
+
+            model.addAttribute("directories", directories.stream().sorted().collect(Collectors.toList()));
+            model.addAttribute("files", files.stream().sorted().collect(Collectors.toList()));
+            model.addAttribute("bucketname", bucketname + directoryName.substring(0, directoryName.length() - 1));
+
             return "bucket";
         } else {
+            String objectName = url.substring(9 + bucketname.length());
 
+            List<ObjectVersion> versions = bucketService.getAllVersionsFromObject(objectName, bucketname);
+
+            model.addAttribute("versions", versions);
+            model.addAttribute("name", objectName);
+
+            return "file";
         }
-
-        return "bucket";
     }
 
+    @GetMapping("/download/{objectid}/{fileid}")
+    public ResponseEntity<byte[]> download(@PathVariable int objectid, @PathVariable int fileid) {
+        BucketFile file = bucketService.getFile(fileid);
+        BucketObject object = bucketService.getObject(objectid);
 
-    /*
-    @PostMapping("...")
-    public ResponseEntity<byte[]> download() {
         byte[] content = file.getContent();
-        String name = obj.getName();
+        String name = object.getObjectname();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.valueOf("application/octet-stream"));
@@ -127,5 +158,4 @@ public class BucketController {
 
         return new ResponseEntity<>(content, headers, HttpStatus.OK);
     }
-    */
 }

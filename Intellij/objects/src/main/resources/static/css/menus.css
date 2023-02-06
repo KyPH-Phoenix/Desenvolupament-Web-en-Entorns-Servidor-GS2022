@@ -90,3 +90,8 @@ li a {
   padding: 10px;
   display: block;
 }
+
+.spacer {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

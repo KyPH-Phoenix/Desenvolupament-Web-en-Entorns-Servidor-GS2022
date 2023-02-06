@@ -99,4 +99,21 @@ public class BucketService {
         return path.charAt(0) == '/';
     }
 
+    public List<BucketObject> getAllObjectsFromDirectory(String directoryName, String bucketname) {
+        return bucketDAO.getAllObjectsFromDirectory(directoryName, bucketname);
+    }
+
+    public List<ObjectVersion> getAllVersionsFromObject(String objectName, String bucketname) {
+        int objectId = bucketDAO.getObjectId(objectName, bucketname);
+
+        return bucketDAO.getAllVersions(objectId);
+    }
+
+    public BucketFile getFile(int idfile) {
+        return bucketDAO.getFile(idfile);
+    }
+
+    public BucketObject getObject(int objectid) {
+        return bucketDAO.getObject(objectid);
+    }
 }

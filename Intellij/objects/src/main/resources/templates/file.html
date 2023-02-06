@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${name}"></title>
+
+    <link rel="stylesheet" href="/css/menus.css">
+</head>
+<body>
+    <header>
+        <h1 th:text="${name}"></h1>
+    </header>
+
+    <main>
+        <div class="spacer"></div>
+        <ul id="myUL">
+            <li th:each="v : ${versions}" class="file">
+                <span th:text="'Version date: ' + ${v.date}"></span>
+                <a th:href="@{ /download/{objid}/{fid} (objid=${v.idobject}, fid=${v.idfile}) }">DOWNLOAD</a>
+            </li>
+        </ul>
+    </main>
+</body>
+</html>
