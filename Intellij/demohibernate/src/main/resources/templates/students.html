@@ -1,0 +1,14 @@
+<html>
+    <body>
+        <ul>
+            <li th:each="s : ${students}">
+                [[${s.name}]]
+                <ul>
+                    <li th:each="c : ${s.courses}">
+                        [[${c.description}]]
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    <body>
+<html>

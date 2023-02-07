@@ -1,0 +1,10 @@
+<html>
+    <body>
+        <ul>
+            <li th:each="u : ${users}">
+                [[${u.name}]] ([[${u.job.description}]])
+
+            </li>
+        </ul>
+    <body>
+<html>

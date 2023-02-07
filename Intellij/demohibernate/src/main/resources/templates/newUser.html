@@ -1,0 +1,21 @@
+<html>
+<h1>New User</h1>
+<div th:if="${ok}">
+    Usuari Creat Correctament
+</div>
+
+<div th:unless="${ok}">
+    <form action="/newuser" method="post">
+        Name <input type="text" name="name">
+        <br>
+        Birthyear: <input type="number" name="birthYear">
+        <br>
+        Job: <select name="job">
+        <option th:each="j: ${jobs}" th:value="${j.id}">
+            [[${j.description}]]
+        </option>
+        </select>
+        <input type="submit" value="Guarda">
+    </form>
+</div>
+</html>

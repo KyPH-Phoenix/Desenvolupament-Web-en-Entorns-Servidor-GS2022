@@ -1,0 +1,8 @@
+package com.villanueva.demohibernate.repos;
+
+import com.villanueva.demohibernate.models.Film;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface FilmRepo extends JpaRepository<Film, Long> {
+
+}
