@@ -69,4 +69,11 @@ public class UserController {
 
         return new RedirectView("/login");
     }
+
+    @GetMapping("/logout")
+    public RedirectView logout() {
+        session.removeAttribute("user");
+
+        return new RedirectView("/login");
+    }
 }

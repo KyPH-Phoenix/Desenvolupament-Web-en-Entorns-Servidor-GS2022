@@ -11,6 +11,8 @@
 <body>
     <header>
         <h1 th:text="'Welcome, ' + ${username}"></h1>
+        
+        <nav th:replace="navbar.html :: nav">
     </header>
 
     <main>

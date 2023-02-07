@@ -1,9 +1,7 @@
 package com.liceu.objects.controller;
 
-import com.liceu.objects.exception.ObjectAlreadyExistsException;
 import com.liceu.objects.model.*;
 import com.liceu.objects.service.BucketService;
-import com.liceu.objects.util.Utilities;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -56,6 +54,8 @@ public class BucketController {
 
     @GetMapping("/objects/{bucketname}")
     public String bucketGet(@PathVariable String bucketname, Model model) {
+        if (bucketNotFromUser(bucketname)) return "error";
+
         List<BucketObject> objects = bucketService.getAllObjectsFromBucket(bucketname);
 
         List<String> directories = new ArrayList<>();
@@ -79,6 +79,12 @@ public class BucketController {
         model.addAttribute("bucketname", bucketname);
 
         return "bucket";
+    }
+
+    private boolean bucketNotFromUser(String bucketname) {
+        List<Bucket> buckets = bucketService.getBucketsFromUser((User) session.getAttribute("user"));
+
+        return buckets.stream().noneMatch(bucket -> bucket.getBucketname().equals(bucketname));
     }
 
     @PostMapping("/objects/{bucketname}/**")
@@ -135,7 +141,7 @@ public class BucketController {
             List<ObjectVersion> versions = bucketService.getAllVersionsFromObject(objectName, bucketname);
 
             model.addAttribute("versions", versions);
-            model.addAttribute("name", objectName);
+            model.addAttribute("name", bucketname + objectName);
 
             return "file";
         }
