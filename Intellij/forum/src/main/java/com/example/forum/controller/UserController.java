@@ -2,6 +2,7 @@ package com.example.forum.controller;
 
 import com.example.forum.model.User;
 
+import com.example.forum.service.TokenService;
 import com.example.forum.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.BeanUtils;
@@ -18,16 +19,12 @@ import java.util.Map;
 @RestController
 public class UserController {
     UserService userService;
+    TokenService tokenService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, TokenService tokenService) {
         this.userService = userService;
+        this.tokenService = tokenService;
     }
-
-//    @GetMapping("/categories")
-//    @CrossOrigin(origins = "http://localhost:3000")
-//    public Map<String, String> categories() {
-//        return "";
-//    }
 
     @PostMapping("/register")
     @CrossOrigin(origins = "http://localhost:3000")
@@ -53,11 +50,17 @@ public class UserController {
         return !users.isEmpty();
     }
 
+    @PostMapping("/login")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Map<String, Object> login(@RequestBody User user, HttpServletResponse res) {
         Map<String, Object> map = new HashMap<>();
 
         if (userOk(user)) {
+            User u = userService.findByEmailLike(user.getEmail()).get(0);
+            String token = tokenService.newToken(u);
 
+            map.put("token", token);
+            map.put("user", u);
         } else {
             map.put("message", "Incorrect email or password");
             res.setStatus(400);
