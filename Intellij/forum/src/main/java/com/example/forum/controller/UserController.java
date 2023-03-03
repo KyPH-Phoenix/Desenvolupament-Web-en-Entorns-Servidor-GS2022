@@ -2,15 +2,15 @@ package com.example.forum.controller;
 
 import com.example.forum.model.User;
 
+import com.example.forum.service.CategoryService;
 import com.example.forum.service.TokenService;
 import com.example.forum.service.UserService;
+import com.example.forum.utilities.Util;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,10 +20,12 @@ import java.util.Map;
 public class UserController {
     UserService userService;
     TokenService tokenService;
+    CategoryService categoryService;
 
-    public UserController(UserService userService, TokenService tokenService) {
+    public UserController(UserService userService, TokenService tokenService, CategoryService categoryService) {
         this.userService = userService;
         this.tokenService = tokenService;
+        this.categoryService = categoryService;
     }
 
     @PostMapping("/register")
@@ -60,13 +62,21 @@ public class UserController {
             String token = tokenService.newToken(u);
 
             map.put("token", token);
-            map.put("user", u);
+            map.put("user", Util.buildUserMap(u, categoryService.getAllCategories()));
         } else {
             map.put("message", "Incorrect email or password");
             res.setStatus(400);
         }
 
         return map;
+    }
+
+    @GetMapping("/getprofile")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Map<String, Object> getProfile(HttpServletRequest req) {
+        String email = (String) req.getAttribute("email");
+        User u = userService.findByEmailLike(email).get(0);
+        return Util.buildUserMap(u, categoryService.getAllCategories());
     }
 
     private boolean userOk(User user) {

@@ -2,12 +2,14 @@ package com.example.forum.service;
 
 import com.example.forum.dao.UserDao;
 import com.example.forum.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class UserService {
+    @Autowired
     UserDao userDao;
 
     public UserService(UserDao userDao) {

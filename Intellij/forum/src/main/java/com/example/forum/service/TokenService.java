@@ -31,10 +31,11 @@ public class TokenService {
                 .sign(Algorithm.HMAC512(tokenSecret.getBytes()));
     }
 
-    public String getUser(String token) {
+    public String getEmail(String token) {
         return JWT.require(Algorithm.HMAC512(tokenSecret.getBytes()))
                 .build()
                 .verify(token)
-                .getSubject();
+                .getClaim("email")
+                .asString();
     }
 }
