@@ -20,7 +20,7 @@ public class CategoryService {
         return categoryDao.findBySlugLike(slug);
     }
 
-    public void save(Category c) {
+    public synchronized void save(Category c) {
         categoryDao.save(c);
     }
 }

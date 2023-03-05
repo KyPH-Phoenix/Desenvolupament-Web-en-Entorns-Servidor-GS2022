@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
+
 @SpringBootApplication
 public class ForumApplication implements WebMvcConfigurer {
 	@Autowired
@@ -18,6 +20,9 @@ public class ForumApplication implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(tokenInterceptor).addPathPatterns("/getprofile");
+		registry.addInterceptor(tokenInterceptor).addPathPatterns(List.of(
+				"/getprofile",
+				"/profile",
+				"/profile/**"));
 	}
 }

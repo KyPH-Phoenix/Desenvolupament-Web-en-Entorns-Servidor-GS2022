@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.time.Instant;
 import java.util.Base64;
 
 @Component
@@ -27,10 +28,11 @@ public class TokenInterceptor implements HandlerInterceptor {
         if (authHeader == null) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 
         String token = authHeader.replace("Bearer ", "");
+        long iat = tokenService.getExpiration(token);
         String email = tokenService.getEmail(token);
 
         request.setAttribute("email", email);
-
+        request.setAttribute("iat", iat);
         return true;
     }
 }

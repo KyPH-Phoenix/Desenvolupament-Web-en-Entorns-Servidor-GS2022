@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,8 +76,14 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:3000")
     public Map<String, Object> getProfile(HttpServletRequest req) {
         String email = (String) req.getAttribute("email");
+
         User u = userService.findByEmailLike(email).get(0);
-        return Util.buildUserMap(u, categoryService.getAllCategories());
+        long iat = (long) req.getAttribute("iat");
+
+        Map<String, Object> map = Util.buildUserMap(u, categoryService.getAllCategories());
+        map.put("iat", iat);
+
+        return map;
     }
 
     private boolean userOk(User user) {

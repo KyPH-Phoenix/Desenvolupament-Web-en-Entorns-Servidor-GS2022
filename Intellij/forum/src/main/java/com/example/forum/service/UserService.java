@@ -20,7 +20,7 @@ public class UserService {
         return userDao.findByEmailLike(email);
     }
 
-    public void save(User user) {
+    public synchronized void save(User user) {
         userDao.save(user);
     }
 }

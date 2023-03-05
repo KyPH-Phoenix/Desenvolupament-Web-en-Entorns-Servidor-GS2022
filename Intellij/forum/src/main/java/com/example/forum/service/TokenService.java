@@ -6,6 +6,7 @@ import com.example.forum.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,5 +38,12 @@ public class TokenService {
                 .verify(token)
                 .getClaim("email")
                 .asString();
+    }
+
+    public long getExpiration(String token) {
+        return JWT.require(Algorithm.HMAC512(tokenSecret.getBytes()))
+                .build()
+                .verify(token)
+                .getExpiresAt().getTime();
     }
 }
