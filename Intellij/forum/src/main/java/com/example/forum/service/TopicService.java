@@ -29,7 +29,7 @@ public class TopicService {
                 .toList();
     }
 
-    public Topic saveTopic(String content, String categorySlug, String title, String userEmail) {
+    public synchronized Topic saveTopic(String content, String categorySlug, String title, String userEmail) {
         Topic topic = new Topic();
         topic.setContent(content);
         topic.setTitle(title);
@@ -48,11 +48,11 @@ public class TopicService {
         return topic;
     }
 
-    public void deleteTopic(long id) {
+    public synchronized void deleteTopic(long id) {
         topicDao.deleteById(id);
     }
 
-    public void updateTopic(String title, String content, long catId, long id) {
+    public synchronized void updateTopic(String title, String content, long catId, long id) {
         topicDao.updateTopic(title, content, catId, id);
     }
 }

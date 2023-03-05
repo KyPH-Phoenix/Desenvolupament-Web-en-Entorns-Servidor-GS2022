@@ -21,7 +21,7 @@ public class ReplyService {
         return replyDao.findAllReplyByTopicId(id);
     }
 
-    public Reply createReply(String content, User user, Topic topic) {
+    public synchronized Reply createReply(String content, User user, Topic topic) {
         Reply reply = new Reply();
 
         reply.setContent(content);
@@ -31,11 +31,11 @@ public class ReplyService {
         return replyDao.save(reply);
     }
 
-    public void deleteReply(long id) {
+    public synchronized void deleteReply(long id) {
         replyDao.deleteById(id);
     }
 
-    public void updateReply(long replyId, String content) {
+    public synchronized void updateReply(long replyId, String content) {
         replyDao.updateReply(content, Instant.now(), replyId);
     }
 

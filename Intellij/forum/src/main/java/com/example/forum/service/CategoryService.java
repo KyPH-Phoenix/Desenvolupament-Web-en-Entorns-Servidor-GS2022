@@ -24,11 +24,11 @@ public class CategoryService {
         categoryDao.save(c);
     }
 
-    public void updateCategory(String slug, String title, String description) {
+    public synchronized void updateCategory(String slug, String title, String description) {
         categoryDao.updateCategory(slug, title, description);
     }
 
-    public void deleteCategory(String slug) {
+    public synchronized void deleteCategory(String slug) {
         categoryDao.deleteBySlug(slug);
     }
 }

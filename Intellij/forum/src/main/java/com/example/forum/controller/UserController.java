@@ -93,4 +93,26 @@ public class UserController {
 
         return users.get(0).getPassword().equals(user.getPassword());
     }
+
+    @PutMapping("/profile")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Map<String, Object> updateProfile(@RequestHeader("Authorization") String auth, @RequestBody User userInfo) {
+        String token = auth.replace("Bearer ", "");
+        String email = userInfo.getEmail();
+        String name = userInfo.getName();
+
+        User user = userService.findByEmailLike(tokenService.getEmail(token)).get(0);
+
+        userService.updateUserData(email, name, user.getId());
+
+        user.setEmail(email);
+        user.setName(name);
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("token", token);
+        map.put("user", Util.buildUserMap(user, categoryService.getAllCategories()));
+
+        return map;
+    }
 }

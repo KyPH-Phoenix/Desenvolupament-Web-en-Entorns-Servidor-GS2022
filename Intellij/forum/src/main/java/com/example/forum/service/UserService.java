@@ -23,4 +23,8 @@ public class UserService {
     public synchronized void save(User user) {
         userDao.save(user);
     }
+
+    public void updateUserData(String email, String name, Long id) {
+        userDao.updateUser(id, name, email);
+    }
 }
