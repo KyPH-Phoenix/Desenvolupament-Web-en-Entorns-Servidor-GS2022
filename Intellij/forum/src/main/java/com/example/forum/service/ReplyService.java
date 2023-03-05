@@ -6,6 +6,7 @@ import com.example.forum.model.Topic;
 import com.example.forum.model.User;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -28,5 +29,17 @@ public class ReplyService {
         reply.setTopic(topic);
 
         return replyDao.save(reply);
+    }
+
+    public void deleteReply(long id) {
+        replyDao.deleteById(id);
+    }
+
+    public void updateReply(long replyId, String content) {
+        replyDao.updateReply(content, Instant.now(), replyId);
+    }
+
+    public Reply getById(long replyId) {
+        return replyDao.findByIdLike(replyId);
     }
 }

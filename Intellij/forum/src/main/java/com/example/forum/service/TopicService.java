@@ -47,4 +47,12 @@ public class TopicService {
 
         return topic;
     }
+
+    public void deleteTopic(long id) {
+        topicDao.deleteById(id);
+    }
+
+    public void updateTopic(String title, String content, long catId, long id) {
+        topicDao.updateTopic(title, content, catId, id);
+    }
 }

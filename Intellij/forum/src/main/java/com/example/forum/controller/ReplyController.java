@@ -42,5 +42,31 @@ public class ReplyController {
 
         return Util.buildReplyMap(reply);
     }
+
+    @PutMapping("/topics/{topicId}/replies/{replyId}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Map<String, Object> updateReply(@PathVariable long topicId, @PathVariable long replyId,
+                                           @RequestBody Reply replyContent, @RequestHeader("Authorization") String auth) {
+        String content = replyContent.getContent();
+        String token = auth.replace("Bearer ", "");
+        String userEmail = tokenService.getEmail(token);
+
+        User user = userService.findByEmailLike(userEmail).get(0);
+        Topic topic = topicService.getTopicById(topicId);
+
+        replyService.updateReply(replyId, content);
+
+        Reply reply = replyService.getById(replyId);
+
+        return Util.buildReplyMap(reply);
+    }
+
+    @DeleteMapping("/topics/{topicId}/replies/{replyId}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public boolean deleteReply(@PathVariable long topicId, @PathVariable long replyId) {
+        replyService.deleteReply(replyId);
+
+        return true;
+    }
 }
 

@@ -1,8 +1,12 @@
 package com.example.forum.controller;
 
 import com.example.forum.model.Category;
+import com.example.forum.model.Reply;
+import com.example.forum.model.Topic;
 import com.example.forum.service.CategoryService;
 
+import com.example.forum.service.ReplyService;
+import com.example.forum.service.TopicService;
 import com.example.forum.utilities.Util;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.BeanUtils;
@@ -14,9 +18,13 @@ import java.util.Map;
 @RestController
 public class CategoryController {
     CategoryService categoryService;
+    TopicService topicService;
+    ReplyService replyService;
 
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, TopicService topicService, ReplyService replyService) {
         this.categoryService = categoryService;
+        this.topicService = topicService;
+        this.replyService = replyService;
     }
 
     @GetMapping("/categories")
@@ -65,5 +73,38 @@ public class CategoryController {
         }
 
         return Util.buildCategoryMap(category);
+    }
+
+    @PutMapping("categories/{slug}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Map<String, Object> updateCategory(@PathVariable String slug, @RequestBody Category categoryData) {
+        String title = categoryData.getTitle();
+        String description = categoryData.getDescription();
+        categoryService.updateCategory(slug, title, description);
+
+        Category category = categoryService.findBySlugLike(slug).get(0);
+
+        return Util.buildCategoryMap(category);
+    }
+
+    @DeleteMapping("/categories/{slug}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public boolean deleteCategory(@PathVariable String slug) {
+        long id = categoryService.findBySlugLike(slug).get(0).getId();
+        List<Topic> topics = topicService.getAllTopicsFromCategory(id);
+
+        topics.forEach(topic -> {
+            List<Reply> replies = replyService.getAllRepliesFromTopic(topic.getId());
+
+            replies.forEach(reply -> {
+                replyService.deleteReply(reply.getId());
+            });
+
+            topicService.deleteTopic(topic.getId());
+        });
+
+        categoryService.deleteCategory(slug);
+
+        return true;
     }
 }

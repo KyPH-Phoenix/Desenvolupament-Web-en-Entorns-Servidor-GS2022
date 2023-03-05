@@ -1,6 +1,7 @@
 package com.example.forum.controller;
 
 import com.example.forum.model.Category;
+import com.example.forum.model.Reply;
 import com.example.forum.model.Topic;
 import com.example.forum.service.CategoryService;
 import com.example.forum.service.ReplyService;
@@ -74,5 +75,41 @@ public class TopicController {
         });
 
         return Util.buildTopicMap(topic, replies);
+    }
+
+    @PutMapping("/topics/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Map<String, Object> updateTopic(@PathVariable long id, @RequestBody TopicRequester topicRequester) {
+        String title = topicRequester.getTitle();
+        String content = topicRequester.getContent();
+        String slug = topicRequester.getCategory();
+        long catId = categoryService.findBySlugLike(slug).get(0).getId();
+
+        topicService.updateTopic(title, content, catId, id);
+
+        Topic topic = topicService.getTopicById(id);
+        List<Object> replies = new ArrayList<>();
+
+        replyService.getAllRepliesFromTopic(topic.getId()).forEach(reply -> {
+            replies.add(Util.buildReplyMap(reply));
+        });
+
+        return Util.buildTopicMap(topic, replies);
+    }
+
+    @DeleteMapping("/topics/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public boolean deleteTopic(@PathVariable long id) {
+        Topic topic = topicService.getTopicById(id);
+
+        List<Reply> replies = replyService.getAllRepliesFromTopic(topic.getId());
+
+        replies.forEach(reply -> {
+            replyService.deleteReply(reply.getId());
+        });
+
+        topicService.deleteTopic(topic.getId());
+
+        return true;
     }
 }
